@@ -1,0 +1,107 @@
+import { useState } from "react";
+import { Link, useLocation } from "wouter";
+import { Button } from "@/components/ui/button";
+import { Film, Search, Bell, Menu, X } from "lucide-react";
+
+export default function Header() {
+  const [location] = useLocation();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const navItems = [
+    { href: "/browse", label: "Browse", active: location.startsWith("/browse") },
+    { href: "/browse/location", label: "Locations" },
+    { href: "/browse/crew", label: "Crew" },
+    { href: "/browse/cast", label: "Cast" },
+    { href: "/browse/service", label: "Services" },
+  ];
+
+  return (
+    <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <Link href="/" className="flex items-center space-x-2">
+            <Film className="h-8 w-8 text-orange-500" />
+            <span className="font-serif font-bold text-xl text-gray-900">FilmMatch</span>
+            <span className="text-gray-600 font-medium">Oakland</span>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex space-x-6">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`font-medium transition-colors ${
+                  item.active
+                    ? "text-orange-500"
+                    : "text-gray-600 hover:text-orange-500"
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Desktop Actions */}
+          <div className="hidden md:flex items-center space-x-4">
+            <Button variant="ghost" size="sm">
+              <Search className="h-4 w-4" />
+            </Button>
+            <Button variant="ghost" size="sm">
+              <Bell className="h-4 w-4" />
+            </Button>
+            <Link href="/project-profile">
+              <Button className="bg-orange-500 hover:bg-orange-600 text-white">
+                Post Project
+              </Button>
+            </Link>
+            <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="md:hidden"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </Button>
+        </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-gray-200 py-4">
+            <nav className="flex flex-col space-y-3">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`font-medium transition-colors ${
+                    item.active
+                      ? "text-orange-500"
+                      : "text-gray-600 hover:text-orange-500"
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <div className="pt-3 border-t border-gray-200">
+                <Link href="/project-profile">
+                  <Button 
+                    className="w-full bg-orange-500 hover:bg-orange-600 text-white"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Post Project
+                  </Button>
+                </Link>
+              </div>
+            </nav>
+          </div>
+        )}
+      </div>
+    </header>
+  );
+}
