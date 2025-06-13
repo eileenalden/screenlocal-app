@@ -174,6 +174,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         crew: allResources.filter(r => r.type === 'crew').length,
         cast: allResources.filter(r => r.type === 'cast').length,
         services: allResources.filter(r => r.type === 'service').length,
+        craftServices: allResources.filter(r => r.type === 'craft-service').length,
       };
       
       res.json(stats);

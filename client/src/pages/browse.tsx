@@ -179,14 +179,50 @@ export default function Browse() {
                 </div>
               </div>
 
-              {/* Location */}
+              {/* Location - only show for location type */}
+              {selectedType === "location" && (
+                <div className="mb-6">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Specific Area</label>
+                  <Input
+                    placeholder="Downtown, Lake Merritt, etc."
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                  />
+                </div>
+              )}
+
+              {/* Experience Level - for crew and cast */}
+              {(selectedType === "crew" || selectedType === "cast") && (
+                <div className="mb-6">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Experience Level</label>
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Any experience" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Any Experience</SelectItem>
+                      <SelectItem value="beginner">Beginner (0-2 years)</SelectItem>
+                      <SelectItem value="intermediate">Intermediate (3-7 years)</SelectItem>
+                      <SelectItem value="professional">Professional (8+ years)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+
+              {/* Availability - for all types */}
               <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
-                <Input
-                  placeholder="Oakland area..."
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                />
+                <label className="block text-sm font-medium text-gray-700 mb-2">Availability</label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Any time" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Any Time</SelectItem>
+                    <SelectItem value="immediate">Available Now</SelectItem>
+                    <SelectItem value="week">Within 1 Week</SelectItem>
+                    <SelectItem value="month">Within 1 Month</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
               <Button 

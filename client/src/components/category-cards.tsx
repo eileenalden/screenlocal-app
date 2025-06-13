@@ -42,6 +42,16 @@ const categories = [
     price: "Custom pricing",
     image: "https://images.unsplash.com/photo-1551818255-e6e10975bc17?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
     href: "/browse/service"
+  },
+  {
+    id: "craft-service",
+    title: "Craft Services",
+    description: "Catering, coffee service, and on-set dining solutions",
+    icon: Cog,
+    count: "25+ providers",
+    price: "From $50/day",
+    image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
+    href: "/browse/craft-service"
   }
 ];
 
@@ -58,7 +68,7 @@ export default function CategoryCards() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           {categories.map((category) => {
             const Icon = category.icon;
             return (
