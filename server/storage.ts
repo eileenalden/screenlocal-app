@@ -102,6 +102,15 @@ export class MemStorage implements IStorage {
   }
 
   private initializeWithSampleData() {
+    // Create Oakland organization
+    this.createOrganization({
+      name: "Oakland Film Commission",
+      slug: "oakland",
+      city: "Oakland",
+      state: "California",
+      isActive: true,
+    });
+
     // Sample Oakland locations
     this.createResource({
       providerId: 1,
@@ -261,6 +270,35 @@ export class MemStorage implements IStorage {
       amenities: ["Espresso Machine", "Variety of Teas", "Pastries", "All Day Service"],
       isActive: true
     });
+  }
+
+  // Organizations
+  async getOrganization(id: number): Promise<Organization | undefined> {
+    return this.organizations.get(id);
+  }
+
+  async getOrganizationBySlug(slug: string): Promise<Organization | undefined> {
+    return Array.from(this.organizations.values()).find(org => org.slug === slug);
+  }
+
+  async createOrganization(insertOrganization: InsertOrganization): Promise<Organization> {
+    const id = this.currentId++;
+    const organization: Organization = { 
+      ...insertOrganization, 
+      id,
+      createdAt: new Date(),
+    };
+    this.organizations.set(id, organization);
+    return organization;
+  }
+
+  async updateOrganization(id: number, updates: Partial<InsertOrganization>): Promise<Organization | undefined> {
+    const organization = this.organizations.get(id);
+    if (!organization) return undefined;
+    
+    const updatedOrganization = { ...organization, ...updates };
+    this.organizations.set(id, updatedOrganization);
+    return updatedOrganization;
   }
 
   // Users

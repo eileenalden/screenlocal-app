@@ -4,6 +4,7 @@ import { pgTable, text, serial, integer, boolean, decimal, timestamp, jsonb } fr
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
+// Future multi-tenant support
 export const organizations = pgTable("organizations", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
@@ -16,13 +17,12 @@ export const organizations = pgTable("organizations", {
 
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
-  organizationId: integer("organization_id").notNull().references(() => organizations.id),
-  username: text("username").notNull(),
-  email: text("email").notNull(),
+  organizationId: integer("organization_id").default(1), // Future-proofed for multi-tenant
+  username: text("username").notNull().unique(),
+  email: text("email").notNull().unique(),
   password: text("password").notNull(),
   role: text("role").notNull().default("filmmaker"), // filmmaker, provider, admin
   profileComplete: boolean("profile_complete").notNull().default(false),
-  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const filmmakers = pgTable("filmmakers", {
@@ -37,7 +37,7 @@ export const filmmakers = pgTable("filmmakers", {
 
 export const resources = pgTable("resources", {
   id: serial("id").primaryKey(),
-  organizationId: integer("organization_id").notNull().references(() => organizations.id),
+  organizationId: integer("organization_id").notNull().references(() => organizations.id).default(1),
   providerId: integer("provider_id").notNull(),
   type: text("type").notNull(), // location, crew, cast, service, craft-service
   title: text("title").notNull(),
@@ -111,6 +111,8 @@ export const insertResourceSchema = createInsertSchema(resources).omit({
   id: true,
   rating: true,
   reviewCount: true,
+}).extend({
+  organizationId: z.number().optional(),
 });
 
 export const insertProjectSchema = createInsertSchema(projects).omit({
