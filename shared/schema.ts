@@ -4,13 +4,25 @@ import { pgTable, text, serial, integer, boolean, decimal, timestamp, jsonb } fr
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
+export const organizations = pgTable("organizations", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  slug: text("slug").notNull().unique(),
+  city: text("city").notNull(),
+  state: text("state").notNull(),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
-  username: text("username").notNull().unique(),
-  email: text("email").notNull().unique(),
+  organizationId: integer("organization_id").notNull().references(() => organizations.id),
+  username: text("username").notNull(),
+  email: text("email").notNull(),
   password: text("password").notNull(),
   role: text("role").notNull().default("filmmaker"), // filmmaker, provider, admin
   profileComplete: boolean("profile_complete").notNull().default(false),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const filmmakers = pgTable("filmmakers", {
@@ -25,8 +37,9 @@ export const filmmakers = pgTable("filmmakers", {
 
 export const resources = pgTable("resources", {
   id: serial("id").primaryKey(),
+  organizationId: integer("organization_id").notNull().references(() => organizations.id),
   providerId: integer("provider_id").notNull(),
-  type: text("type").notNull(), // location, crew, cast, service
+  type: text("type").notNull(), // location, crew, cast, service, craft-service
   title: text("title").notNull(),
   description: text("description").notNull(),
   category: text("category"), // For crew: dp, sound, etc. For cast: actor, extra, etc.
@@ -45,6 +58,7 @@ export const resources = pgTable("resources", {
 
 export const projects = pgTable("projects", {
   id: serial("id").primaryKey(),
+  organizationId: integer("organization_id").notNull().references(() => organizations.id),
   filmmakerId: integer("filmmaker_id").notNull(),
   title: text("title").notNull(),
   description: text("description"),
@@ -79,8 +93,14 @@ export const inquiries = pgTable("inquiries", {
 });
 
 // Insert schemas
+export const insertOrganizationSchema = createInsertSchema(organizations).omit({
+  id: true,
+  createdAt: true,
+});
+
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
+  createdAt: true,
 });
 
 export const insertFilmmakerSchema = createInsertSchema(filmmakers).omit({
@@ -109,6 +129,9 @@ export const insertInquirySchema = createInsertSchema(inquiries).omit({
 });
 
 // Types
+export type Organization = typeof organizations.$inferSelect;
+export type InsertOrganization = z.infer<typeof insertOrganizationSchema>;
+
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 

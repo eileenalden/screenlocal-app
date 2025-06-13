@@ -1,12 +1,15 @@
 // © Eileen Alden, 2025. All rights reserved. This software and its components are the original work of Eileen Alden, developed without compensation. No rights are granted or implied for use or distribution without a signed agreement.
 
 import {
+  organizations,
   users,
   filmmakers,
   resources,
   projects,
   matches,
   inquiries,
+  type Organization,
+  type InsertOrganization,
   type User,
   type InsertUser,
   type Filmmaker,
@@ -22,6 +25,12 @@ import {
 } from "@shared/schema";
 
 export interface IStorage {
+  // Organizations
+  getOrganization(id: number): Promise<Organization | undefined>;
+  getOrganizationBySlug(slug: string): Promise<Organization | undefined>;
+  createOrganization(organization: InsertOrganization): Promise<Organization>;
+  updateOrganization(id: number, updates: Partial<InsertOrganization>): Promise<Organization | undefined>;
+
   // Users
   getUser(id: number): Promise<User | undefined>;
   getUserByEmail(email: string): Promise<User | undefined>;
@@ -71,6 +80,7 @@ export interface IStorage {
 }
 
 export class MemStorage implements IStorage {
+  private organizations: Map<number, Organization>;
   private users: Map<number, User>;
   private filmmakers: Map<number, Filmmaker>;
   private resources: Map<number, Resource>;
@@ -80,6 +90,7 @@ export class MemStorage implements IStorage {
   private currentId: number;
 
   constructor() {
+    this.organizations = new Map();
     this.users = new Map();
     this.filmmakers = new Map();
     this.resources = new Map();
