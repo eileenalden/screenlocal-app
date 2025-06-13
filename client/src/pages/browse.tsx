@@ -1,253 +1,205 @@
+/*
+ * © Eileen Alden, 2025
+ * All rights reserved.
+ */
+
 import { useState } from "react";
-import { useParams } from "wouter";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import ResourceCard from "@/components/resource-card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Search, Filter, Grid, List } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Search, Grid, List, Heart, MessageSquare, Loader2 } from "lucide-react";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 import type { Resource } from "@shared/schema";
 
 export default function Browse() {
-  const params = useParams();
-  const categoryFromUrl = params?.category;
-  
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedType, setSelectedType] = useState(categoryFromUrl || "");
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
-  const [location, setLocation] = useState("");
+  const [resourceType, setResourceType] = useState<string>("");
+  const [serviceSubtype, setServiceSubtype] = useState<string>("");
+  const [description, setDescription] = useState("");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [favorites, setFavorites] = useState<number[]>([]);
+  const [aiResults, setAiResults] = useState<Resource[]>([]);
+  const { toast } = useToast();
 
-  const { data: resources = [], isLoading } = useQuery({
-    queryKey: ["/api/resources", selectedType, selectedCategory, location, minPrice, maxPrice],
-    queryFn: async () => {
-      const params = new URLSearchParams();
-      if (selectedType && selectedType !== "all") params.append("type", selectedType);
-      if (selectedCategory && selectedCategory !== "all") params.append("category", selectedCategory);
-      if (location) params.append("location", location);
-      if (minPrice) params.append("minPrice", minPrice);
-      if (maxPrice) params.append("maxPrice", maxPrice);
-      
-      const response = await fetch(`/api/resources?${params}`);
-      if (!response.ok) throw new Error("Failed to fetch resources");
-      return response.json();
-    },
+  const { data: allResources = [], isLoading } = useQuery({
+    queryKey: ['/api/resources'],
   });
 
-  const filteredResources = resources.filter((resource: Resource) => 
-    !searchQuery || 
-    resource.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    resource.description.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const aiSearchMutation = useMutation({
+    mutationFn: async ({ type, subtype, query }: { type: string; subtype?: string; query: string }) => {
+      const response = await apiRequest('POST', '/api/ai/search', { 
+        resourceType: type, 
+        serviceSubtype: subtype, 
+        description: query 
+      });
+      return await response.json();
+    },
+    onSuccess: (results: Resource[]) => {
+      setAiResults(results);
+      toast({
+        title: "Search completed",
+        description: `Found ${results.length} matching resources`,
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Search failed",
+        description: "Please try again or contact support",
+        variant: "destructive",
+      });
+    }
+  });
+
+  const handleSearch = () => {
+    if (!resourceType || !description.trim()) {
+      toast({
+        title: "Missing information",
+        description: "Please select a resource type and provide a description",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    aiSearchMutation.mutate({
+      type: resourceType,
+      subtype: resourceType === 'services' ? serviceSubtype : undefined,
+      query: description
+    });
+  };
+
+  const toggleFavorite = (resourceId: number) => {
+    setFavorites(prev => 
+      prev.includes(resourceId) 
+        ? prev.filter(id => id !== resourceId)
+        : [...prev, resourceId]
+    );
+  };
+
+  const displayResources = aiResults.length > 0 ? aiResults : allResources;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
       <Header />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">
-            Browse {selectedType ? selectedType.charAt(0).toUpperCase() + selectedType.slice(1) : "Resources"}
-          </h1>
-          <p className="text-gray-600">
-            Discover the perfect resources for your Oakland film production
-          </p>
-        </div>
-
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Filters Sidebar */}
-          <div className="lg:w-1/4">
-            <div className="bg-white rounded-2xl p-6 shadow-sm sticky top-24">
-              <div className="flex items-center mb-4">
-                <Filter className="h-5 w-5 text-orange-500 mr-2" />
-                <h3 className="font-semibold text-lg text-gray-900">Filters</h3>
-              </div>
-
-              {/* Search */}
-              <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                  <Input
-                    placeholder="Search resources..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10"
-                  />
-                </div>
-              </div>
-
-              {/* Resource Type */}
-              <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Resource Type</label>
-                <Select value={selectedType} onValueChange={setSelectedType}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="All Types" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Types</SelectItem>
-                    <SelectItem value="location">Locations</SelectItem>
-                    <SelectItem value="crew">Crew</SelectItem>
-                    <SelectItem value="cast">Cast</SelectItem>
-                    <SelectItem value="service">Services</SelectItem>
-                    <SelectItem value="craft-service">Craft Services</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Category */}
-              {selectedType && (
-                <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
-                  <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+      <main className="flex-1 container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* AI Search Panel */}
+          <div className="lg:col-span-1">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Search className="h-5 w-5" />
+                  AI Search
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <Label htmlFor="resource-type">Resource Type</Label>
+                  <Select value={resourceType} onValueChange={setResourceType}>
                     <SelectTrigger>
-                      <SelectValue placeholder="All Categories" />
+                      <SelectValue placeholder="Select type" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="all">All Categories</SelectItem>
-                      {selectedType === "location" && (
-                        <>
-                          <SelectItem value="studio">Studio</SelectItem>
-                          <SelectItem value="house">House</SelectItem>
-                          <SelectItem value="warehouse">Warehouse</SelectItem>
-                          <SelectItem value="outdoor">Outdoor</SelectItem>
-                        </>
-                      )}
-                      {selectedType === "crew" && (
-                        <>
-                          <SelectItem value="director">Director</SelectItem>
-                          <SelectItem value="dp">Director of Photography</SelectItem>
-                          <SelectItem value="sound">Sound Engineer</SelectItem>
-                          <SelectItem value="editor">Editor</SelectItem>
-                          <SelectItem value="gaffer">Gaffer</SelectItem>
-                          <SelectItem value="script-supervisor">Script Supervisor</SelectItem>
-                          <SelectItem value="producer">Producer</SelectItem>
-                        </>
-                      )}
-                      {selectedType === "cast" && (
-                        <>
-                          <SelectItem value="lead-male">Lead Actor (Male)</SelectItem>
-                          <SelectItem value="lead-female">Lead Actor (Female)</SelectItem>
-                          <SelectItem value="supporting">Supporting Cast</SelectItem>
-                          <SelectItem value="extra">Extra</SelectItem>
-                          <SelectItem value="voice">Voice Actor</SelectItem>
-                          <SelectItem value="child">Child Actor</SelectItem>
-                        </>
-                      )}
-                      {selectedType === "service" && (
-                        <>
-                          <SelectItem value="equipment">Equipment Rental</SelectItem>
-                          <SelectItem value="post">Post-Production</SelectItem>
-                          <SelectItem value="transport">Transportation</SelectItem>
-                          <SelectItem value="security">Security</SelectItem>
-                        </>
-                      )}
-                      {selectedType === "craft-service" && (
-                        <>
-                          <SelectItem value="catering">Catering</SelectItem>
-                          <SelectItem value="coffee">Coffee Service</SelectItem>
-                          <SelectItem value="meals">Full Meals</SelectItem>
-                          <SelectItem value="snacks">Snacks & Beverages</SelectItem>
-                        </>
-                      )}
+                      <SelectItem value="location">Location</SelectItem>
+                      <SelectItem value="crew">Crew</SelectItem>
+                      <SelectItem value="cast">Cast</SelectItem>
+                      <SelectItem value="services">Services</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
-              )}
 
-              {/* Price Range */}
-              <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Price Range</label>
-                <div className="flex gap-2">
-                  <Input
-                    type="number"
-                    placeholder="Min"
-                    value={minPrice}
-                    onChange={(e) => setMinPrice(e.target.value)}
-                  />
-                  <Input
-                    type="number"
-                    placeholder="Max"
-                    value={maxPrice}
-                    onChange={(e) => setMaxPrice(e.target.value)}
-                  />
-                </div>
-              </div>
+                {resourceType === 'services' && (
+                  <div>
+                    <Label htmlFor="service-subtype">Service Category</Label>
+                    <Select value={serviceSubtype} onValueChange={setServiceSubtype}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="pre-production">Pre-production</SelectItem>
+                        <SelectItem value="equipment-rental">Equipment Rental</SelectItem>
+                        <SelectItem value="craft-services">Craft Services</SelectItem>
+                        <SelectItem value="post-production">Post-production</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
 
-              {/* Location - only show for location type */}
-              {selectedType === "location" && (
-                <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Specific Area</label>
-                  <Input
-                    placeholder="Downtown, Lake Merritt, etc."
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
+                <div>
+                  <Label htmlFor="description">Description</Label>
+                  <Textarea
+                    id="description"
+                    placeholder="Describe what you need using natural language..."
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    rows={4}
+                    className="resize-none"
                   />
                 </div>
-              )}
 
-              {/* Experience Level - for crew and cast */}
-              {(selectedType === "crew" || selectedType === "cast") && (
-                <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Experience Level</label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Any experience" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">Any Experience</SelectItem>
-                      <SelectItem value="beginner">Beginner (0-2 years)</SelectItem>
-                      <SelectItem value="intermediate">Intermediate (3-7 years)</SelectItem>
-                      <SelectItem value="professional">Professional (8+ years)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              )}
+                <Button 
+                  onClick={handleSearch} 
+                  className="w-full"
+                  disabled={aiSearchMutation.isPending || !resourceType || !description.trim()}
+                >
+                  {aiSearchMutation.isPending ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Searching...
+                    </>
+                  ) : (
+                    <>
+                      <Search className="h-4 w-4 mr-2" />
+                      Search with AI
+                    </>
+                  )}
+                </Button>
 
-              {/* Availability - for all types */}
-              <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Availability</label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Any time" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Any Time</SelectItem>
-                    <SelectItem value="immediate">Available Now</SelectItem>
-                    <SelectItem value="week">Within 1 Week</SelectItem>
-                    <SelectItem value="month">Within 1 Month</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <Button 
-                onClick={() => {
-                  setSearchQuery("");
-                  setSelectedType("");
-                  setSelectedCategory("");
-                  setMinPrice("");
-                  setMaxPrice("");
-                  setLocation("");
-                }}
-                variant="outline"
-                className="w-full"
-              >
-                Clear Filters
-              </Button>
-            </div>
+                {favorites.length > 0 && (
+                  <div className="pt-4 border-t">
+                    <Label className="text-sm font-medium">Favorites ({favorites.length})</Label>
+                    <div className="mt-2 space-y-2">
+                      {favorites.map(id => {
+                        const resource = displayResources.find(r => r.id === id);
+                        return resource ? (
+                          <div key={id} className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-800 rounded">
+                            <span className="text-sm truncate">{resource.title}</span>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => {/* TODO: Implement messaging */}}
+                            >
+                              <MessageSquare className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        ) : null;
+                      })}
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
           </div>
 
-          {/* Results */}
-          <div className="lg:w-3/4">
+          {/* Results Panel */}
+          <div className="lg:col-span-3">
             <div className="flex justify-between items-center mb-6">
-              <div className="text-sm text-gray-600">
-                {filteredResources.length} results found
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  {aiResults.length > 0 ? 'Search Results' : 'All Resources'}
+                </h1>
+                <p className="text-gray-600 dark:text-gray-400">
+                  {isLoading ? 'Loading...' : `${displayResources.length} resources found`}
+                </p>
               </div>
+              
               <div className="flex items-center gap-2">
                 <Button
                   variant={viewMode === "grid" ? "default" : "outline"}
@@ -266,44 +218,60 @@ export default function Browse() {
               </div>
             </div>
 
-            {isLoading ? (
-              <div className="text-center py-12">
-                <div className="text-gray-500">Loading resources...</div>
-              </div>
-            ) : filteredResources.length === 0 ? (
-              <div className="text-center py-12">
-                <div className="text-gray-500 mb-4">No resources found matching your criteria</div>
-                <Button 
-                  onClick={() => {
-                    setSearchQuery("");
-                    setSelectedType("");
-                    setSelectedCategory("");
-                    setMinPrice("");
-                    setMaxPrice("");
-                    setLocation("");
-                  }}
+            {aiResults.length > 0 && (
+              <div className="mb-4">
+                <Badge variant="secondary" className="mb-2">
+                  AI Search Results for "{resourceType}"
+                  {serviceSubtype && ` - ${serviceSubtype}`}
+                </Badge>
+                <Button
                   variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setAiResults([]);
+                    setDescription("");
+                    setResourceType("");
+                    setServiceSubtype("");
+                  }}
                 >
-                  Clear Filters
+                  Clear search
                 </Button>
+              </div>
+            )}
+
+            {isLoading ? (
+              <div className="flex justify-center items-center h-64">
+                <Loader2 className="h-8 w-8 animate-spin" />
               </div>
             ) : (
               <div className={viewMode === "grid" 
-                ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" 
+                ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" 
                 : "space-y-4"
               }>
-                {filteredResources.map((resource: Resource) => (
-                  <ResourceCard
-                    key={resource.id}
-                    resource={resource}
-                    viewMode={viewMode}
-                  />
+                {displayResources.map((resource: Resource) => (
+                  <div key={resource.id} className="relative">
+                    <ResourceCard 
+                      resource={resource} 
+                      viewMode={viewMode}
+                      showMatchButton={false}
+                    />
+                    <Button
+                      size="sm"
+                      variant={favorites.includes(resource.id) ? "default" : "outline"}
+                      className="absolute top-2 right-2"
+                      onClick={() => toggleFavorite(resource.id)}
+                    >
+                      <Heart 
+                        className={`h-4 w-4 ${favorites.includes(resource.id) ? 'fill-current' : ''}`}
+                      />
+                    </Button>
+                  </div>
                 ))}
               </div>
             )}
           </div>
         </div>
-      </div>
+      </main>
 
       <Footer />
     </div>
