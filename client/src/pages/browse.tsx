@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Search, Filter, Grid, List } from "lucide-react";
+import type { Resource } from "@shared/schema";
 
 export default function Browse() {
   const params = useParams();
@@ -26,8 +27,8 @@ export default function Browse() {
     queryKey: ["/api/resources", selectedType, selectedCategory, location, minPrice, maxPrice],
     queryFn: async () => {
       const params = new URLSearchParams();
-      if (selectedType) params.append("type", selectedType);
-      if (selectedCategory) params.append("category", selectedCategory);
+      if (selectedType && selectedType !== "all") params.append("type", selectedType);
+      if (selectedCategory && selectedCategory !== "all") params.append("category", selectedCategory);
       if (location) params.append("location", location);
       if (minPrice) params.append("minPrice", minPrice);
       if (maxPrice) params.append("maxPrice", maxPrice);
@@ -38,7 +39,7 @@ export default function Browse() {
     },
   });
 
-  const filteredResources = resources.filter(resource => 
+  const filteredResources = resources.filter((resource: Resource) => 
     !searchQuery || 
     resource.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     resource.description.toLowerCase().includes(searchQuery.toLowerCase())
@@ -89,11 +90,12 @@ export default function Browse() {
                     <SelectValue placeholder="All Types" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All Types</SelectItem>
+                    <SelectItem value="all">All Types</SelectItem>
                     <SelectItem value="location">Locations</SelectItem>
                     <SelectItem value="crew">Crew</SelectItem>
                     <SelectItem value="cast">Cast</SelectItem>
                     <SelectItem value="service">Services</SelectItem>
+                    <SelectItem value="craft-service">Craft Services</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -107,7 +109,7 @@ export default function Browse() {
                       <SelectValue placeholder="All Categories" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Categories</SelectItem>
+                      <SelectItem value="all">All Categories</SelectItem>
                       {selectedType === "location" && (
                         <>
                           <SelectItem value="studio">Studio</SelectItem>
@@ -122,20 +124,35 @@ export default function Browse() {
                           <SelectItem value="dp">Director of Photography</SelectItem>
                           <SelectItem value="sound">Sound Engineer</SelectItem>
                           <SelectItem value="editor">Editor</SelectItem>
+                          <SelectItem value="gaffer">Gaffer</SelectItem>
+                          <SelectItem value="script-supervisor">Script Supervisor</SelectItem>
+                          <SelectItem value="producer">Producer</SelectItem>
                         </>
                       )}
                       {selectedType === "cast" && (
                         <>
-                          <SelectItem value="actor">Actor</SelectItem>
+                          <SelectItem value="lead-male">Lead Actor (Male)</SelectItem>
+                          <SelectItem value="lead-female">Lead Actor (Female)</SelectItem>
+                          <SelectItem value="supporting">Supporting Cast</SelectItem>
                           <SelectItem value="extra">Extra</SelectItem>
                           <SelectItem value="voice">Voice Actor</SelectItem>
+                          <SelectItem value="child">Child Actor</SelectItem>
                         </>
                       )}
                       {selectedType === "service" && (
                         <>
                           <SelectItem value="equipment">Equipment Rental</SelectItem>
                           <SelectItem value="post">Post-Production</SelectItem>
+                          <SelectItem value="transport">Transportation</SelectItem>
+                          <SelectItem value="security">Security</SelectItem>
+                        </>
+                      )}
+                      {selectedType === "craft-service" && (
+                        <>
                           <SelectItem value="catering">Catering</SelectItem>
+                          <SelectItem value="coffee">Coffee Service</SelectItem>
+                          <SelectItem value="meals">Full Meals</SelectItem>
+                          <SelectItem value="snacks">Snacks & Beverages</SelectItem>
                         </>
                       )}
                     </SelectContent>
@@ -239,7 +256,7 @@ export default function Browse() {
                 ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" 
                 : "space-y-4"
               }>
-                {filteredResources.map((resource) => (
+                {filteredResources.map((resource: Resource) => (
                   <ResourceCard
                     key={resource.id}
                     resource={resource}
