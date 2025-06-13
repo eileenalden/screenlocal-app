@@ -286,6 +286,7 @@ export class MemStorage implements IStorage {
     const organization: Organization = { 
       ...insertOrganization, 
       id,
+      isActive: insertOrganization.isActive ?? true,
       createdAt: new Date(),
     };
     this.organizations.set(id, organization);
@@ -316,7 +317,13 @@ export class MemStorage implements IStorage {
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = this.currentId++;
-    const user: User = { ...insertUser, id };
+    const user: User = { 
+      ...insertUser, 
+      id,
+      organizationId: insertUser.organizationId ?? 1,
+      role: insertUser.role ?? "filmmaker",
+      profileComplete: insertUser.profileComplete ?? false,
+    };
     this.users.set(id, user);
     return user;
   }
@@ -340,7 +347,15 @@ export class MemStorage implements IStorage {
 
   async createFilmmaker(insertFilmmaker: InsertFilmmaker): Promise<Filmmaker> {
     const id = this.currentId++;
-    const filmmaker: Filmmaker = { ...insertFilmmaker, id };
+    const filmmaker: Filmmaker = { 
+      ...insertFilmmaker,
+      id,
+      companyName: insertFilmmaker.companyName ?? null,
+      bio: insertFilmmaker.bio ?? null,
+      experience: insertFilmmaker.experience ?? null,
+      portfolio: insertFilmmaker.portfolio ?? null,
+      preferredGenres: insertFilmmaker.preferredGenres ?? null,
+    };
     this.filmmakers.set(id, filmmaker);
     return filmmaker;
   }
@@ -398,8 +413,19 @@ export class MemStorage implements IStorage {
     const resource: Resource = { 
       ...insertResource, 
       id,
+      organizationId: insertResource.organizationId ?? 1,
+      category: insertResource.category ?? null,
+      images: insertResource.images ?? null,
+      pricePerDay: insertResource.pricePerDay ?? null,
+      priceType: insertResource.priceType ?? "day",
+      location: insertResource.location ?? null,
+      availability: insertResource.availability ?? null,
+      amenities: insertResource.amenities ?? null,
+      equipment: insertResource.equipment ?? null,
+      specialties: insertResource.specialties ?? null,
       rating: "0",
-      reviewCount: 0
+      reviewCount: 0,
+      isActive: insertResource.isActive ?? true,
     };
     this.resources.set(id, resource);
     return resource;

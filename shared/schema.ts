@@ -58,7 +58,7 @@ export const resources = pgTable("resources", {
 
 export const projects = pgTable("projects", {
   id: serial("id").primaryKey(),
-  organizationId: integer("organization_id").notNull().references(() => organizations.id),
+  organizationId: integer("organization_id").default(1), // Future-proofed for multi-tenant
   filmmakerId: integer("filmmaker_id").notNull(),
   title: text("title").notNull(),
   description: text("description"),
@@ -100,7 +100,8 @@ export const insertOrganizationSchema = createInsertSchema(organizations).omit({
 
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
-  createdAt: true,
+}).extend({
+  organizationId: z.number().optional(),
 });
 
 export const insertFilmmakerSchema = createInsertSchema(filmmakers).omit({
@@ -118,6 +119,8 @@ export const insertResourceSchema = createInsertSchema(resources).omit({
 export const insertProjectSchema = createInsertSchema(projects).omit({
   id: true,
   createdAt: true,
+}).extend({
+  organizationId: z.number().optional(),
 });
 
 export const insertMatchSchema = createInsertSchema(matches).omit({
