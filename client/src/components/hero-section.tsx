@@ -8,20 +8,20 @@ import { apiRequest } from "@/lib/queryClient";
 
 const oaklandImages = [
   {
-    url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&h=1380",
-    caption: "Lake Merritt"
-  },
-  {
     url: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&h=1380",
-    caption: "Oakland Skyline"
+    caption: "Oakland Downtown & Lake Merritt"
   },
   {
-    url: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&h=1380",
-    caption: "Oakland Hills"
+    url: "https://images.unsplash.com/photo-1563299796-17596ed6b77c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&h=1380",
+    caption: "Oakland City Architecture"
   },
   {
-    url: "https://images.unsplash.com/photo-1549924231-f129b911e442?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&h=1380",
-    caption: "Downtown Oakland"
+    url: "https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&h=1380",
+    caption: "Bay Area Urban Landscape"
+  },
+  {
+    url: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&h=1380",
+    caption: "Oakland Industrial District"
   }
 ];
 
@@ -66,61 +66,34 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative bg-gradient-to-r from-gray-900 to-gray-800 text-white overflow-hidden">
-      {/* Background Image Carousel */}
+    <section className="relative bg-gradient-to-br from-orange-600 via-orange-500 to-amber-500 text-white overflow-hidden">
+      {/* Geometric Background Pattern */}
       <div className="absolute inset-0">
-        {oaklandImages.map((image, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${
-              index === currentImageIndex ? 'opacity-100' : 'opacity-0'
-            }`}
-            style={{ backgroundImage: `url('${image.url}')` }}
-          />
-        ))}
-        <div className="absolute inset-0 bg-black bg-opacity-60"></div>
-      </div>
-
-      {/* Navigation Controls */}
-      <button
-        onClick={prevImage}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black bg-opacity-30 hover:bg-opacity-50 text-white p-2 rounded-full transition-all"
-      >
-        <ChevronLeft className="h-6 w-6" />
-      </button>
-      <button
-        onClick={nextImage}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-black bg-opacity-30 hover:bg-opacity-50 text-white p-2 rounded-full transition-all"
-      >
-        <ChevronRight className="h-6 w-6" />
-      </button>
-
-      {/* Image Indicators */}
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
-        {oaklandImages.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentImageIndex(index)}
-            className={`w-3 h-3 rounded-full transition-all ${
-              index === currentImageIndex ? 'bg-orange-500' : 'bg-white bg-opacity-50'
-            }`}
-          />
-        ))}
-      </div>
-
-      {/* Image Caption */}
-      <div className="absolute bottom-12 right-6 z-20 bg-black bg-opacity-50 px-3 py-1 rounded text-sm text-white">
-        {oaklandImages[currentImageIndex].caption}
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-600/90 via-orange-500/80 to-amber-500/90"></div>
+        <div className="absolute inset-0 opacity-10">
+          <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <defs>
+              <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" strokeWidth="0.5"/>
+              </pattern>
+            </defs>
+            <rect width="100" height="100" fill="url(#grid)" />
+          </svg>
+        </div>
+        {/* Oakland Themed Geometric Elements */}
+        <div className="absolute top-20 right-20 w-32 h-32 bg-white/10 rounded-full animate-pulse"></div>
+        <div className="absolute bottom-20 left-20 w-24 h-24 bg-white/10 rounded-lg rotate-45 animate-pulse delay-700"></div>
+        <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white/10 rounded-full animate-pulse delay-1000"></div>
       </div>
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 z-10">
         <div className="text-center">
-          <h1 className="font-serif text-4xl md:text-6xl font-bold mb-6 leading-tight drop-shadow-2xl">
+          <h1 className="font-serif text-4xl md:text-6xl font-bold mb-6 leading-tight">
             Your Oakland<br />
-            <span className="text-orange-500">Film Production</span><br />
+            <span className="text-white drop-shadow-lg">Film Production</span><br />
             Matchmaker
           </h1>
-          <p className="text-xl md:text-2xl mb-8 text-white max-w-3xl mx-auto font-semibold drop-shadow-lg">
+          <p className="text-xl md:text-2xl mb-8 text-white/95 max-w-3xl mx-auto font-medium">
             Connect with locations, crew, cast, and services in Oakland. From concept to screen, we've got your production covered.
           </p>
 
