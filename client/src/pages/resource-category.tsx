@@ -32,6 +32,16 @@ const LOCATION_SETTINGS = {
   budget: { defaultRadius: 100, options: [50, 100, 200, 500] }
 };
 
+// East Bay cities for distance reference
+const REFERENCE_CITIES = [
+  { id: "oakland", name: "Oakland", coordinates: { lat: 37.8044, lng: -122.2711 } },
+  { id: "berkeley", name: "Berkeley", coordinates: { lat: 37.8715, lng: -122.2730 } },
+  { id: "richmond", name: "Richmond", coordinates: { lat: 37.9358, lng: -122.3477 } },
+  { id: "fremont", name: "Fremont", coordinates: { lat: 37.5485, lng: -121.9886 } },
+  { id: "hayward", name: "Hayward", coordinates: { lat: 37.6688, lng: -122.0808 } },
+  { id: "san_leandro", name: "San Leandro", coordinates: { lat: 37.7249, lng: -122.1561 } }
+];
+
 // Browse filtering options for each resource type
 const BROWSE_FILTERS = {
   locations: {
@@ -539,6 +549,7 @@ export default function ResourceCategory() {
   const [locationRadius, setLocationRadius] = useState<number>(
     LOCATION_SETTINGS[category]?.defaultRadius || 20
   );
+  const [referenceCity, setReferenceCity] = useState<string>("oakland");
   const [showLocationSettings, setShowLocationSettings] = useState(false);
   const [skippedResources, setSkippedResources] = useState<number[]>([]);
   const [showFavorites, setShowFavorites] = useState(false);
@@ -816,17 +827,32 @@ export default function ResourceCategory() {
                 <DialogTrigger asChild>
                   <Button variant="outline" size="sm" className="text-gray-600 border-gray-300">
                     <MapPin className="h-4 w-4 mr-2" />
-                    {locationRadius} mile radius
+                    {locationRadius}mi from {REFERENCE_CITIES.find(c => c.id === referenceCity)?.name}
                   </Button>
                 </DialogTrigger>
               <DialogContent className="sm:max-w-md">
                 <DialogHeader>
                   <DialogTitle>Location Settings</DialogTitle>
                   <p className="text-sm text-gray-600">
-                    Set search radius for {config.title.toLowerCase()}
+                    Set search radius for {config.title.toLowerCase()} from your chosen East Bay city
                   </p>
                 </DialogHeader>
                 <div className="space-y-4">
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Reference City</label>
+                    <Select value={referenceCity} onValueChange={setReferenceCity}>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {REFERENCE_CITIES.map(city => (
+                          <SelectItem key={city.id} value={city.id}>
+                            {city.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
                   <div>
                     <label className="text-sm font-medium mb-2 block">Search Radius</label>
                     <Select 
@@ -839,14 +865,14 @@ export default function ResourceCategory() {
                       <SelectContent>
                         {LOCATION_SETTINGS[category]?.options.map(radius => (
                           <SelectItem key={radius} value={radius.toString()}>
-                            {radius} miles
+                            {radius} miles from {REFERENCE_CITIES.find(c => c.id === referenceCity)?.name}
                           </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                   </div>
                   <div className="text-xs text-gray-500">
-                    Different resource types have different default ranges. Locations typically need closer proximity, while cast and crew can travel further.
+                    Distance measured from city center. Different resource types have different default ranges based on typical travel willingness.
                   </div>
                 </div>
               </DialogContent>
