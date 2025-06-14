@@ -134,6 +134,9 @@ Changelog:
 - June 14, 2025. Renamed Tax Rebates tab to Budget and consolidated tax rebates with SSO budgeting software integration
 - June 14, 2025. Moved insurance resources from services to permits section (permits often require insurance liability coverage)
 - June 14, 2025. Integrated production tools (SSO budgeting software) directly into Budget tab for seamless workflow
+- June 14, 2025. Removed browse/search/favorites/radius controls from Budget tab - dedicated tax rebate and budgeting interface only
+- June 14, 2025. Added East Bay city dropdown (Oakland, Berkeley, Richmond) with detailed tax rebate qualifications and application processes
+- June 14, 2025. Implemented California state tax credit section with expandable details and direct application links
 ```
 
 ## User Preferences
