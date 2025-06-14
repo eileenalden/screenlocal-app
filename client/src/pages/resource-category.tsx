@@ -28,7 +28,7 @@ const LOCATION_SETTINGS = {
   cast: { defaultRadius: 30, options: [10, 20, 30, 50] },
   services: { defaultRadius: 20, options: [10, 15, 20, 30] },
   permits: { defaultRadius: 50, options: [20, 30, 50, 100] },
-  'tax-rebates': { defaultRadius: 100, options: [50, 100, 200, 500] }
+  budget: { defaultRadius: 100, options: [50, 100, 200, 500] }
 };
 
 const categoryConfig = {

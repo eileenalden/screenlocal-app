@@ -52,7 +52,7 @@ export default function Header() {
     { href: "/cast", label: "Cast", active: location.startsWith("/cast") },
     { href: "/services", label: "Services", active: location.startsWith("/services") },
     { href: "/permits", label: "Permits", active: location.startsWith("/permits") },
-    { href: "/tax-rebates", label: "Tax Rebates", active: location.startsWith("/tax-rebates") },
+    { href: "/budget", label: "Budget", active: location.startsWith("/budget") },
   ];
 
   return (

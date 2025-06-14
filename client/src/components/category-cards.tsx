@@ -55,14 +55,14 @@ const categories = [
     href: "/permits"
   },
   {
-    id: "tax-rebate",
-    title: "Tax Rebates",
-    description: "State and local film tax incentives and rebate programs",
+    id: "budget",
+    title: "Budget",
+    description: "Tax incentives, rebate programs, and budgeting software",
     icon: Percent,
-    count: "Multiple programs",
-    price: "Up to 30% back",
+    count: "Multiple tools",
+    price: "Save up to 30%",
     image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-    href: "/tax-rebates"
+    href: "/budget"
   }
 ];
 

@@ -328,13 +328,27 @@ export class MemStorage implements IStorage {
       isActive: true
     });
 
-    // Sample tax rebates
+    this.createResource({
+      providerId: 16,
+      type: "permit",
+      title: "Bay Area Film Insurance Services",
+      description: "Comprehensive production insurance covering general liability, equipment, and errors & omissions for film productions in the Bay Area.",
+      category: "insurance",
+      images: ["https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"],
+      pricePerDay: "200",
+      priceType: "day",
+      location: "Oakland",
+      amenities: ["General Liability", "Equipment Coverage", "E&O Insurance", "Certificate of Insurance"],
+      isActive: true
+    });
+
+    // Sample budget resources (tax rebates and budgeting tools)
     this.createResource({
       providerId: 14,
-      type: "tax-rebate",
+      type: "budget",
       title: "California Film & TV Tax Credit Program",
       description: "State tax incentive program offering up to 25% tax credits for qualified film and television productions shot in California.",
-      category: "state",
+      category: "tax-rebate",
       images: ["https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"],
       pricePerDay: "0",
       priceType: "percentage",
@@ -345,7 +359,7 @@ export class MemStorage implements IStorage {
 
     this.createResource({
       providerId: 15,
-      type: "tax-rebate",
+      type: "budget",
       title: "Oakland Local Production Incentive",
       description: "City of Oakland tax rebate program supporting local film production with reduced permit fees and tax incentives.",
       category: "city",
