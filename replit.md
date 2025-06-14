@@ -143,6 +143,8 @@ Changelog:
 - June 14, 2025. Added location type filters (Interior/Exterior - House/Apartment/Business) for location browsing
 - June 14, 2025. Implemented crew department filters (Production, Camera, Grip & Electric, Art, Wardrobe, Hair & Makeup, Sound, Post-Production)
 - June 14, 2025. Created comprehensive cast demographic filters with multi-select for gender and ethnicity categories
+- June 14, 2025. Added age range filtering by decade (0-9 Children through 80+ Seniors) for cast demographics
+- June 14, 2025. Added "Any" option for gender, ethnicity, and age range selections to allow broader cast searches
 ```
 
 ## User Preferences

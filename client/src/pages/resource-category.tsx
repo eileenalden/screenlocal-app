@@ -64,11 +64,17 @@ const BROWSE_FILTERS = {
     categories: {
       gender: {
         name: "Gender",
-        options: ["Male", "Female", "Non-binary"]
+        options: [
+          "Any",
+          "Male", 
+          "Female", 
+          "Non-binary"
+        ]
       },
       ethnicity: {
         name: "Ethnicity",
         options: [
+          "Any",
           "Black / African American / African (and/or Caribbean descent)",
           "Latine / Latinx / Hispanic (when pan-ethnic identification is needed)",
           "Indigenous / Native American / First Nations / Alaska Native",
@@ -79,6 +85,21 @@ const BROWSE_FILTERS = {
           "Pacific Islander (e.g., Native Hawaiian, Samoan, Tongan, Fijian)",
           "White / Caucasian",
           "Multiracial / Mixed-race"
+        ]
+      },
+      age: {
+        name: "Age Range",
+        options: [
+          "Any",
+          "0-9 (Children)",
+          "10-19 (Teens)", 
+          "20-29 (Twenties)",
+          "30-39 (Thirties)",
+          "40-49 (Forties)",
+          "50-59 (Fifties)",
+          "60-69 (Sixties)",
+          "70-79 (Seventies)",
+          "80+ (Seniors)"
         ]
       }
     }
@@ -505,6 +526,7 @@ export default function ResourceCategory() {
     selectedSubcategory?: string;
     castGender?: string[];
     castEthnicity?: string[];
+    castAge?: string[];
   }>({});
   const [showBrowseFilters, setShowBrowseFilters] = useState(false);
   
@@ -615,10 +637,10 @@ export default function ResourceCategory() {
 
     if (category === 'cast') {
       // For cast, require at least one selection from each category
-      if (!browseFilters.castGender?.length || !browseFilters.castEthnicity?.length) {
+      if (!browseFilters.castGender?.length || !browseFilters.castEthnicity?.length || !browseFilters.castAge?.length) {
         toast({
           title: "Missing filters",
-          description: "Please select at least one option for both gender and ethnicity",
+          description: "Please select at least one option for gender, ethnicity, and age range",
           variant: "destructive",
         });
         return;
@@ -1074,6 +1096,36 @@ export default function ResourceCategory() {
                                 }
                               }}
                               className="rounded border-gray-300 mt-0.5"
+                            />
+                            <span className="text-sm">{option}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="text-sm font-medium mb-2 block">Age Range</label>
+                      <div className="space-y-2">
+                        {BROWSE_FILTERS[category].categories.age.options.map((option) => (
+                          <label key={option} className="flex items-center space-x-2">
+                            <input
+                              type="checkbox"
+                              checked={browseFilters.castAge?.includes(option) || false}
+                              onChange={(e) => {
+                                const current = browseFilters.castAge || [];
+                                if (e.target.checked) {
+                                  setBrowseFilters({
+                                    ...browseFilters,
+                                    castAge: [...current, option]
+                                  });
+                                } else {
+                                  setBrowseFilters({
+                                    ...browseFilters,
+                                    castAge: current.filter(a => a !== option)
+                                  });
+                                }
+                              }}
+                              className="rounded border-gray-300"
                             />
                             <span className="text-sm">{option}</span>
                           </label>
