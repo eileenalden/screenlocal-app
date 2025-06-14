@@ -216,8 +216,23 @@ function BudgetSection() {
               </div>
 
               <div className="bg-blue-50 rounded-lg p-4">
-                <h4 className="font-medium mb-2">Contact Information</h4>
-                <p className="text-gray-700">{selectedCityData.contactInfo}</p>
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h4 className="font-medium mb-2">Contact Information</h4>
+                    <p className="text-gray-700">{selectedCityData.contactInfo}</p>
+                  </div>
+                  {selectedCityData.id === "oakland" && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      disabled
+                      className="opacity-50 cursor-not-allowed"
+                    >
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      Apply Online
+                    </Button>
+                  )}
+                </div>
               </div>
             </div>
           )}
