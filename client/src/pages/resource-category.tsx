@@ -115,6 +115,14 @@ const BROWSE_FILTERS = {
           "70-79 (Seventies)",
           "80+ (Seniors)"
         ]
+      },
+      unionStatus: {
+        name: "Union Status",
+        options: [
+          "Any",
+          "Union",
+          "Non-Union"
+        ]
       }
     }
   },
@@ -541,6 +549,9 @@ export default function ResourceCategory() {
     castGender?: string[];
     castEthnicity?: string[];
     castAge?: string[];
+    castUnionStatus?: string[];
+    crewDepartment?: string[];
+    crewUnionStatus?: string[];
   }>({});
   const [showBrowseFilters, setShowBrowseFilters] = useState(false);
   
@@ -651,10 +662,20 @@ export default function ResourceCategory() {
 
     if (category === 'cast') {
       // For cast, require at least one selection from each category
-      if (!browseFilters.castGender?.length || !browseFilters.castEthnicity?.length || !browseFilters.castAge?.length) {
+      if (!browseFilters.castGender?.length || !browseFilters.castEthnicity?.length || !browseFilters.castAge?.length || !browseFilters.castUnionStatus?.length) {
         toast({
           title: "Missing filters",
-          description: "Please select at least one option for gender, ethnicity, and age range",
+          description: "Please select at least one option for gender, ethnicity, age range, and union status",
+          variant: "destructive",
+        });
+        return;
+      }
+    } else if (category === 'crew') {
+      // For crew, require at least one selection from each category
+      if (!browseFilters.crewDepartment?.length || !browseFilters.crewUnionStatus?.length) {
+        toast({
+          title: "Missing filters",
+          description: "Please select at least one option for department and union status",
           variant: "destructive",
         });
         return;
@@ -1139,6 +1160,99 @@ export default function ResourceCategory() {
                                   setBrowseFilters({
                                     ...browseFilters,
                                     castAge: current.filter(a => a !== option)
+                                  });
+                                }
+                              }}
+                              className="rounded border-gray-300"
+                            />
+                            <span className="text-sm">{option}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="text-sm font-medium mb-2 block">Union Status</label>
+                      <div className="space-y-2">
+                        {BROWSE_FILTERS[category].categories.unionStatus.options.map((option) => (
+                          <label key={option} className="flex items-center space-x-2">
+                            <input
+                              type="checkbox"
+                              checked={browseFilters.castUnionStatus?.includes(option) || false}
+                              onChange={(e) => {
+                                const current = browseFilters.castUnionStatus || [];
+                                if (e.target.checked) {
+                                  setBrowseFilters({
+                                    ...browseFilters,
+                                    castUnionStatus: [...current, option]
+                                  });
+                                } else {
+                                  setBrowseFilters({
+                                    ...browseFilters,
+                                    castUnionStatus: current.filter(u => u !== option)
+                                  });
+                                }
+                              }}
+                              className="rounded border-gray-300"
+                            />
+                            <span className="text-sm">{option}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ) : category === 'crew' ? (
+                  /* Special multi-select interface for crew department and union status */
+                  <div className="space-y-4">
+                    <div>
+                      <label className="text-sm font-medium mb-2 block">Department</label>
+                      <div className="space-y-2">
+                        {BROWSE_FILTERS[category].categories.department.options.map((option) => (
+                          <label key={option} className="flex items-center space-x-2">
+                            <input
+                              type="checkbox"
+                              checked={browseFilters.crewDepartment?.includes(option) || false}
+                              onChange={(e) => {
+                                const current = browseFilters.crewDepartment || [];
+                                if (e.target.checked) {
+                                  setBrowseFilters({
+                                    ...browseFilters,
+                                    crewDepartment: [...current, option]
+                                  });
+                                } else {
+                                  setBrowseFilters({
+                                    ...browseFilters,
+                                    crewDepartment: current.filter(d => d !== option)
+                                  });
+                                }
+                              }}
+                              className="rounded border-gray-300"
+                            />
+                            <span className="text-sm">{option}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="text-sm font-medium mb-2 block">Union Status</label>
+                      <div className="space-y-2">
+                        {BROWSE_FILTERS[category].categories.unionStatus.options.map((option) => (
+                          <label key={option} className="flex items-center space-x-2">
+                            <input
+                              type="checkbox"
+                              checked={browseFilters.crewUnionStatus?.includes(option) || false}
+                              onChange={(e) => {
+                                const current = browseFilters.crewUnionStatus || [];
+                                if (e.target.checked) {
+                                  setBrowseFilters({
+                                    ...browseFilters,
+                                    crewUnionStatus: [...current, option]
+                                  });
+                                } else {
+                                  setBrowseFilters({
+                                    ...browseFilters,
+                                    crewUnionStatus: current.filter(u => u !== option)
                                   });
                                 }
                               }}
