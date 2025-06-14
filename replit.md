@@ -154,6 +154,8 @@ Changelog:
 - June 14, 2025. Relocated AI search section from hero to after resource category carousel for better flow
 - June 14, 2025. Added union/non-union filtering for cast and crew browsing - industry-standard distinction for rates and working conditions
 - June 14, 2025. Implemented multi-select filtering for crew departments (Production, Camera, Grip & Electric, Art, Wardrobe, Hair & Makeup, Sound, Post-Production) and union status
+- June 14, 2025. Integrated AI search directly with category carousel to create unified mental model - users can either browse cards or use AI search on the same content
+- June 14, 2025. Added contextual messaging "Can't find what you need browsing? Let AI help you find the perfect match from these categories" to connect the two interaction modes
 ```
 
 ## User Preferences

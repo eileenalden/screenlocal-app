@@ -1,6 +1,9 @@
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "wouter";
-import { MapPin, Users, Theater, Cog, FileText, Percent } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Link, useLocation } from "wouter";
+import { MapPin, Users, Theater, Cog, FileText, Percent, Wand2, Grid3X3 } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 const categories = [
@@ -67,6 +70,17 @@ const categories = [
 ];
 
 export default function CategoryCards() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [, setLocation] = useLocation();
+
+  const handleAISearch = () => {
+    if (searchQuery.trim()) {
+      // Navigate to locations page with search query as URL parameter
+      const encodedQuery = encodeURIComponent(searchQuery);
+      setLocation(`/locations?query=${encodedQuery}`);
+    }
+  };
+
   return (
     <section className="bg-gray-50 py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -84,7 +98,7 @@ export default function CategoryCards() {
             align: "start",
             loop: true,
           }}
-          className="w-full max-w-6xl mx-auto"
+          className="w-full max-w-6xl mx-auto mb-8"
         >
           <CarouselContent className="-ml-2 md:-ml-4">
             {categories.map((category) => {
@@ -117,6 +131,51 @@ export default function CategoryCards() {
           <CarouselPrevious className="hidden md:flex" />
           <CarouselNext className="hidden md:flex" />
         </Carousel>
+
+        {/* Integrated AI Search Section */}
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-6">
+            <p className="text-lg text-gray-600">
+              Can't find what you need browsing? Let AI help you find the perfect match from these categories
+            </p>
+          </div>
+          
+          <Card className="bg-white rounded-2xl shadow-lg border-2 border-orange-100">
+            <CardContent className="p-6">
+              <div className="flex flex-col md:flex-row gap-4">
+                <div className="flex-1">
+                  <Textarea
+                    placeholder="Describe your project: 'Looking for a Victorian house for a period drama, need 3-day shoot with vintage props...'"
+                    className="w-full p-4 border border-gray-300 rounded-xl resize-none text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    rows={3}
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Button 
+                    onClick={handleAISearch}
+                    className="bg-orange-500 text-white px-8 py-4 rounded-xl hover:bg-orange-600 transition-colors font-semibold h-auto"
+                  >
+                    <Wand2 className="h-4 w-4 mr-2" />
+                    AI Match
+                  </Button>
+                  <div className="text-center">
+                    <span className="text-gray-500 text-sm">or</span>
+                  </div>
+                  <Button
+                    variant="outline"
+                    onClick={() => setLocation("/locations")}
+                    className="border-2 border-orange-500 text-orange-500 px-8 py-4 rounded-xl hover:bg-orange-500 hover:text-white transition-colors font-semibold h-auto"
+                  >
+                    <Grid3X3 className="h-4 w-4 mr-2" />
+                    Browse All
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </section>
   );
