@@ -114,6 +114,10 @@ The application uses a PostgreSQL database with the following main entities:
 ```
 Changelog:
 - June 14, 2025. Initial setup
+- June 14, 2025. Implemented AI-powered natural language search with GPT-4o-mini
+- June 14, 2025. Added comprehensive in-app messaging system with notifications
+- June 14, 2025. Created service subcategory filtering (pre-production, equipment rental, craft services, post-production)
+- June 14, 2025. Built favorites system with direct messaging from browse interface
 ```
 
 ## User Preferences

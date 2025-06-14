@@ -83,7 +83,7 @@ export default function Browse() {
     );
   };
 
-  const displayResources = aiResults.length > 0 ? aiResults : allResources;
+  const displayResources: Resource[] = aiResults.length > 0 ? aiResults : (allResources || []);
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
@@ -168,17 +168,11 @@ export default function Browse() {
                     <Label className="text-sm font-medium">Favorites ({favorites.length})</Label>
                     <div className="mt-2 space-y-2">
                       {favorites.map(id => {
-                        const resource = displayResources.find(r => r.id === id);
+                        const resource = displayResources.find((r: Resource) => r.id === id);
                         return resource ? (
                           <div key={id} className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-800 rounded">
                             <span className="text-sm truncate">{resource.title}</span>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => {/* TODO: Implement messaging */}}
-                            >
-                              <MessageSquare className="h-3 w-3" />
-                            </Button>
+                            <MessagingDialog resource={resource} senderId={1} />
                           </div>
                         ) : null;
                       })}
