@@ -1,6 +1,17 @@
 // © Eileen Alden, 2025. All rights reserved. This software and its components are the original work of Eileen Alden, developed without compensation. No rights are granted or implied for use or distribution without a signed agreement.
 
-import { pgTable, text, serial, integer, boolean, decimal, timestamp, jsonb } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  text,
+  serial,
+  integer,
+  boolean,
+  decimal,
+  timestamp,
+  jsonb,
+  varchar,
+  index,
+} from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -21,24 +32,68 @@ export const organizations = pgTable("organizations", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Session storage table.
+// (IMPORTANT) This table is mandatory for Replit Auth, don't drop it.
+export const sessions = pgTable(
+  "sessions",
+  {
+    sid: varchar("sid").primaryKey(),
+    sess: jsonb("sess").notNull(),
+    expire: timestamp("expire").notNull(),
+  },
+  (table) => [index("IDX_session_expire").on(table.expire)],
+);
+
+// User storage table.
+// (IMPORTANT) This table is mandatory for Replit Auth, don't drop it.
 export const users = pgTable("users", {
-  id: serial("id").primaryKey(),
-  organizationId: integer("organization_id").default(1), // Future-proofed for multi-tenant
-  username: text("username").notNull().unique(),
-  email: text("email").notNull().unique(),
-  password: text("password").notNull(),
+  id: varchar("id").primaryKey().notNull(),
+  email: varchar("email").unique(),
+  firstName: varchar("first_name"),
+  lastName: varchar("last_name"),
+  profileImageUrl: varchar("profile_image_url"),
   role: text("role").notNull().default("filmmaker"), // filmmaker, provider, admin
+  organizationId: integer("organization_id").default(1),
   profileComplete: boolean("profile_complete").notNull().default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 export const filmmakers = pgTable("filmmakers", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull(),
+  userId: varchar("user_id").notNull().references(() => users.id),
   companyName: text("company_name"),
   bio: text("bio"),
   experience: text("experience"),
   portfolio: text("portfolio"),
   preferredGenres: text("preferred_genres").array(),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Resource Providers (location agents, crew, cast, service providers)
+export const providers = pgTable("providers", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  businessName: text("business_name"),
+  contactPhone: text("contact_phone"),
+  website: text("website"),
+  bio: text("bio"),
+  specialties: text("specialties").array(),
+  insuranceInfo: jsonb("insurance_info"), // Insurance details for liability coverage
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Calendar availability for resources
+export const resourceAvailability = pgTable("resource_availability", {
+  id: serial("id").primaryKey(),
+  resourceId: integer("resource_id").notNull(),
+  date: timestamp("date").notNull(),
+  isAvailable: boolean("is_available").notNull().default(true),
+  notes: text("notes"), // e.g., "Booked for commercial shoot", "Maintenance day"
+  lastUpdated: timestamp("last_updated").defaultNow(),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const resources = pgTable("resources", {
@@ -133,12 +188,26 @@ export const insertOrganizationSchema = createInsertSchema(organizations).omit({
 
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
-}).extend({
-  organizationId: z.number().optional(),
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertProviderSchema = createInsertSchema(providers).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertResourceAvailabilitySchema = createInsertSchema(resourceAvailability).omit({
+  id: true,
+  createdAt: true,
+  lastUpdated: true,
 });
 
 export const insertFilmmakerSchema = createInsertSchema(filmmakers).omit({
   id: true,
+  createdAt: true,
+  updatedAt: true,
 });
 
 export const insertResourceSchema = createInsertSchema(resources).omit({
@@ -182,8 +251,14 @@ export const insertNotificationSchema = createInsertSchema(notifications).omit({
 export type Organization = typeof organizations.$inferSelect;
 export type InsertOrganization = z.infer<typeof insertOrganizationSchema>;
 
+export type UpsertUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
-export type InsertUser = z.infer<typeof insertUserSchema>;
+
+export type Provider = typeof providers.$inferSelect;
+export type InsertProvider = z.infer<typeof insertProviderSchema>;
+
+export type ResourceAvailability = typeof resourceAvailability.$inferSelect;
+export type InsertResourceAvailability = z.infer<typeof insertResourceAvailabilitySchema>;
 
 export type Filmmaker = typeof filmmakers.$inferSelect;
 export type InsertFilmmaker = z.infer<typeof insertFilmmakerSchema>;
