@@ -19,6 +19,7 @@ import { Search, Heart, MessageSquare, Loader2, ChevronLeft, ChevronRight, X, Re
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import MessagingDialog from "@/components/messaging-dialog";
+import ProductionTools from "@/components/production-tools";
 import type { Resource } from "@shared/schema";
 
 // Location radius configuration for each resource type
@@ -62,11 +63,11 @@ const categoryConfig = {
     subcategories: ["filming", "street-closure", "drone", "special-events", "public-property", "commercial"],
     placeholder: "Describe your permit needs: 'Street filming permit for downtown scene' or 'Drone permit for aerial shots'..."
   },
-  'tax-rebates': {
-    title: "Tax Rebates",
-    description: "Film tax incentives and rebates",
-    subcategories: ["state", "city", "county", "federal", "production", "post-production"],
-    placeholder: "Describe your tax rebate needs: 'California film incentive application' or 'Local production rebates'..."
+  budget: {
+    title: "Budget",
+    description: "Tax incentives, rebates, and budgeting tools",
+    subcategories: ["tax-rebate", "budgeting-software", "cost-estimation", "financial-planning"],
+    placeholder: "Describe your budget needs: 'California film incentive application' or 'Export to Movie Magic Budgeting'..."
   }
 };
 
@@ -463,6 +464,13 @@ export default function ResourceCategory() {
               </div>
             ) : (
               <div className="space-y-6">
+                {/* Budget Tools Integration */}
+                {category === "budget" && (
+                  <div className="mb-8">
+                    <ProductionTools />
+                  </div>
+                )}
+                
                 {/* Swipe Interface */}
                 <div className="relative max-w-2xl mx-auto">
                   <Card className="overflow-hidden">

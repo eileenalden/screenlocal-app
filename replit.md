@@ -131,6 +131,9 @@ Changelog:
 - June 14, 2025. Removed availability calendar - availability is resource-specific, not a broad utility
 - June 14, 2025. Implemented carousel for category cards with all 6 resource types (locations, crew, cast, services, permits, tax rebates)
 - June 14, 2025. Made category cards clickable to navigate directly to respective resource tabs
+- June 14, 2025. Renamed Tax Rebates tab to Budget and consolidated tax rebates with SSO budgeting software integration
+- June 14, 2025. Moved insurance resources from services to permits section (permits often require insurance liability coverage)
+- June 14, 2025. Integrated production tools (SSO budgeting software) directly into Budget tab for seamless workflow
 ```
 
 ## User Preferences
