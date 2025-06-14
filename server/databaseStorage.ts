@@ -183,6 +183,7 @@ export class DatabaseStorage implements IStorage {
   }): Promise<Resource[]> {
     let query = db.select().from(resources);
     
+    // Apply filters if provided
     if (filters?.type) {
       query = query.where(eq(resources.type, filters.type));
     }
@@ -283,17 +284,18 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getConversation(senderId: string, recipientId: string, resourceId?: number): Promise<Message[]> {
-    let query = db.select().from(messages)
-      .where(and(
-        eq(messages.senderId, senderId),
-        eq(messages.recipientId, recipientId)
-      ));
+    const conditions = [
+      eq(messages.senderId, senderId),
+      eq(messages.recipientId, recipientId)
+    ];
     
     if (resourceId) {
-      query = query.where(eq(messages.resourceId, resourceId));
+      conditions.push(eq(messages.resourceId, resourceId));
     }
     
-    return await query.orderBy(messages.createdAt);
+    return await db.select().from(messages)
+      .where(and(...conditions))
+      .orderBy(messages.createdAt);
   }
 
   async createMessage(message: InsertMessage): Promise<Message> {

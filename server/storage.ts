@@ -102,15 +102,15 @@ export interface IStorage {
 
   // Messages
   getMessage(id: number): Promise<Message | undefined>;
-  getMessagesByUser(userId: number): Promise<Message[]>;
-  getConversation(senderId: number, recipientId: number, resourceId?: number): Promise<Message[]>;
+  getMessagesByUser(userId: string): Promise<Message[]>;
+  getConversation(senderId: string, recipientId: string, resourceId?: number): Promise<Message[]>;
   createMessage(message: InsertMessage): Promise<Message>;
   markMessageAsRead(id: number): Promise<Message | undefined>;
 
   // Notifications
   getNotification(id: number): Promise<Notification | undefined>;
-  getNotificationsByUser(userId: number): Promise<Notification[]>;
-  getUnreadNotificationsByUser(userId: number): Promise<Notification[]>;
+  getNotificationsByUser(userId: string): Promise<Notification[]>;
+  getUnreadNotificationsByUser(userId: string): Promise<Notification[]>;
   createNotification(notification: InsertNotification): Promise<Notification>;
   markNotificationAsRead(id: number): Promise<Notification | undefined>;
 }
@@ -739,4 +739,6 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+import { DatabaseStorage } from "./databaseStorage";
+
+export const storage = new DatabaseStorage();

@@ -161,8 +161,8 @@ export const messages = pgTable("messages", {
   createdAt: timestamp("created_at").defaultNow(),
   
   // Foreign keys
-  senderId: integer("sender_id").notNull().references(() => users.id),
-  recipientId: integer("recipient_id").notNull().references(() => users.id),
+  senderId: varchar("sender_id").notNull().references(() => users.id),
+  recipientId: varchar("recipient_id").notNull().references(() => users.id),
   resourceId: integer("resource_id").references(() => resources.id),
   inquiryId: integer("inquiry_id").references(() => inquiries.id),
 });
@@ -176,7 +176,7 @@ export const notifications = pgTable("notifications", {
   createdAt: timestamp("created_at").defaultNow(),
   
   // Foreign keys
-  userId: integer("user_id").notNull().references(() => users.id),
+  userId: varchar("user_id").notNull().references(() => users.id),
   messageId: integer("message_id").references(() => messages.id),
 });
 
