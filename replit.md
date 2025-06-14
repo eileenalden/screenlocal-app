@@ -125,7 +125,7 @@ Changelog:
 - June 14, 2025. Removed "Oakland" branding for broader geographic flexibility
 - June 14, 2025. Added direct messaging buttons to all resource cards for immediate contact
 - June 14, 2025. Implemented multi-tenant branding support with customizable hero text per organization
-- June 14, 2025. Updated footer copyright to "2025 FilmMatcher. All rights reserved."
+- June 14, 2025. Updated footer copyright to "2025 ScreenLocal. All rights reserved."
 - June 14, 2025. Removed MatchmakingInterface component and project filtering sections from home page
 - June 14, 2025. Replaced cost estimator with SSO integration links to professional budgeting software (Saturation.io, Movie Magic Budgeting, Showbiz Budgeting, Hot Budget)
 - June 14, 2025. Removed availability calendar - availability is resource-specific, not a broad utility
@@ -159,6 +159,8 @@ Changelog:
 - June 14, 2025. Added contextual messaging "Can't find what you need browsing? Let AI help you find the perfect match from these categories" to connect the two interaction modes
 - June 14, 2025. Removed metrics row (0+ stats) from home page for cleaner user experience flow
 - June 14, 2025. Integrated "Get Started" CTA and login link directly into hero banner below main descriptive text
+- June 14, 2025. Replaced orange gradient hero with Oakland lakefront/downtown image background with dark overlay for text readability
+- June 14, 2025. Removed "Free to browse. No credit card required." microcopy from hero section for cleaner appearance
 ```
 
 ## User Preferences
