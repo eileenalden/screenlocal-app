@@ -13,7 +13,7 @@ import {
   type Organization,
   type InsertOrganization,
   type User,
-  type InsertUser,
+  type UpsertUser,
   type Filmmaker,
   type InsertFilmmaker,
   type Resource,
@@ -28,6 +28,12 @@ import {
   type InsertMessage,
   type Notification,
   type InsertNotification,
+  providers,
+  resourceAvailability,
+  type Provider,
+  type InsertProvider,
+  type ResourceAvailability,
+  type InsertResourceAvailability,
 } from "@shared/schema";
 
 export interface IStorage {
@@ -37,18 +43,28 @@ export interface IStorage {
   createOrganization(organization: InsertOrganization): Promise<Organization>;
   updateOrganization(id: number, updates: Partial<InsertOrganization>): Promise<Organization | undefined>;
 
-  // Users
-  getUser(id: number): Promise<User | undefined>;
+  // Users (IMPORTANT: these user operations are mandatory for Replit Auth)
+  getUser(id: string): Promise<User | undefined>;
+  upsertUser(user: UpsertUser): Promise<User>;
   getUserByEmail(email: string): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
-  updateUser(id: number, updates: Partial<InsertUser>): Promise<User | undefined>;
+  updateUserRole(id: string, role: string): Promise<User | undefined>;
+
+  // Providers
+  getProvider(id: number): Promise<Provider | undefined>;
+  getProviderByUserId(userId: string): Promise<Provider | undefined>;
+  createProvider(provider: InsertProvider): Promise<Provider>;
+  updateProvider(id: number, updates: Partial<InsertProvider>): Promise<Provider | undefined>;
 
   // Filmmakers
   getFilmmaker(id: number): Promise<Filmmaker | undefined>;
-  getFilmmakerByUserId(userId: number): Promise<Filmmaker | undefined>;
+  getFilmmakerByUserId(userId: string): Promise<Filmmaker | undefined>;
   createFilmmaker(filmmaker: InsertFilmmaker): Promise<Filmmaker>;
   updateFilmmaker(id: number, updates: Partial<InsertFilmmaker>): Promise<Filmmaker | undefined>;
+
+  // Calendar Availability
+  getResourceAvailability(resourceId: number, startDate: Date, endDate: Date): Promise<ResourceAvailability[]>;
+  updateResourceAvailability(availability: InsertResourceAvailability): Promise<ResourceAvailability>;
+  getLastCalendarUpdate(resourceId: number): Promise<Date | null>;
 
   // Resources
   getResource(id: number): Promise<Resource | undefined>;
