@@ -150,6 +150,10 @@ Changelog:
 - June 14, 2025. Added "Any" option for gender, ethnicity, and age range selections to allow broader cast searches
 - June 14, 2025. Updated homepage hero text to "Your Oakland/East Bay Film Production Matchmaker"
 - June 14, 2025. Reordered home page sections - moved permits & tax incentives above budgeting software tools
+- June 14, 2025. Optimized buyer's psychological journey: moved "How It Works" section above category cards with "Get Started" CTA that leads to account creation
+- June 14, 2025. Relocated AI search section from hero to after resource category carousel for better flow
+- June 14, 2025. Added union/non-union filtering for cast and crew browsing - industry-standard distinction for rates and working conditions
+- June 14, 2025. Implemented multi-select filtering for crew departments (Production, Camera, Grip & Electric, Art, Wardrobe, Hair & Makeup, Sound, Post-Production) and union status
 ```
 
 ## User Preferences
