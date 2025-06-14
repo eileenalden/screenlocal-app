@@ -1,7 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Star, CheckCircle, Heart, Info, User, Play, Camera } from "lucide-react";
+import { Star, CheckCircle, Heart, Info, User, Play, Camera, MessageSquare } from "lucide-react";
+import MessagingDialog from "@/components/messaging-dialog";
 import type { Resource } from "@shared/schema";
 
 interface ResourceCardProps {
@@ -119,6 +120,11 @@ export default function ResourceCard({ resource, viewMode = "grid", showMatchBut
               View Details
             </Button>
           )}
+          <MessagingDialog resource={resource} senderId={1}>
+            <Button variant="outline" size="sm" className="px-3">
+              <MessageSquare className="h-4 w-4" />
+            </Button>
+          </MessagingDialog>
           <Button variant="outline" size="sm" className="px-3">
             <ResourceIcon className="h-4 w-4" />
           </Button>

@@ -97,11 +97,6 @@ export default function Header() {
             <Button variant="ghost" size="sm">
               <Bell className="h-4 w-4" />
             </Button>
-            <Link href="/project-profile">
-              <Button className="bg-orange-500 hover:bg-orange-600 text-white">
-                Post Project
-              </Button>
-            </Link>
             <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
           </div>
 

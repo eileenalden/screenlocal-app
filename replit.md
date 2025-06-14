@@ -51,25 +51,23 @@ The application uses a PostgreSQL database with the following main entities:
 ## Data Flow
 
 ### Resource Discovery
-1. Filmmakers browse or search for resources by type and filters
-2. AI-powered matching suggests relevant resources based on project requirements
+1. Filmmakers browse or search for resources by category (locations, crew, cast, services)
+2. AI-powered search translates natural language into specific resource queries
 3. Smart filtering by budget, location, availability, and other criteria
-4. Resource cards display pricing, ratings, and key information
+4. Swipe interface allows quick review with favorites and skip tracking
 
-### Matching Algorithm
-1. Project requirements are analyzed using AI
-2. Resources are scored based on compatibility factors:
-   - Budget alignment (30% weight)
-   - Location proximity (20% weight)
-   - Genre/type matching (25% weight)
-   - Availability overlap (25% weight)
-3. Top matches are presented with explanations
+### User Journey
+1. Browse/swipe through resources manually OR use AI to narrow choices
+2. Add resources to favorites with heart button, skip with X button
+3. Access favorites across all categories from header counter
+4. Message providers directly from favorites for contracting
+5. Reset mechanism allows reviewing previously skipped resources
 
-### Booking Process
-1. Filmmakers express interest through inquiries
+### Communication Process
+1. Filmmakers initiate contact through in-app messaging
 2. Providers receive notifications and can respond
 3. Details are negotiated through the platform
-4. Bookings are confirmed and managed
+4. No public project posting to avoid spam/overwhelm
 
 ## External Dependencies
 
@@ -118,6 +116,9 @@ Changelog:
 - June 14, 2025. Added comprehensive in-app messaging system with notifications
 - June 14, 2025. Created service subcategory filtering (pre-production, equipment rental, craft services, post-production)
 - June 14, 2025. Built favorites system with direct messaging from browse interface
+- June 14, 2025. Restructured navigation to category-focused pages (locations, crew, cast, services)
+- June 14, 2025. Added persistent favorites system with localStorage and reset functionality
+- June 14, 2025. Removed "Post Project" feature - MVP focuses on filmmaker-initiated contact to avoid spam
 ```
 
 ## User Preferences
