@@ -33,17 +33,17 @@ export default function HeroSection() {
   // Auto-rotate images every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % oaklandImages.length);
+      setCurrentImageIndex((prev) => (prev + 1) % filmingImages.length);
     }, 5000);
     return () => clearInterval(interval);
   }, []);
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % oaklandImages.length);
+    setCurrentImageIndex((prev) => (prev + 1) % filmingImages.length);
   };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + oaklandImages.length) % oaklandImages.length);
+    setCurrentImageIndex((prev) => (prev - 1 + filmingImages.length) % filmingImages.length);
   };
 
   const handleAISearch = () => {
@@ -78,19 +78,19 @@ export default function HeroSection() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 z-10">
         <div className="text-center">
           <h1 className="font-serif text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            Your Oakland<br />
+            Your Local<br />
             <span className="text-white drop-shadow-lg">Film Production</span><br />
             Matchmaker
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-white/95 max-w-3xl mx-auto font-medium">
-            Connect with locations, crew, cast, and services in Oakland. From concept to screen, we've got your production covered.
+            Connect with locations, crew, cast, services, permits, and tax rebates. From concept to screen, we've got your production covered.
           </p>
 
           <div className="max-w-4xl mx-auto bg-white rounded-2xl p-6 shadow-2xl">
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1">
                 <Textarea
-                  placeholder="Describe your project: 'Looking for a Victorian house in Oakland for a period drama, need 3-day shoot with vintage props...'"
+                  placeholder="Describe your project: 'Looking for a Victorian house for a period drama, need 3-day shoot with vintage props...'"
                   className="w-full p-4 border border-gray-300 rounded-xl resize-none text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                   rows={3}
                   value={searchQuery}
