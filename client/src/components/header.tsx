@@ -8,11 +8,10 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { href: "/browse", label: "Browse", active: location.startsWith("/browse") },
-    { href: "/browse/location", label: "Locations" },
-    { href: "/browse/crew", label: "Crew" },
-    { href: "/browse/cast", label: "Cast" },
-    { href: "/browse/service", label: "Services" },
+    { href: "/locations", label: "Locations", active: location.startsWith("/locations") },
+    { href: "/crew", label: "Crew", active: location.startsWith("/crew") },
+    { href: "/cast", label: "Cast", active: location.startsWith("/cast") },
+    { href: "/services", label: "Services", active: location.startsWith("/services") },
   ];
 
   return (

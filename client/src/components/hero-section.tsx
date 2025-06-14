@@ -48,9 +48,9 @@ export default function HeroSection() {
 
   const handleAISearch = () => {
     if (searchQuery.trim()) {
-      // Navigate to browse page with search query as URL parameter
+      // Navigate to locations page with search query as URL parameter
       const encodedQuery = encodeURIComponent(searchQuery);
-      setLocation(`/browse?query=${encodedQuery}`);
+      setLocation(`/locations?query=${encodedQuery}`);
     }
   };
 
@@ -108,7 +108,7 @@ export default function HeroSection() {
                 <div className="text-center">
                   <span className="text-gray-500 text-sm">or</span>
                 </div>
-                <Link href="/browse">
+                <Link href="/locations">
                   <Button
                     variant="outline"
                     className="border-2 border-orange-500 text-orange-500 px-8 py-4 rounded-xl hover:bg-orange-500 hover:text-white transition-colors font-semibold h-auto w-full"
