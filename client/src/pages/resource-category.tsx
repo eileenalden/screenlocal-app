@@ -76,9 +76,11 @@ export default function ResourceCategory() {
     }
   }, [category]);
 
-  // Save favorites to localStorage
+  // Save favorites to localStorage and notify other components
   useEffect(() => {
     localStorage.setItem(`favorites_${category}`, JSON.stringify(favorites));
+    // Dispatch custom event to update header counter
+    window.dispatchEvent(new Event('favoritesChanged'));
   }, [favorites, category]);
 
   // Save skipped resources to localStorage
@@ -454,29 +456,18 @@ export default function ResourceCategory() {
                   </Card>
                 </div>
 
-                {/* Favorites */}
-                {favorites.length > 0 && (
+                {/* Favorites Mode - Contact Options */}
+                {mode === "favorites" && currentResource && (
                   <Card className="max-w-2xl mx-auto">
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
                         <Heart className="h-5 w-5 text-red-500" />
-                        Favorites ({favorites.length})
+                        Your Favorites - Contact Options
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="space-y-3">
-                        {favorites.map(id => {
-                          const resource = displayResources.find(r => r.id === id);
-                          return resource ? (
-                            <div key={id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                              <div>
-                                <h4 className="font-medium">{resource.title}</h4>
-                                <p className="text-sm text-gray-500">{resource.location}</p>
-                              </div>
-                              <MessagingDialog resource={resource} senderId={1} />
-                            </div>
-                          ) : null;
-                        })}
+                      <div className="flex justify-center">
+                        <MessagingDialog resource={currentResource} senderId={1} />
                       </div>
                     </CardContent>
                   </Card>

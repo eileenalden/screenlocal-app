@@ -1,11 +1,50 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Film, Search, Bell, Menu, X } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Film, Search, Bell, Menu, X, Heart } from "lucide-react";
 
 export default function Header() {
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [totalFavorites, setTotalFavorites] = useState(0);
+
+  // Calculate total favorites across all categories
+  useEffect(() => {
+    const categories = ['locations', 'crew', 'cast', 'services'];
+    let total = 0;
+    
+    categories.forEach(category => {
+      const saved = localStorage.getItem(`favorites_${category}`);
+      if (saved) {
+        total += JSON.parse(saved).length;
+      }
+    });
+    
+    setTotalFavorites(total);
+
+    // Listen for localStorage changes to update counter
+    const handleStorageChange = () => {
+      let newTotal = 0;
+      categories.forEach(category => {
+        const saved = localStorage.getItem(`favorites_${category}`);
+        if (saved) {
+          newTotal += JSON.parse(saved).length;
+        }
+      });
+      setTotalFavorites(newTotal);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Also listen for custom events when favorites change within the same tab
+    window.addEventListener('favoritesChanged', handleStorageChange);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('favoritesChanged', handleStorageChange);
+    };
+  }, []);
 
   const navItems = [
     { href: "/locations", label: "Locations", active: location.startsWith("/locations") },
@@ -46,6 +85,14 @@ export default function Header() {
           <div className="hidden md:flex items-center space-x-4">
             <Button variant="ghost" size="sm">
               <Search className="h-4 w-4" />
+            </Button>
+            <Button variant="ghost" size="sm" className="relative">
+              <Heart className="h-4 w-4" />
+              {totalFavorites > 0 && (
+                <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs">
+                  {totalFavorites}
+                </Badge>
+              )}
             </Button>
             <Button variant="ghost" size="sm">
               <Bell className="h-4 w-4" />
