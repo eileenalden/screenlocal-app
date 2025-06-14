@@ -14,6 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Search, Heart, MessageSquare, Loader2, ChevronLeft, ChevronRight, X, RefreshCw, BookOpen, MapPin, Settings } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -269,33 +270,76 @@ export default function ResourceCategory() {
             {config.description}
           </p>
           
-          {/* Mode Toggle */}
-          <div className="flex justify-center gap-4 mb-6">
-            <Button
-              variant={mode === "browse" ? "default" : "outline"}
-              onClick={handleBrowse}
-            >
-              Browse All
-            </Button>
-            <Button
-              variant={mode === "search" ? "default" : "outline"}
-              onClick={() => setMode("search")}
-            >
-              AI Search
-            </Button>
-            <Button
-              variant={mode === "favorites" ? "default" : "outline"}
-              onClick={handleFavorites}
-              className="relative"
-            >
-              <BookOpen className="h-4 w-4 mr-2" />
-              Favorites
-              {favorites.length > 0 && (
-                <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs">
-                  {favorites.length}
-                </Badge>
-              )}
-            </Button>
+          {/* Mode Toggle and Location Settings */}
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-6">
+            <div className="flex gap-4">
+              <Button
+                variant={mode === "browse" ? "default" : "outline"}
+                onClick={handleBrowse}
+              >
+                Browse All
+              </Button>
+              <Button
+                variant={mode === "search" ? "default" : "outline"}
+                onClick={() => setMode("search")}
+              >
+                AI Search
+              </Button>
+              <Button
+                variant={mode === "favorites" ? "default" : "outline"}
+                onClick={handleFavorites}
+                className="relative"
+              >
+                <BookOpen className="h-4 w-4 mr-2" />
+                Favorites
+                {favorites.length > 0 && (
+                  <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs">
+                    {favorites.length}
+                  </Badge>
+                )}
+              </Button>
+            </div>
+            
+            {/* Location Settings */}
+            <Dialog open={showLocationSettings} onOpenChange={setShowLocationSettings}>
+              <DialogTrigger asChild>
+                <Button variant="outline" size="sm" className="text-gray-600 border-gray-300">
+                  <MapPin className="h-4 w-4 mr-2" />
+                  {locationRadius} mile radius
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle>Location Settings</DialogTitle>
+                  <p className="text-sm text-gray-600">
+                    Set search radius for {config.title.toLowerCase()}
+                  </p>
+                </DialogHeader>
+                <div className="space-y-4">
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Search Radius</label>
+                    <Select 
+                      value={locationRadius.toString()} 
+                      onValueChange={(value) => setLocationRadius(parseInt(value))}
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {LOCATION_SETTINGS[category]?.options.map(radius => (
+                          <SelectItem key={radius} value={radius.toString()}>
+                            {radius} miles
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="text-xs text-gray-500">
+                    Different resource types have different default ranges. Locations typically need closer proximity, while cast and crew can travel further.
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
 
           {/* Reset Button */}

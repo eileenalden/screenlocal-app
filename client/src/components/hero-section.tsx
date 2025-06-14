@@ -6,22 +6,22 @@ import { Wand2, Grid3X3, ChevronLeft, ChevronRight } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 
-const oaklandImages = [
+const filmingImages = [
   {
     url: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&h=1380",
-    caption: "Oakland Downtown & Lake Merritt"
+    caption: "Urban Downtown & Waterfront"
   },
   {
     url: "https://images.unsplash.com/photo-1563299796-17596ed6b77c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&h=1380",
-    caption: "Oakland City Architecture"
+    caption: "Modern City Architecture"
   },
   {
     url: "https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&h=1380",
-    caption: "Bay Area Urban Landscape"
+    caption: "Bay Area Landscape"
   },
   {
     url: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&h=1380",
-    caption: "Oakland Industrial District"
+    caption: "Industrial Film District"
   }
 ];
 

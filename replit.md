@@ -51,10 +51,11 @@ The application uses a PostgreSQL database with the following main entities:
 ## Data Flow
 
 ### Resource Discovery
-1. Filmmakers browse or search for resources by category (locations, crew, cast, services)
-2. AI-powered search translates natural language into specific resource queries
-3. Smart filtering by budget, location, availability, and other criteria
-4. Swipe interface allows quick review with favorites and skip tracking
+1. Filmmakers browse or search for resources by category (locations, crew, cast, services, permits, tax-rebates)
+2. Location radius settings allow customization per resource type (locations: 10mi, crew/cast: 30mi, permits: 50mi, tax-rebates: 100mi)
+3. AI-powered search translates natural language into specific resource queries
+4. Smart filtering by budget, location, availability, and other criteria
+5. Swipe interface allows quick review with favorites and skip tracking
 
 ### User Journey
 1. Browse/swipe through resources manually OR use AI to narrow choices
@@ -119,6 +120,10 @@ Changelog:
 - June 14, 2025. Restructured navigation to category-focused pages (locations, crew, cast, services)
 - June 14, 2025. Added persistent favorites system with localStorage and reset functionality
 - June 14, 2025. Removed "Post Project" feature - MVP focuses on filmmaker-initiated contact to avoid spam
+- June 14, 2025. Added permit and tax rebate navigation tabs with dedicated categories
+- June 14, 2025. Implemented location radius settings - different geographic ranges per resource type
+- June 14, 2025. Removed "Oakland" branding for broader geographic flexibility
+- June 14, 2025. Added direct messaging buttons to all resource cards for immediate contact
 ```
 
 ## User Preferences

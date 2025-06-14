@@ -294,6 +294,64 @@ export class MemStorage implements IStorage {
       amenities: ["Espresso Machine", "Variety of Teas", "Pastries", "All Day Service"],
       isActive: true
     });
+
+    // Sample permits
+    this.createResource({
+      providerId: 12,
+      type: "permit",
+      title: "City of Oakland Filming Permit",
+      description: "Standard filming permit for public locations within Oakland city limits. Includes street use, park filming, and municipal building access.",
+      category: "filming",
+      images: ["https://images.unsplash.com/photo-1541354329998-f4d9a9f9297f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"],
+      pricePerDay: "150",
+      priceType: "day",
+      location: "Oakland",
+      amenities: ["Public Space Access", "Police Coordination", "Traffic Control", "Insurance Verification"],
+      isActive: true
+    });
+
+    this.createResource({
+      providerId: 13,
+      type: "permit",
+      title: "Drone Filming Permit - Bay Area",
+      description: "FAA Part 107 compliant drone filming permits for aerial cinematography in the Oakland and Bay Area region.",
+      category: "drone",
+      images: ["https://images.unsplash.com/photo-1473968512647-3e447244af8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"],
+      pricePerDay: "300",
+      priceType: "day",
+      location: "Oakland",
+      amenities: ["FAA Clearance", "Airspace Coordination", "Insurance Coverage", "Weather Monitoring"],
+      isActive: true
+    });
+
+    // Sample tax rebates
+    this.createResource({
+      providerId: 14,
+      type: "tax-rebate",
+      title: "California Film & TV Tax Credit Program",
+      description: "State tax incentive program offering up to 25% tax credits for qualified film and television productions shot in California.",
+      category: "state",
+      images: ["https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"],
+      pricePerDay: "0",
+      priceType: "percentage",
+      location: "California",
+      amenities: ["25% Tax Credit", "No Budget Minimum", "Relocating Productions Bonus", "Jobs Ratio Requirements"],
+      isActive: true
+    });
+
+    this.createResource({
+      providerId: 15,
+      type: "tax-rebate",
+      title: "Oakland Local Production Incentive",
+      description: "City of Oakland tax rebate program supporting local film production with reduced permit fees and tax incentives.",
+      category: "city",
+      images: ["https://images.unsplash.com/photo-1444653614773-995cb1ef9efa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"],
+      pricePerDay: "0",
+      priceType: "percentage",
+      location: "Oakland",
+      amenities: ["15% Local Rebate", "Permit Fee Reduction", "Fast-Track Processing", "Local Hire Incentives"],
+      isActive: true
+    });
   }
 
   // Organizations
