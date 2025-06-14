@@ -78,7 +78,7 @@ export default function HeroSection() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 z-10">
         <div className="text-center">
           <h1 className="font-serif text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            Your Local<br />
+            Your Oakland/East Bay<br />
             <span className="text-white drop-shadow-lg">Film Production</span><br />
             Matchmaker
           </h1>

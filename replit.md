@@ -145,6 +145,7 @@ Changelog:
 - June 14, 2025. Created comprehensive cast demographic filters with multi-select for gender and ethnicity categories
 - June 14, 2025. Added age range filtering by decade (0-9 Children through 80+ Seniors) for cast demographics
 - June 14, 2025. Added "Any" option for gender, ethnicity, and age range selections to allow broader cast searches
+- June 14, 2025. Updated homepage hero text to "Your Oakland/East Bay Film Production Matchmaker"
 ```
 
 ## User Preferences
