@@ -66,6 +66,7 @@ export default function ResourceCard({ resource, viewMode = "grid", showMatchBut
                     <CheckCircle className="h-4 w-4 inline mr-1" />
                     {getStatusText(resource.isActive || false)}
                   </span>
+                  <MessagingDialog resource={resource} senderId={1} />
                 </div>
               </div>
             </div>
@@ -120,11 +121,7 @@ export default function ResourceCard({ resource, viewMode = "grid", showMatchBut
               View Details
             </Button>
           )}
-          <MessagingDialog resource={resource} senderId={1}>
-            <Button variant="outline" size="sm" className="px-3">
-              <MessageSquare className="h-4 w-4" />
-            </Button>
-          </MessagingDialog>
+          <MessagingDialog resource={resource} senderId={1} />
           <Button variant="outline" size="sm" className="px-3">
             <ResourceIcon className="h-4 w-4" />
           </Button>
