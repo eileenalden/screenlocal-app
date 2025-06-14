@@ -32,6 +32,86 @@ const LOCATION_SETTINGS = {
   budget: { defaultRadius: 100, options: [50, 100, 200, 500] }
 };
 
+// Browse filtering options for each resource type
+const BROWSE_FILTERS = {
+  locations: {
+    name: "Location Type",
+    options: [
+      "Interior - House",
+      "Exterior - House", 
+      "Interior - Apartment",
+      "Exterior - Apartment",
+      "Interior - Business",
+      "Exterior - Business"
+    ]
+  },
+  crew: {
+    name: "Department",
+    options: [
+      "Production",
+      "Camera", 
+      "Grip & Electric",
+      "Art",
+      "Wardrobe",
+      "Hair & Makeup",
+      "Sound",
+      "Post-Production"
+    ]
+  },
+  cast: {
+    name: "Demographics",
+    multiSelect: true,
+    categories: {
+      gender: {
+        name: "Gender",
+        options: ["Male", "Female", "Non-binary"]
+      },
+      ethnicity: {
+        name: "Ethnicity",
+        options: [
+          "Black / African American / African (and/or Caribbean descent)",
+          "Latine / Latinx / Hispanic (when pan-ethnic identification is needed)",
+          "Indigenous / Native American / First Nations / Alaska Native",
+          "East Asian (e.g., Chinese, Japanese, Korean)",
+          "Southeast Asian (e.g., Vietnamese, Filipino, Thai, Indonesian)",
+          "South Asian (e.g., Indian, Pakistani, Bangladeshi, Nepali)",
+          "Middle Eastern / North African (MENA)",
+          "Pacific Islander (e.g., Native Hawaiian, Samoan, Tongan, Fijian)",
+          "White / Caucasian",
+          "Multiracial / Mixed-race"
+        ]
+      }
+    }
+  },
+  services: {
+    name: "Service Type",
+    options: [
+      "Pre-production",
+      "Equipment Rental",
+      "Craft Services", 
+      "Post-production"
+    ]
+  },
+  permits: {
+    name: "Permit Type",
+    options: [
+      "Location Permits",
+      "Special Event Permits",
+      "Insurance & Liability",
+      "Legal Documentation"
+    ]
+  },
+  budget: {
+    name: "Budget Tool",
+    options: [
+      "Tax Rebates",
+      "Budgeting Software",
+      "Cost Estimation",
+      "Financial Planning"
+    ]
+  }
+};
+
 // East Bay Cities Tax Rebate Data
 const EAST_BAY_CITIES = [
   {
@@ -419,6 +499,15 @@ export default function ResourceCategory() {
   const [showLocationSettings, setShowLocationSettings] = useState(false);
   const [skippedResources, setSkippedResources] = useState<number[]>([]);
   const [showFavorites, setShowFavorites] = useState(false);
+  
+  // Browse filtering state
+  const [browseFilters, setBrowseFilters] = useState<{
+    selectedSubcategory?: string;
+    castGender?: string[];
+    castEthnicity?: string[];
+  }>({});
+  const [showBrowseFilters, setShowBrowseFilters] = useState(false);
+  
   const { toast } = useToast();
   const search = useSearch();
 
@@ -515,12 +604,44 @@ export default function ResourceCategory() {
   };
 
   const handleBrowse = () => {
+    // Show filters dialog instead of immediately browsing
+    setShowBrowseFilters(true);
+  };
+
+  const applyBrowseFilters = () => {
+    // Check if required filters are selected
+    const filterConfig = BROWSE_FILTERS[category];
+    if (!filterConfig) return;
+
+    if (category === 'cast') {
+      // For cast, require at least one selection from each category
+      if (!browseFilters.castGender?.length || !browseFilters.castEthnicity?.length) {
+        toast({
+          title: "Missing filters",
+          description: "Please select at least one option for both gender and ethnicity",
+          variant: "destructive",
+        });
+        return;
+      }
+    } else {
+      // For other categories, require subcategory selection
+      if (!browseFilters.selectedSubcategory) {
+        toast({
+          title: "Missing filter",
+          description: `Please select a ${filterConfig.name.toLowerCase()}`,
+          variant: "destructive",
+        });
+        return;
+      }
+    }
+
     setMode("browse");
     setAiResults([]);
     setDescription("");
     setSubcategory("");
     setCurrentIndex(0);
     setShowFavorites(false);
+    setShowBrowseFilters(false);
   };
 
   const handleFavorites = () => {
@@ -610,7 +731,7 @@ export default function ResourceCategory() {
                   variant={mode === "browse" ? "default" : "outline"}
                   onClick={handleBrowse}
                 >
-                  Browse All
+                  Browse
                 </Button>
                 <Button
                   variant={mode === "search" ? "default" : "outline"}
@@ -884,6 +1005,127 @@ export default function ResourceCategory() {
           </div>
         </div>
       </main>
+
+      {/* Browse Filters Dialog */}
+      <Dialog open={showBrowseFilters} onOpenChange={setShowBrowseFilters}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Browse Filters</DialogTitle>
+            <p className="text-sm text-gray-600">
+              Select filters to browse {config.title.toLowerCase()}
+            </p>
+          </DialogHeader>
+          <div className="space-y-4">
+            {BROWSE_FILTERS[category] && (
+              <>
+                {category === 'cast' ? (
+                  /* Special multi-select interface for cast demographics */
+                  <div className="space-y-4">
+                    <div>
+                      <label className="text-sm font-medium mb-2 block">Gender</label>
+                      <div className="space-y-2">
+                        {BROWSE_FILTERS[category].categories.gender.options.map((option) => (
+                          <label key={option} className="flex items-center space-x-2">
+                            <input
+                              type="checkbox"
+                              checked={browseFilters.castGender?.includes(option) || false}
+                              onChange={(e) => {
+                                const current = browseFilters.castGender || [];
+                                if (e.target.checked) {
+                                  setBrowseFilters({
+                                    ...browseFilters,
+                                    castGender: [...current, option]
+                                  });
+                                } else {
+                                  setBrowseFilters({
+                                    ...browseFilters,
+                                    castGender: current.filter(g => g !== option)
+                                  });
+                                }
+                              }}
+                              className="rounded border-gray-300"
+                            />
+                            <span className="text-sm">{option}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="text-sm font-medium mb-2 block">Ethnicity</label>
+                      <div className="space-y-2 max-h-48 overflow-y-auto">
+                        {BROWSE_FILTERS[category].categories.ethnicity.options.map((option) => (
+                          <label key={option} className="flex items-start space-x-2">
+                            <input
+                              type="checkbox"
+                              checked={browseFilters.castEthnicity?.includes(option) || false}
+                              onChange={(e) => {
+                                const current = browseFilters.castEthnicity || [];
+                                if (e.target.checked) {
+                                  setBrowseFilters({
+                                    ...browseFilters,
+                                    castEthnicity: [...current, option]
+                                  });
+                                } else {
+                                  setBrowseFilters({
+                                    ...browseFilters,
+                                    castEthnicity: current.filter(e => e !== option)
+                                  });
+                                }
+                              }}
+                              className="rounded border-gray-300 mt-0.5"
+                            />
+                            <span className="text-sm">{option}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  /* Standard dropdown for other categories */
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">{BROWSE_FILTERS[category].name}</label>
+                    <Select 
+                      value={browseFilters.selectedSubcategory || ""} 
+                      onValueChange={(value) => setBrowseFilters({
+                        ...browseFilters,
+                        selectedSubcategory: value
+                      })}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder={`Select ${BROWSE_FILTERS[category].name.toLowerCase()}`} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {BROWSE_FILTERS[category].options.map((option) => (
+                          <SelectItem key={option} value={option}>
+                            {option}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+              </>
+            )}
+            
+            <div className="flex gap-2 pt-4">
+              <Button
+                variant="outline"
+                onClick={() => setShowBrowseFilters(false)}
+                className="flex-1"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={applyBrowseFilters}
+                className="flex-1"
+              >
+                Apply Filters
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <Footer />
     </div>
