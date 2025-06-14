@@ -2,7 +2,6 @@ import Header from "@/components/header";
 import HeroSection from "@/components/hero-section";
 import CategoryCards from "@/components/category-cards";
 import HowItWorks from "@/components/how-it-works";
-import ProductionTools from "@/components/production-tools";
 import PermitSection from "@/components/permit-section";
 import SuccessStories from "@/components/success-stories";
 import Footer from "@/components/footer";
@@ -45,7 +44,6 @@ export default function Home() {
       <CategoryCards />
       <HowItWorks />
       <PermitSection />
-      <ProductionTools />
       <SuccessStories />
       <Footer />
     </div>
