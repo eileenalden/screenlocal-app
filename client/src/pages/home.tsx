@@ -42,8 +42,8 @@ export default function Home() {
       </section>
 
       <CategoryCards />
-      <ProductionTools />
       <PermitSection />
+      <ProductionTools />
       <SuccessStories />
       <Footer />
     </div>
