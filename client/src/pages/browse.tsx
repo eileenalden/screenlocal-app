@@ -3,8 +3,9 @@
  * All rights reserved.
  */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { useSearch } from "wouter";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import ResourceCard from "@/components/resource-card";
@@ -28,6 +29,24 @@ export default function Browse() {
   const [favorites, setFavorites] = useState<number[]>([]);
   const [aiResults, setAiResults] = useState<Resource[]>([]);
   const { toast } = useToast();
+  const search = useSearch();
+
+  // Handle URL query parameter from hero section
+  useEffect(() => {
+    const urlParams = new URLSearchParams(search);
+    const queryParam = urlParams.get('query');
+    if (queryParam) {
+      setDescription(queryParam);
+      setResourceType("location"); // Default to location for general queries
+      // Auto-trigger AI search after setting values
+      setTimeout(() => {
+        aiSearchMutation.mutate({
+          type: "location",
+          query: queryParam
+        });
+      }, 100);
+    }
+  }, [search]);
 
   const { data: allResources = [], isLoading } = useQuery({
     queryKey: ['/api/resources'],

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Wand2, Grid3X3, ChevronLeft, ChevronRight } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
@@ -28,6 +28,7 @@ const oaklandImages = [
 export default function HeroSection() {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [, setLocation] = useLocation();
 
   // Auto-rotate images every 5 seconds
   useEffect(() => {
@@ -45,23 +46,11 @@ export default function HeroSection() {
     setCurrentImageIndex((prev) => (prev - 1 + oaklandImages.length) % oaklandImages.length);
   };
 
-  const aiMatchMutation = useMutation({
-    mutationFn: async (query: string) => {
-      return apiRequest("POST", "/api/ai-match", {
-        projectDescription: query,
-        projectType: "feature",
-        budget: 50000
-      });
-    },
-    onSuccess: (data) => {
-      // Handle AI match results - could navigate to results page
-      console.log("AI matches:", data);
-    },
-  });
-
   const handleAISearch = () => {
     if (searchQuery.trim()) {
-      aiMatchMutation.mutate(searchQuery);
+      // Navigate to browse page with search query as URL parameter
+      const encodedQuery = encodeURIComponent(searchQuery);
+      setLocation(`/browse?query=${encodedQuery}`);
     }
   };
 
@@ -111,11 +100,10 @@ export default function HeroSection() {
               <div className="flex flex-col gap-2">
                 <Button 
                   onClick={handleAISearch}
-                  disabled={aiMatchMutation.isPending}
                   className="bg-orange-500 text-white px-8 py-4 rounded-xl hover:bg-orange-600 transition-colors font-semibold h-auto"
                 >
                   <Wand2 className="h-4 w-4 mr-2" />
-                  {aiMatchMutation.isPending ? "Matching..." : "AI Match"}
+                  AI Match
                 </Button>
                 <div className="text-center">
                   <span className="text-gray-500 text-sm">or</span>
