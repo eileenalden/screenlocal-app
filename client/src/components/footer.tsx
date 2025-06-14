@@ -43,7 +43,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <Film className="h-8 w-8 text-orange-500" />
-              <span className="font-serif font-bold text-xl">FilmMatcher</span>
+              <span className="font-serif font-bold text-xl">ScreenLocal</span>
             </div>
             <p className="text-gray-400 mb-4">
               Connecting filmmakers with local production resources. From concept to screen, we've got your production covered.
@@ -81,7 +81,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <div className="text-gray-400 text-sm">
-            © 2025 FilmMatcher. All rights reserved.
+            © 2025 ScreenLocal. All rights reserved.
           </div>
           <div className="flex space-x-6 text-sm text-gray-400 mt-4 md:mt-0">
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>

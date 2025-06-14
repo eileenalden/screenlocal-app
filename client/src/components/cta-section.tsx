@@ -8,7 +8,7 @@ export default function CTASection() {
           Ready to Start Your Next Production?
         </h2>
         <p className="text-xl text-orange-100 mb-8 max-w-2xl mx-auto">
-          Join filmmakers across Oakland who are already using FilmMatcher to build their teams and find resources
+          Join filmmakers across Oakland who are already using ScreenLocal to build their teams and find resources
         </p>
         
         <Button 
