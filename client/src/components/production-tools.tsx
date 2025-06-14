@@ -1,20 +1,43 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calculator, Calendar, Percent, Download, CalendarPlus } from "lucide-react";
+import { ExternalLink, Calendar, CalendarPlus, FileSpreadsheet } from "lucide-react";
 
 export default function ProductionTools() {
   const [selectedMonth, setSelectedMonth] = useState("March 2024");
 
-  const costBreakdown = [
-    { item: "Location (3 days)", cost: 1200 },
-    { item: "Crew (5 members × 3 days)", cost: 4500 },
-    { item: "Cast (3 actors × 3 days)", cost: 2250 },
-    { item: "Equipment Rental", cost: 1800 },
-    { item: "Permits & Insurance", cost: 600 }
+  const budgetingTools = [
+    {
+      name: "Saturation.io",
+      description: "Modern cloud-based budgeting and scheduling platform",
+      logo: "🎬",
+      popular: true
+    },
+    {
+      name: "Movie Magic Budgeting",
+      description: "Industry-standard budgeting software by Entertainment Partners",
+      logo: "✨",
+      popular: true
+    },
+    {
+      name: "Showbiz Budgeting",
+      description: "Professional film and TV budgeting solution",
+      logo: "🎭",
+      popular: false
+    },
+    {
+      name: "Hot Budget",
+      description: "Streamlined budgeting for independent productions",
+      logo: "🔥",
+      popular: false
+    }
   ];
 
-  const totalCost = costBreakdown.reduce((sum, item) => sum + item.cost, 0);
+  const handleExportToTool = (toolName: string) => {
+    // This would integrate with SSO and export selected resources
+    console.log(`Exporting selected resources to ${toolName}`);
+    // Implementation would pass favorites/selected resources to the budgeting tool
+  };
 
   const calendarDays = [
     { day: "5", status: "available" },
@@ -45,46 +68,58 @@ export default function ProductionTools() {
             Production Planning Tools
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Estimate costs, check availability, and manage permits all in one place
+            Export your selected resources to professional budgeting software and check availability
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Cost Estimator */}
+          {/* Budgeting Software Integration */}
           <Card className="bg-white rounded-2xl shadow-lg">
             <CardHeader>
               <CardTitle className="flex items-center">
-                <Calculator className="h-6 w-6 text-orange-500 mr-3" />
-                Cost Estimator
+                <FileSpreadsheet className="h-6 w-6 text-orange-500 mr-3" />
+                Export to Budgeting Software
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4 mb-6">
-                {costBreakdown.map((item, index) => (
-                  <div key={index} className="flex justify-between items-center py-3 border-b border-gray-100">
-                    <span className="text-gray-600">{item.item}</span>
-                    <span className="font-semibold text-gray-900">${item.cost.toLocaleString()}</span>
+              <p className="text-gray-600 mb-6">
+                Send your selected resources directly to industry-standard budgeting platforms for detailed cost analysis and scheduling.
+              </p>
+
+              <div className="space-y-4">
+                {budgetingTools.map((tool, index) => (
+                  <div key={index} className="border border-gray-200 rounded-lg p-4 hover:border-orange-300 transition-colors">
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center space-x-3">
+                        <span className="text-2xl">{tool.logo}</span>
+                        <div>
+                          <h4 className="font-semibold text-gray-900 flex items-center">
+                            {tool.name}
+                            {tool.popular && (
+                              <span className="ml-2 px-2 py-1 bg-orange-100 text-orange-600 text-xs rounded-full">Popular</span>
+                            )}
+                          </h4>
+                          <p className="text-sm text-gray-600">{tool.description}</p>
+                        </div>
+                      </div>
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        onClick={() => handleExportToTool(tool.name)}
+                        className="border-orange-500 text-orange-500 hover:bg-orange-50"
+                      >
+                        <ExternalLink className="h-4 w-4 mr-1" />
+                        Export
+                      </Button>
+                    </div>
                   </div>
                 ))}
               </div>
 
-              <div className="bg-orange-50 rounded-lg p-4 mb-6">
-                <div className="flex justify-between items-center">
-                  <span className="font-semibold text-gray-900">Total Estimated Cost</span>
-                  <span className="font-bold text-2xl text-orange-500">${totalCost.toLocaleString()}</span>
-                </div>
-                <p className="text-sm text-gray-600 mt-1">3-day shoot, 8 total resources</p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <Button className="bg-teal-500 hover:bg-teal-600 text-white">
-                  <Percent className="h-4 w-4 mr-2" />
-                  Tax Rebates
-                </Button>
-                <Button variant="outline" className="border-orange-500 text-orange-500 hover:bg-orange-50">
-                  <Download className="h-4 w-4 mr-2" />
-                  Export PDF
-                </Button>
+              <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+                <p className="text-sm text-blue-700">
+                  <strong>Note:</strong> SSO integration will automatically transfer your selected locations, crew, cast, and services with pricing information to your chosen budgeting platform.
+                </p>
               </div>
             </CardContent>
           </Card>
