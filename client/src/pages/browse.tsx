@@ -17,6 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import { Search, Grid, List, Heart, MessageSquare, Loader2 } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import MessagingDialog from "@/components/messaging-dialog";
 import type { Resource } from "@shared/schema";
 
 export default function Browse() {

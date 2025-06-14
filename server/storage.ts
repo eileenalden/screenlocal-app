@@ -554,6 +554,97 @@ export class MemStorage implements IStorage {
     this.inquiries.set(id, updated);
     return updated;
   }
+
+  // Messages
+  async getMessage(id: number): Promise<Message | undefined> {
+    return this.messages.get(id);
+  }
+
+  async getMessagesByUser(userId: number): Promise<Message[]> {
+    return Array.from(this.messages.values()).filter(m => 
+      m.senderId === userId || m.recipientId === userId
+    );
+  }
+
+  async getConversation(senderId: number, recipientId: number, resourceId?: number): Promise<Message[]> {
+    return Array.from(this.messages.values()).filter(m => 
+      ((m.senderId === senderId && m.recipientId === recipientId) ||
+       (m.senderId === recipientId && m.recipientId === senderId)) &&
+      (!resourceId || m.resourceId === resourceId)
+    ).sort((a, b) => a.createdAt!.getTime() - b.createdAt!.getTime());
+  }
+
+  async createMessage(insertMessage: InsertMessage): Promise<Message> {
+    const id = this.currentId++;
+    const message: Message = {
+      ...insertMessage,
+      id,
+      resourceId: insertMessage.resourceId ?? null,
+      inquiryId: insertMessage.inquiryId ?? null,
+      isRead: false,
+      createdAt: new Date(),
+    };
+    this.messages.set(id, message);
+    
+    // Create notification for recipient
+    await this.createNotification({
+      userId: insertMessage.recipientId,
+      type: "message",
+      title: "New Message",
+      content: `You have a new message: ${insertMessage.subject}`,
+      messageId: id,
+    });
+
+    return message;
+  }
+
+  async markMessageAsRead(id: number): Promise<Message | undefined> {
+    const message = this.messages.get(id);
+    if (!message) return undefined;
+
+    const updatedMessage = { ...message, isRead: true };
+    this.messages.set(id, updatedMessage);
+    return updatedMessage;
+  }
+
+  // Notifications
+  async getNotification(id: number): Promise<Notification | undefined> {
+    return this.notifications.get(id);
+  }
+
+  async getNotificationsByUser(userId: number): Promise<Notification[]> {
+    return Array.from(this.notifications.values())
+      .filter(n => n.userId === userId)
+      .sort((a, b) => b.createdAt!.getTime() - a.createdAt!.getTime());
+  }
+
+  async getUnreadNotificationsByUser(userId: number): Promise<Notification[]> {
+    return Array.from(this.notifications.values())
+      .filter(n => n.userId === userId && !n.isRead)
+      .sort((a, b) => b.createdAt!.getTime() - a.createdAt!.getTime());
+  }
+
+  async createNotification(insertNotification: InsertNotification): Promise<Notification> {
+    const id = this.currentId++;
+    const notification: Notification = {
+      ...insertNotification,
+      id,
+      messageId: insertNotification.messageId ?? null,
+      isRead: false,
+      createdAt: new Date(),
+    };
+    this.notifications.set(id, notification);
+    return notification;
+  }
+
+  async markNotificationAsRead(id: number): Promise<Notification | undefined> {
+    const notification = this.notifications.get(id);
+    if (!notification) return undefined;
+
+    const updatedNotification = { ...notification, isRead: true };
+    this.notifications.set(id, updatedNotification);
+    return updatedNotification;
+  }
 }
 
 export const storage = new MemStorage();

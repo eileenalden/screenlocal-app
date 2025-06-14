@@ -3,7 +3,8 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertResourceSchema, insertProjectSchema, insertMatchSchema, insertInquirySchema } from "@shared/schema";
+import { insertResourceSchema, insertProjectSchema, insertMatchSchema, insertInquirySchema, insertMessageSchema } from "@shared/schema";
+import { performAISearch } from "./ai-search";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Resources endpoints
@@ -224,6 +225,106 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(matches);
     } catch (error) {
       res.status(500).json({ message: "AI matching failed" });
+    }
+  });
+
+  // AI Search endpoint
+  app.post("/api/ai/search", async (req, res) => {
+    try {
+      const { resourceType, serviceSubtype, description } = req.body;
+      
+      if (!resourceType || !description) {
+        return res.status(400).json({ message: "Resource type and description are required" });
+      }
+
+      const allResources = await storage.getResources();
+      const results = await performAISearch(resourceType, serviceSubtype, description, allResources);
+      
+      res.json(results);
+    } catch (error) {
+      console.error("AI search error:", error);
+      res.status(500).json({ message: "AI search failed" });
+    }
+  });
+
+  // Messages endpoints
+  app.get("/api/messages/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const messages = await storage.getMessagesByUser(userId);
+      res.json(messages);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch messages" });
+    }
+  });
+
+  app.get("/api/conversations/:senderId/:recipientId", async (req, res) => {
+    try {
+      const senderId = parseInt(req.params.senderId);
+      const recipientId = parseInt(req.params.recipientId);
+      const resourceId = req.query.resourceId ? parseInt(req.query.resourceId as string) : undefined;
+      
+      const conversation = await storage.getConversation(senderId, recipientId, resourceId);
+      res.json(conversation);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch conversation" });
+    }
+  });
+
+  app.post("/api/messages", async (req, res) => {
+    try {
+      const messageData = insertMessageSchema.parse(req.body);
+      const message = await storage.createMessage(messageData);
+      res.json(message);
+    } catch (error) {
+      res.status(400).json({ message: "Invalid message data" });
+    }
+  });
+
+  app.patch("/api/messages/:id/read", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const message = await storage.markMessageAsRead(id);
+      if (!message) {
+        return res.status(404).json({ message: "Message not found" });
+      }
+      res.json(message);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to mark message as read" });
+    }
+  });
+
+  // Notifications endpoints
+  app.get("/api/notifications/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const notifications = await storage.getNotificationsByUser(userId);
+      res.json(notifications);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch notifications" });
+    }
+  });
+
+  app.get("/api/notifications/:userId/unread", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const notifications = await storage.getUnreadNotificationsByUser(userId);
+      res.json(notifications);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch unread notifications" });
+    }
+  });
+
+  app.patch("/api/notifications/:id/read", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const notification = await storage.markNotificationAsRead(id);
+      if (!notification) {
+        return res.status(404).json({ message: "Notification not found" });
+      }
+      res.json(notification);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to mark notification as read" });
     }
   });
 
