@@ -11,7 +11,7 @@ const categories = [
     count: "250+ available",
     price: "From $200/day",
     image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-    href: "/browse/location"
+    href: "/locations"
   },
   {
     id: "crew",
@@ -21,7 +21,7 @@ const categories = [
     count: "150+ professionals",
     price: "From $300/day",
     image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-    href: "/browse/crew"
+    href: "/crew"
   },
   {
     id: "cast",
@@ -31,7 +31,7 @@ const categories = [
     count: "300+ profiles",
     price: "From $150/day",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-    href: "/browse/cast"
+    href: "/cast"
   },
   {
     id: "service",
@@ -41,7 +41,7 @@ const categories = [
     count: "50+ services",
     price: "Custom pricing",
     image: "https://images.unsplash.com/photo-1551818255-e6e10975bc17?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-    href: "/browse/service"
+    href: "/services"
   },
   {
     id: "craft-service",
@@ -51,7 +51,7 @@ const categories = [
     count: "25+ providers",
     price: "From $50/day",
     image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-    href: "/browse/craft-service"
+    href: "/services"
   }
 ];
 
