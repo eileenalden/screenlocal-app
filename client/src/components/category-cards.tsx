@@ -3,8 +3,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Link, useLocation } from "wouter";
-import { MapPin, Users, Theater, Cog, FileText, Percent, Wand2, Grid3X3 } from "lucide-react";
+import { MapPin, Users, Theater, Cog, FileText, Percent, Wand2, Grid3X3, Lock, Eye } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 const categories = [
   {
@@ -69,15 +72,77 @@ const categories = [
   }
 ];
 
+// Mock preview results for unauthenticated users
+const PREVIEW_RESULTS = [
+  {
+    id: 1,
+    name: "Victorian House with Period Details",
+    type: "location",
+    price: "$400/day",
+    location: "Oakland Hills",
+    image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=400&h=300"
+  },
+  {
+    id: 2,
+    name: "Industrial Warehouse Space",
+    type: "location", 
+    price: "$600/day",
+    location: "West Oakland",
+    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=400&h=300"
+  },
+  {
+    id: 3,
+    name: "Retro Diner Interior",
+    type: "location",
+    price: "$350/day", 
+    location: "Downtown Oakland",
+    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&h=300"
+  },
+  {
+    id: 4,
+    name: "Classic American Diner",
+    type: "location",
+    price: "$425/day",
+    location: "Berkeley",
+    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?auto=format&fit=crop&w=400&h=300"
+  }
+];
+
 export default function CategoryCards() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [showPreview, setShowPreview] = useState(false);
+  const [previewSummary, setPreviewSummary] = useState("");
+  const [matchCount, setMatchCount] = useState(0);
   const [, setLocation] = useLocation();
+  const { toast } = useToast();
+
+  const previewSearchMutation = useMutation({
+    mutationFn: async (query: string) => {
+      // Simulate AI analysis for preview
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      return {
+        summary: `I found several locations perfect for filming retro diner scenes in the Oakland area. These venues offer authentic vintage atmospheres with period-appropriate fixtures and décor.`,
+        matchCount: 4,
+        results: PREVIEW_RESULTS
+      };
+    },
+    onSuccess: (data) => {
+      setPreviewSummary(data.summary);
+      setMatchCount(data.matchCount);
+      setShowPreview(true);
+    },
+    onError: () => {
+      toast({
+        title: "Search failed",
+        description: "Please try again",
+        variant: "destructive",
+      });
+    }
+  });
 
   const handleAISearch = () => {
     if (searchQuery.trim()) {
-      // Navigate to locations page with search query as URL parameter
-      const encodedQuery = encodeURIComponent(searchQuery);
-      setLocation(`/locations?query=${encodedQuery}`);
+      previewSearchMutation.mutate(searchQuery);
     }
   };
 
@@ -145,7 +210,7 @@ export default function CategoryCards() {
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1">
                   <Textarea
-                    placeholder="Describe your project: 'Looking for a Victorian house for a period drama, need 3-day shoot with vintage props...'"
+                    placeholder="Try: 'Where can I film a retro diner scene in Oakland?' or 'Need a Victorian house for period drama...'"
                     className="w-full p-4 border border-gray-300 rounded-xl resize-none text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                     rows={3}
                     value={searchQuery}
@@ -155,26 +220,93 @@ export default function CategoryCards() {
                 <div className="flex flex-col gap-2">
                   <Button 
                     onClick={handleAISearch}
-                    className="bg-orange-500 text-white px-8 py-4 rounded-xl hover:bg-orange-600 transition-colors font-semibold h-auto"
+                    disabled={previewSearchMutation.isPending}
+                    className="bg-orange-500 text-white px-8 py-4 rounded-xl hover:bg-orange-600 transition-colors font-semibold h-auto disabled:opacity-70"
                   >
-                    <Wand2 className="h-4 w-4 mr-2" />
-                    AI Match
+                    {previewSearchMutation.isPending ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                        Searching...
+                      </>
+                    ) : (
+                      <>
+                        <Wand2 className="h-4 w-4 mr-2" />
+                        Try AI Search
+                      </>
+                    )}
                   </Button>
                   <div className="text-center">
                     <span className="text-gray-500 text-sm">or</span>
                   </div>
                   <Button
                     variant="outline"
-                    onClick={() => setLocation("/locations")}
+                    onClick={() => window.location.href = '/api/login'}
                     className="border-2 border-orange-500 text-orange-500 px-8 py-4 rounded-xl hover:bg-orange-500 hover:text-white transition-colors font-semibold h-auto"
                   >
                     <Grid3X3 className="h-4 w-4 mr-2" />
-                    Browse All
+                    Sign Up to Browse
                   </Button>
                 </div>
               </div>
             </CardContent>
           </Card>
+          
+          {/* Preview Results */}
+          {showPreview && (
+            <div className="mt-8 max-w-4xl mx-auto">
+              <Card className="bg-white rounded-2xl shadow-xl border-2 border-orange-200">
+                <CardContent className="p-6">
+                  <div className="mb-6">
+                    <div className="flex items-center mb-3">
+                      <Eye className="h-5 w-5 text-orange-500 mr-2" />
+                      <h3 className="font-semibold text-lg text-gray-900">AI Search Preview</h3>
+                    </div>
+                    <p className="text-gray-700 mb-4">{previewSummary}</p>
+                    <p className="text-orange-600 font-medium">
+                      I found {matchCount} locations that match your search
+                    </p>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    {PREVIEW_RESULTS.map((result) => (
+                      <div key={result.id} className="relative">
+                        <Card className="overflow-hidden bg-gray-100">
+                          <div className="relative">
+                            <div 
+                              className="h-40 bg-cover bg-center filter blur-sm"
+                              style={{ backgroundImage: `url(${result.image})` }}
+                            />
+                            <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                              <Lock className="h-8 w-8 text-white" />
+                            </div>
+                          </div>
+                          <CardContent className="p-4">
+                            <div className="filter blur-sm">
+                              <h4 className="font-semibold text-gray-900 mb-1">{result.name}</h4>
+                              <p className="text-sm text-gray-600 mb-2">{result.location}</p>
+                              <p className="text-orange-600 font-medium">{result.price}</p>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="text-center bg-orange-50 rounded-xl p-6">
+                    <Lock className="h-8 w-8 text-orange-500 mx-auto mb-3" />
+                    <h4 className="font-semibold text-gray-900 mb-2">Sign up to view full matches and contact info</h4>
+                    <p className="text-gray-600 mb-4">Get complete details, pricing, availability, and direct contact with providers</p>
+                    <Button 
+                      onClick={() => window.location.href = '/api/login'}
+                      className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors font-semibold"
+                    >
+                      Sign Up Now - It's Free
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
         </div>
       </div>
     </section>
