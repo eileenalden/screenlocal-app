@@ -1,12 +1,13 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "wouter";
-import { MapPin, Users, Theater, Cog } from "lucide-react";
+import { MapPin, Users, Theater, Cog, FileText, Percent } from "lucide-react";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 const categories = [
   {
     id: "location",
     title: "Locations",
-    description: "Studios, warehouses, homes, and iconic Oakland spots",
+    description: "Studios, warehouses, homes, and iconic spots",
     icon: MapPin,
     count: "250+ available",
     price: "From $200/day",
@@ -36,22 +37,32 @@ const categories = [
   {
     id: "service",
     title: "Services",
-    description: "Post-production, equipment rental, and specialized services",
+    description: "Equipment rental, post-production, and craft services",
     icon: Cog,
-    count: "50+ services",
+    count: "75+ services",
     price: "Custom pricing",
     image: "https://images.unsplash.com/photo-1551818255-e6e10975bc17?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
     href: "/services"
   },
   {
-    id: "craft-service",
-    title: "Craft Services",
-    description: "Catering, coffee service, and on-set dining solutions",
-    icon: Cog,
-    count: "25+ providers",
-    price: "From $50/day",
-    image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-    href: "/services"
+    id: "permit",
+    title: "Permits",
+    description: "Filming permits, location clearances, and legal documentation",
+    icon: FileText,
+    count: "All agencies",
+    price: "From $100",
+    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
+    href: "/permits"
+  },
+  {
+    id: "tax-rebate",
+    title: "Tax Rebates",
+    description: "State and local film tax incentives and rebate programs",
+    icon: Percent,
+    count: "Multiple programs",
+    price: "Up to 30% back",
+    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
+    href: "/tax-rebates"
   }
 ];
 
@@ -68,32 +79,44 @@ export default function CategoryCards() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-          {categories.map((category) => {
-            const Icon = category.icon;
-            return (
-              <Link key={category.id} href={category.href}>
-                <Card className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer group">
-                  <div 
-                    className="h-48 bg-cover bg-center group-hover:scale-105 transition-transform duration-300"
-                    style={{ backgroundImage: `url(${category.image})` }}
-                  />
-                  <CardContent className="p-6">
-                    <div className="flex items-center mb-3">
-                      <Icon className="h-5 w-5 text-orange-500 mr-3" />
-                      <h3 className="font-semibold text-lg text-gray-900">{category.title}</h3>
-                    </div>
-                    <p className="text-gray-600 mb-4 text-sm">{category.description}</p>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-500">{category.count}</span>
-                      <span className="text-orange-500 font-semibold text-sm">{category.price}</span>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            );
-          })}
-        </div>
+        <Carousel
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+          className="w-full max-w-6xl mx-auto"
+        >
+          <CarouselContent className="-ml-2 md:-ml-4">
+            {categories.map((category) => {
+              const Icon = category.icon;
+              return (
+                <CarouselItem key={category.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                  <Link href={category.href}>
+                    <Card className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer group h-full">
+                      <div 
+                        className="h-48 bg-cover bg-center group-hover:scale-105 transition-transform duration-300"
+                        style={{ backgroundImage: `url(${category.image})` }}
+                      />
+                      <CardContent className="p-6">
+                        <div className="flex items-center mb-3">
+                          <Icon className="h-5 w-5 text-orange-500 mr-3" />
+                          <h3 className="font-semibold text-lg text-gray-900">{category.title}</h3>
+                        </div>
+                        <p className="text-gray-600 mb-4 text-sm">{category.description}</p>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-gray-500">{category.count}</span>
+                          <span className="text-orange-500 font-semibold text-sm">{category.price}</span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </CarouselItem>
+              );
+            })}
+          </CarouselContent>
+          <CarouselPrevious className="hidden md:flex" />
+          <CarouselNext className="hidden md:flex" />
+        </Carousel>
       </div>
     </section>
   );

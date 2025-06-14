@@ -129,6 +129,8 @@ Changelog:
 - June 14, 2025. Removed MatchmakingInterface component and project filtering sections from home page
 - June 14, 2025. Replaced cost estimator with SSO integration links to professional budgeting software (Saturation.io, Movie Magic Budgeting, Showbiz Budgeting, Hot Budget)
 - June 14, 2025. Removed availability calendar - availability is resource-specific, not a broad utility
+- June 14, 2025. Implemented carousel for category cards with all 6 resource types (locations, crew, cast, services, permits, tax rebates)
+- June 14, 2025. Made category cards clickable to navigate directly to respective resource tabs
 ```
 
 ## User Preferences
