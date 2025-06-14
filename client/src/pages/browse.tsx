@@ -214,23 +214,28 @@ export default function Browse() {
             </div>
 
             {aiResults.length > 0 && (
-              <div className="mb-4">
-                <Badge variant="secondary" className="mb-2">
-                  AI Search Results for "{resourceType}"
-                  {serviceSubtype && ` - ${serviceSubtype}`}
-                </Badge>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    setAiResults([]);
-                    setDescription("");
-                    setResourceType("");
-                    setServiceSubtype("");
-                  }}
-                >
-                  Clear search
-                </Button>
+              <div className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                <div className="flex items-center justify-between mb-2">
+                  <Badge variant="default" className="bg-blue-600 text-white">
+                    AI Search Results for "{resourceType}"
+                    {serviceSubtype && ` - ${serviceSubtype}`}
+                  </Badge>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setAiResults([]);
+                      setDescription("");
+                      setResourceType("");
+                      setServiceSubtype("");
+                    }}
+                  >
+                    Clear search
+                  </Button>
+                </div>
+                <p className="text-sm text-blue-700 dark:text-blue-300">
+                  Showing {aiResults.length} resources matching: "{description}"
+                </p>
               </div>
             )}
 
