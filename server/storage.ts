@@ -8,6 +8,8 @@ import {
   projects,
   matches,
   inquiries,
+  messages,
+  notifications,
   type Organization,
   type InsertOrganization,
   type User,
@@ -22,6 +24,10 @@ import {
   type InsertMatch,
   type Inquiry,
   type InsertInquiry,
+  type Message,
+  type InsertMessage,
+  type Notification,
+  type InsertNotification,
 } from "@shared/schema";
 
 export interface IStorage {
@@ -77,6 +83,20 @@ export interface IStorage {
   getInquiriesByProvider(providerId: number): Promise<Inquiry[]>;
   createInquiry(inquiry: InsertInquiry): Promise<Inquiry>;
   updateInquiry(id: number, updates: Partial<InsertInquiry>): Promise<Inquiry | undefined>;
+
+  // Messages
+  getMessage(id: number): Promise<Message | undefined>;
+  getMessagesByUser(userId: number): Promise<Message[]>;
+  getConversation(senderId: number, recipientId: number, resourceId?: number): Promise<Message[]>;
+  createMessage(message: InsertMessage): Promise<Message>;
+  markMessageAsRead(id: number): Promise<Message | undefined>;
+
+  // Notifications
+  getNotification(id: number): Promise<Notification | undefined>;
+  getNotificationsByUser(userId: number): Promise<Notification[]>;
+  getUnreadNotificationsByUser(userId: number): Promise<Notification[]>;
+  createNotification(notification: InsertNotification): Promise<Notification>;
+  markNotificationAsRead(id: number): Promise<Notification | undefined>;
 }
 
 export class MemStorage implements IStorage {
@@ -87,6 +107,8 @@ export class MemStorage implements IStorage {
   private projects: Map<number, Project>;
   private matches: Map<number, Match>;
   private inquiries: Map<number, Inquiry>;
+  private messages: Map<number, Message>;
+  private notifications: Map<number, Notification>;
   private currentId: number;
 
   constructor() {
@@ -97,6 +119,8 @@ export class MemStorage implements IStorage {
     this.projects = new Map();
     this.matches = new Map();
     this.inquiries = new Map();
+    this.messages = new Map();
+    this.notifications = new Map();
     this.currentId = 1;
     this.initializeWithSampleData();
   }
