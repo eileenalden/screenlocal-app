@@ -46,7 +46,7 @@ export default function Landing() {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-6">
-            FilmMatch Oakland
+            FilmMatcher Oakland
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
             Your Oakland/East Bay Film Production Matchmaker. Connect with local resources, 
@@ -127,7 +127,7 @@ export default function Landing() {
 
         {/* Footer */}
         <div className="text-center text-gray-500 dark:text-gray-400">
-          <p>&copy; 2025 FilmMatch. All rights reserved.</p>
+          <p>&copy; 2025 FilmMatcher. All rights reserved.</p>
         </div>
       </div>
     </div>

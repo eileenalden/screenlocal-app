@@ -1,8 +1,8 @@
-# FilmMatch Oakland
+# FilmMatcher Oakland
 
 ## Overview
 
-FilmMatch Oakland is a full-stack web application designed to connect filmmakers with local resources in Oakland, California. The platform serves as a marketplace where filmmakers can find locations, crew members, cast, and services for their productions, while providers can list their offerings. The application features AI-powered matching, production planning tools, and permit/tax incentive guidance.
+FilmMatcher Oakland is a full-stack web application designed to connect filmmakers with local resources in Oakland, California. The platform serves as a marketplace where filmmakers can find locations, crew members, cast, and services for their productions, while providers can list their offerings. The application features AI-powered matching, production planning tools, and permit/tax incentive guidance.
 
 ## System Architecture
 
@@ -140,6 +140,7 @@ Changelog:
 - June 14, 2025. Added disabled "Apply Online" placeholder button for Oakland tax rebate section
 - June 14, 2025. Removed redundant "Discover Amazing Resources" carousel section from home page to eliminate duplication with category cards
 - June 14, 2025. Removed SSO budget planning software section from home page since it's now properly integrated in the Budget tab
+- June 14, 2025. Changed application name from FilmMatch to FilmMatcher to avoid confusion with another company
 - June 14, 2025. Implemented filtered Browse system requiring subcategory selection before browsing resources
 - June 14, 2025. Changed "Browse All" to "Browse" with mandatory filtering dialog for locations, crew, cast, services, and permits
 - June 14, 2025. Added location type filters (Interior/Exterior - House/Apartment/Business) for location browsing

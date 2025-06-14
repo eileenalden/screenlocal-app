@@ -37,7 +37,7 @@ export default function SuccessStories() {
             Success Stories
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            See how FilmMatch Oakland has helped bring projects to life
+            See how FilmMatcher Oakland has helped bring projects to life
           </p>
         </div>
 

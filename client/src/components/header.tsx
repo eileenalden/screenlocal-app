@@ -62,7 +62,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <Film className="h-8 w-8 text-orange-500" />
-            <span className="font-serif font-bold text-xl text-gray-900">FilmMatch</span>
+            <span className="font-serif font-bold text-xl text-gray-900">FilmMatcher</span>
           </Link>
 
           {/* Desktop Navigation */}
