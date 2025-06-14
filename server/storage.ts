@@ -126,12 +126,16 @@ export class MemStorage implements IStorage {
   }
 
   private initializeWithSampleData() {
-    // Create Oakland organization
+    // Create Oakland organization with branding
     this.createOrganization({
       name: "Oakland Film Commission",
       slug: "oakland",
       city: "Oakland",
       state: "California",
+      brandName: "Oakland/East Bay",
+      heroTitle: "Your Oakland/East Bay\nFilm Production\nMatchmaker",
+      heroSubtitle: "Connect with locations, crew, cast, services, permits, and tax rebates in the Oakland and East Bay region. From concept to screen, we've got your production covered.",
+      primaryColor: "#ea580c",
       isActive: true,
     });
 

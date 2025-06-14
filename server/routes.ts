@@ -7,6 +7,31 @@ import { insertResourceSchema, insertProjectSchema, insertMatchSchema, insertInq
 import { performAISearch } from "./ai-search";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Organization endpoints
+  app.get("/api/organization/:slug", async (req, res) => {
+    try {
+      const { slug } = req.params;
+      const organization = await storage.getOrganizationBySlug(slug);
+      
+      if (!organization) {
+        return res.status(404).json({ message: "Organization not found" });
+      }
+
+      res.json(organization);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch organization" });
+    }
+  });
+
+  app.get("/api/organization", async (req, res) => {
+    try {
+      const organization = await storage.getOrganizationBySlug("oakland");
+      res.json(organization);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch organization" });
+    }
+  });
+
   // Resources endpoints
   app.get("/api/resources", async (req, res) => {
     try {

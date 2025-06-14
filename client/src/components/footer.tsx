@@ -44,10 +44,9 @@ export default function Footer() {
             <div className="flex items-center space-x-2 mb-4">
               <Film className="h-8 w-8 text-orange-500" />
               <span className="font-serif font-bold text-xl">FilmMatch</span>
-              <span className="text-gray-400">Oakland</span>
             </div>
             <p className="text-gray-400 mb-4">
-              Connecting Oakland's film community. From concept to screen, we've got your production covered.
+              Connecting filmmakers with local production resources. From concept to screen, we've got your production covered.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">
@@ -82,7 +81,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <div className="text-gray-400 text-sm">
-            © 2024 FilmMatch Oakland. All rights reserved.
+            © 2025 FilmMatch. All rights reserved.
           </div>
           <div className="flex space-x-6 text-sm text-gray-400 mt-4 md:mt-0">
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>

@@ -11,6 +11,12 @@ export const organizations = pgTable("organizations", {
   slug: text("slug").notNull().unique(),
   city: text("city").notNull(),
   state: text("state").notNull(),
+  brandName: text("brand_name"), // e.g., "Oakland/East Bay", "Austin", "Atlanta"
+  heroTitle: text("hero_title"), // Custom hero title override
+  heroSubtitle: text("hero_subtitle"), // Custom hero subtitle
+  primaryColor: text("primary_color").default("#ea580c"), // Orange-500 default
+  logoUrl: text("logo_url"),
+  websiteUrl: text("website_url"),
   isActive: boolean("is_active").notNull().default(true),
   createdAt: timestamp("created_at").defaultNow(),
 });
