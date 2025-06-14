@@ -1,7 +1,6 @@
 import Header from "@/components/header";
 import HeroSection from "@/components/hero-section";
 import CategoryCards from "@/components/category-cards";
-import ResourceCarousel from "@/components/resource-carousel";
 import HowItWorks from "@/components/how-it-works";
 import ProductionTools from "@/components/production-tools";
 import PermitSection from "@/components/permit-section";
@@ -44,7 +43,6 @@ export default function Home() {
       </section>
 
       <CategoryCards />
-      <ResourceCarousel />
       <HowItWorks />
       <PermitSection />
       <ProductionTools />

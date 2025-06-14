@@ -138,6 +138,7 @@ Changelog:
 - June 14, 2025. Added East Bay city dropdown (Oakland, Berkeley, Richmond) with detailed tax rebate qualifications and application processes
 - June 14, 2025. Implemented California state tax credit section with expandable details and direct application links
 - June 14, 2025. Added disabled "Apply Online" placeholder button for Oakland tax rebate section
+- June 14, 2025. Removed redundant "Discover Amazing Resources" carousel section from home page to eliminate duplication with category cards
 - June 14, 2025. Implemented filtered Browse system requiring subcategory selection before browsing resources
 - June 14, 2025. Changed "Browse All" to "Browse" with mandatory filtering dialog for locations, crew, cast, services, and permits
 - June 14, 2025. Added location type filters (Interior/Exterior - House/Apartment/Business) for location browsing
