@@ -47,16 +47,30 @@ const BROWSE_FILTERS = {
   },
   crew: {
     name: "Department",
-    options: [
-      "Production",
-      "Camera", 
-      "Grip & Electric",
-      "Art",
-      "Wardrobe",
-      "Hair & Makeup",
-      "Sound",
-      "Post-Production"
-    ]
+    multiSelect: true,
+    categories: {
+      department: {
+        name: "Department",
+        options: [
+          "Production",
+          "Camera", 
+          "Grip & Electric",
+          "Art",
+          "Wardrobe",
+          "Hair & Makeup",
+          "Sound",
+          "Post-Production"
+        ]
+      },
+      unionStatus: {
+        name: "Union Status",
+        options: [
+          "Any",
+          "Union",
+          "Non-Union"
+        ]
+      }
+    }
   },
   cast: {
     name: "Demographics",
