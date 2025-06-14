@@ -13,27 +13,16 @@ import ProjectProfile from "@/pages/project-profile";
 import NotFound from "@/pages/not-found";
 
 function Router() {
-  const { isAuthenticated, isLoading } = useAuth();
-
+  // For development, bypass authentication to show the home page with carousel
   return (
     <Switch>
-      {isLoading ? (
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="text-lg">Loading...</div>
-        </div>
-      ) : !isAuthenticated ? (
-        <Route path="/" component={Landing} />
-      ) : (
-        <>
-          <Route path="/" component={Home} />
-          <Route path="/locations" component={ResourceCategory} />
-          <Route path="/crew" component={ResourceCategory} />
-          <Route path="/cast" component={ResourceCategory} />
-          <Route path="/services" component={ResourceCategory} />
-          <Route path="/permits" component={ResourceCategory} />
-          <Route path="/budget" component={ResourceCategory} />
-        </>
-      )}
+      <Route path="/" component={Home} />
+      <Route path="/locations" component={ResourceCategory} />
+      <Route path="/crew" component={ResourceCategory} />
+      <Route path="/cast" component={ResourceCategory} />
+      <Route path="/services" component={ResourceCategory} />
+      <Route path="/permits" component={ResourceCategory} />
+      <Route path="/budget" component={ResourceCategory} />
       <Route component={NotFound} />
     </Switch>
   );
