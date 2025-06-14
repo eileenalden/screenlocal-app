@@ -835,6 +835,9 @@ export default function ResourceCategory() {
           )}
         </div>
 
+        {/* Budget Category - Special Content */}
+        {category === "budget" && <BudgetSection />}
+
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Search Panel */}
           {category !== "budget" && mode === "search" && (
