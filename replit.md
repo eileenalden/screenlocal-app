@@ -156,6 +156,8 @@ Changelog:
 - June 14, 2025. Implemented multi-select filtering for crew departments (Production, Camera, Grip & Electric, Art, Wardrobe, Hair & Makeup, Sound, Post-Production) and union status
 - June 14, 2025. Integrated AI search directly with category carousel to create unified mental model - users can either browse cards or use AI search on the same content
 - June 14, 2025. Added contextual messaging "Can't find what you need browsing? Let AI help you find the perfect match from these categories" to connect the two interaction modes
+- June 14, 2025. Removed metrics row (0+ stats) from home page for cleaner user experience flow
+- June 14, 2025. Moved "Get Started" CTA to dedicated orange section with login link for existing users below it
 ```
 
 ## User Preferences
