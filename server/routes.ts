@@ -275,7 +275,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Messages endpoints
   app.get("/api/messages/:userId", async (req, res) => {
     try {
-      const userId = parseInt(req.params.userId);
+      const userId = req.params.userId;
       const messages = await storage.getMessagesByUser(userId);
       res.json(messages);
     } catch (error) {
@@ -285,8 +285,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/conversations/:senderId/:recipientId", async (req, res) => {
     try {
-      const senderId = parseInt(req.params.senderId);
-      const recipientId = parseInt(req.params.recipientId);
+      const senderId = req.params.senderId;
+      const recipientId = req.params.recipientId;
       const resourceId = req.query.resourceId ? parseInt(req.query.resourceId as string) : undefined;
       
       const conversation = await storage.getConversation(senderId, recipientId, resourceId);
@@ -322,7 +322,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Notifications endpoints
   app.get("/api/notifications/:userId", async (req, res) => {
     try {
-      const userId = parseInt(req.params.userId);
+      const userId = req.params.userId;
       const notifications = await storage.getNotificationsByUser(userId);
       res.json(notifications);
     } catch (error) {
@@ -332,7 +332,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/notifications/:userId/unread", async (req, res) => {
     try {
-      const userId = parseInt(req.params.userId);
+      const userId = req.params.userId;
       const notifications = await storage.getUnreadNotificationsByUser(userId);
       res.json(notifications);
     } catch (error) {

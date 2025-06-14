@@ -181,14 +181,11 @@ export class DatabaseStorage implements IStorage {
     maxPrice?: number;
     available?: boolean;
   }): Promise<Resource[]> {
-    let query = db.select().from(resources);
-    
-    // Apply filters if provided
     if (filters?.type) {
-      query = query.where(eq(resources.type, filters.type));
+      return await db.select().from(resources).where(eq(resources.type, filters.type));
     }
     
-    return await query;
+    return await db.select().from(resources);
   }
 
   async getResourcesByProvider(providerId: number): Promise<Resource[]> {
