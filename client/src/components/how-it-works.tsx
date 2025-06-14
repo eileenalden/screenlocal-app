@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Search, Heart, Upload } from "lucide-react";
 
 export default function HowItWorks() {
@@ -57,6 +58,20 @@ export default function HowItWorks() {
               </Card>
             );
           })}
+        </div>
+
+        {/* Get Started CTA */}
+        <div className="text-center mt-12">
+          <Button 
+            size="lg"
+            className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 text-lg font-semibold"
+            onClick={() => window.location.href = '/api/login'}
+          >
+            Get Started
+          </Button>
+          <p className="text-sm text-gray-500 mt-3">
+            Create your account to start building your production team
+          </p>
         </div>
       </div>
     </section>

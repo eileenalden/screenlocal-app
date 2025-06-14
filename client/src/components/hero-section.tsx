@@ -1,10 +1,5 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Link, useLocation } from "wouter";
-import { Wand2, Grid3X3, ChevronLeft, ChevronRight } from "lucide-react";
-import { useMutation } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const filmingImages = [
   {
@@ -26,9 +21,7 @@ const filmingImages = [
 ];
 
 export default function HeroSection() {
-  const [searchQuery, setSearchQuery] = useState("");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [, setLocation] = useLocation();
 
   // Auto-rotate images every 5 seconds
   useEffect(() => {
@@ -46,13 +39,7 @@ export default function HeroSection() {
     setCurrentImageIndex((prev) => (prev - 1 + filmingImages.length) % filmingImages.length);
   };
 
-  const handleAISearch = () => {
-    if (searchQuery.trim()) {
-      // Navigate to locations page with search query as URL parameter
-      const encodedQuery = encodeURIComponent(searchQuery);
-      setLocation(`/locations?query=${encodedQuery}`);
-    }
-  };
+
 
   return (
     <section className="relative bg-gradient-to-br from-orange-600 via-orange-500 to-amber-500 text-white overflow-hidden">
@@ -82,44 +69,9 @@ export default function HeroSection() {
             <span className="text-white drop-shadow-lg">Film Production</span><br />
             Matchmaker
           </h1>
-          <p className="text-xl md:text-2xl mb-8 text-white/95 max-w-3xl mx-auto font-medium">
+          <p className="text-xl md:text-2xl mb-12 text-white/95 max-w-3xl mx-auto font-medium">
             Connect with locations, crew, cast, services, permits, and tax rebates. From concept to screen, we've got your production covered.
           </p>
-
-          <div className="max-w-4xl mx-auto bg-white rounded-2xl p-6 shadow-2xl">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1">
-                <Textarea
-                  placeholder="Describe your project: 'Looking for a Victorian house for a period drama, need 3-day shoot with vintage props...'"
-                  className="w-full p-4 border border-gray-300 rounded-xl resize-none text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  rows={3}
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <Button 
-                  onClick={handleAISearch}
-                  className="bg-orange-500 text-white px-8 py-4 rounded-xl hover:bg-orange-600 transition-colors font-semibold h-auto"
-                >
-                  <Wand2 className="h-4 w-4 mr-2" />
-                  AI Match
-                </Button>
-                <div className="text-center">
-                  <span className="text-gray-500 text-sm">or</span>
-                </div>
-                <Link href="/locations">
-                  <Button
-                    variant="outline"
-                    className="border-2 border-orange-500 text-orange-500 px-8 py-4 rounded-xl hover:bg-orange-500 hover:text-white transition-colors font-semibold h-auto w-full"
-                  >
-                    <Grid3X3 className="h-4 w-4 mr-2" />
-                    Browse
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
