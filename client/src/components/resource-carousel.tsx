@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -83,33 +83,7 @@ const typeColors = {
 
 export default function ResourceCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [visibleCards, setVisibleCards] = useState(3);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setVisibleCards(1);
-      } else if (window.innerWidth < 1200) {
-        setVisibleCards(2);
-      } else {
-        setVisibleCards(3);
-      }
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => 
-        prev >= sampleResources.length - visibleCards ? 0 : prev + 1
-      );
-    }, 4000);
-
-    return () => clearInterval(timer);
-  }, [visibleCards]);
+  const visibleCards = 3;
 
   const nextSlide = () => {
     setCurrentIndex((prev) => 
@@ -136,6 +110,7 @@ export default function ResourceCarousel() {
           </p>
         </div>
 
+        {/* Carousel Container */}
         <div className="relative">
           {/* Navigation Buttons */}
           <Button
@@ -180,14 +155,14 @@ export default function ResourceCarousel() {
                       />
                       <div className="absolute top-3 left-3">
                         <Badge className={typeColors[resource.type as keyof typeof typeColors]}>
-                          {resource.type.charAt(0).toUpperCase() + resource.type.slice(1)}
+                          {resource.type}
                         </Badge>
                       </div>
-                      <div className="absolute top-3 right-3 flex gap-2">
+                      <div className="absolute top-3 right-3">
                         <Button
                           size="icon"
-                          variant="secondary"
-                          className="h-8 w-8 bg-white/90 hover:bg-white"
+                          variant="ghost"
+                          className="bg-white/80 hover:bg-white"
                         >
                           <Heart className="h-4 w-4" />
                         </Button>
@@ -195,14 +170,10 @@ export default function ResourceCarousel() {
                     </div>
                     
                     <CardContent className="p-4">
-                      <h3 className="font-semibold text-lg mb-2 line-clamp-1">
-                        {resource.title}
-                      </h3>
-                      <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-                        {resource.description}
-                      </p>
+                      <h3 className="font-semibold text-lg mb-2">{resource.title}</h3>
+                      <p className="text-gray-600 text-sm mb-3">{resource.description}</p>
                       
-                      <div className="space-y-2 mb-4">
+                      <div className="space-y-2">
                         <div className="flex items-center text-sm text-gray-500">
                           <MapPin className="h-4 w-4 mr-1" />
                           {resource.location}
@@ -211,16 +182,13 @@ export default function ResourceCarousel() {
                           <Clock className="h-4 w-4 mr-1" />
                           {resource.category}
                         </div>
-                        <div className="flex items-center text-sm font-semibold text-green-600">
+                        <div className="flex items-center text-sm font-medium text-gray-900">
                           <DollarSign className="h-4 w-4 mr-1" />
                           {resource.price}
                         </div>
                       </div>
-
-                      <Button 
-                        className="w-full"
-                        size="sm"
-                      >
+                      
+                      <Button className="w-full mt-4" size="sm">
                         <MessageCircle className="h-4 w-4 mr-2" />
                         Message Provider
                       </Button>
@@ -231,12 +199,12 @@ export default function ResourceCarousel() {
             </div>
           </div>
 
-          {/* Indicators */}
+          {/* Dots Indicator */}
           <div className="flex justify-center mt-6 space-x-2">
             {Array.from({ length: sampleResources.length - visibleCards + 1 }).map((_, index) => (
               <button
                 key={index}
-                className={`h-2 w-2 rounded-full transition-colors ${
+                className={`w-2 h-2 rounded-full transition-colors ${
                   index === currentIndex ? 'bg-blue-600' : 'bg-gray-300'
                 }`}
                 onClick={() => setCurrentIndex(index)}
