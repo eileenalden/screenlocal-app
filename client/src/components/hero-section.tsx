@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const filmingImages = [
   {
@@ -69,9 +70,32 @@ export default function HeroSection() {
             <span className="text-white drop-shadow-lg">Film Production</span><br />
             Matchmaker
           </h1>
-          <p className="text-xl md:text-2xl mb-12 text-white/95 max-w-3xl mx-auto font-medium">
+          <p className="text-xl md:text-2xl mb-8 text-white/95 max-w-3xl mx-auto font-medium">
             Connect with locations, crew, cast, services, permits, and tax rebates. From concept to screen, we've got your production covered.
           </p>
+          
+          {/* CTA Buttons */}
+          <div className="text-center">
+            <Button 
+              size="lg"
+              className="bg-white text-orange-500 hover:bg-orange-50 px-8 py-3 text-lg font-semibold mb-4"
+              onClick={() => window.location.href = '/api/login'}
+            >
+              Get Started
+            </Button>
+            
+            <div className="text-center">
+              <p className="text-white/90">
+                Already have an account?{" "}
+                <a 
+                  href="/api/login" 
+                  className="text-white underline hover:no-underline font-medium"
+                >
+                  Log in here
+                </a>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -1,8 +1,8 @@
-# FilmMatcher Oakland
+# ScreenLocal
 
 ## Overview
 
-FilmMatcher Oakland is a full-stack web application designed to connect filmmakers with local resources in Oakland, California. The platform serves as a marketplace where filmmakers can find locations, crew members, cast, and services for their productions, while providers can list their offerings. The application features AI-powered matching, production planning tools, and permit/tax incentive guidance.
+ScreenLocal is a full-stack web application designed to connect filmmakers with local resources in Oakland, California. The platform serves as a marketplace where filmmakers can find locations, crew members, cast, and services for their productions, while providers can list their offerings. The application features AI-powered matching, production planning tools, and permit/tax incentive guidance.
 
 ## System Architecture
 
@@ -141,6 +141,7 @@ Changelog:
 - June 14, 2025. Removed redundant "Discover Amazing Resources" carousel section from home page to eliminate duplication with category cards
 - June 14, 2025. Removed SSO budget planning software section from home page since it's now properly integrated in the Budget tab
 - June 14, 2025. Changed application name from FilmMatch to FilmMatcher to avoid confusion with another company
+- June 14, 2025. Rebranded application from FilmMatcher to ScreenLocal with domain screenlocal.app
 - June 14, 2025. Implemented filtered Browse system requiring subcategory selection before browsing resources
 - June 14, 2025. Changed "Browse All" to "Browse" with mandatory filtering dialog for locations, crew, cast, services, and permits
 - June 14, 2025. Added location type filters (Interior/Exterior - House/Apartment/Business) for location browsing
@@ -157,7 +158,7 @@ Changelog:
 - June 14, 2025. Integrated AI search directly with category carousel to create unified mental model - users can either browse cards or use AI search on the same content
 - June 14, 2025. Added contextual messaging "Can't find what you need browsing? Let AI help you find the perfect match from these categories" to connect the two interaction modes
 - June 14, 2025. Removed metrics row (0+ stats) from home page for cleaner user experience flow
-- June 14, 2025. Moved "Get Started" CTA to dedicated orange section with login link for existing users below it
+- June 14, 2025. Integrated "Get Started" CTA and login link directly into hero banner below main descriptive text
 ```
 
 ## User Preferences
