@@ -1,7 +1,6 @@
 import Header from "@/components/header";
 import HeroSection from "@/components/hero-section";
 import CategoryCards from "@/components/category-cards";
-import MatchmakingInterface from "@/components/matchmaking-interface";
 import ProductionTools from "@/components/production-tools";
 import PermitSection from "@/components/permit-section";
 import SuccessStories from "@/components/success-stories";
@@ -43,7 +42,6 @@ export default function Home() {
       </section>
 
       <CategoryCards />
-      <MatchmakingInterface />
       <ProductionTools />
       <PermitSection />
       <SuccessStories />
