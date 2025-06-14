@@ -14,7 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Search, Heart, MessageSquare, Loader2, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { Search, Heart, MessageSquare, Loader2, ChevronLeft, ChevronRight, X, RefreshCw, BookOpen } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import MessagingDialog from "@/components/messaging-dialog";
@@ -57,9 +57,34 @@ export default function ResourceCategory() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [favorites, setFavorites] = useState<number[]>([]);
   const [aiResults, setAiResults] = useState<Resource[]>([]);
-  const [mode, setMode] = useState<"browse" | "search">("browse");
+  const [mode, setMode] = useState<"browse" | "search" | "favorites">("browse");
+  const [skippedResources, setSkippedResources] = useState<number[]>([]);
+  const [showFavorites, setShowFavorites] = useState(false);
   const { toast } = useToast();
   const search = useSearch();
+
+  // Load favorites and skipped resources from localStorage
+  useEffect(() => {
+    const savedFavorites = localStorage.getItem(`favorites_${category}`);
+    const savedSkipped = localStorage.getItem(`skipped_${category}`);
+    
+    if (savedFavorites) {
+      setFavorites(JSON.parse(savedFavorites));
+    }
+    if (savedSkipped) {
+      setSkippedResources(JSON.parse(savedSkipped));
+    }
+  }, [category]);
+
+  // Save favorites to localStorage
+  useEffect(() => {
+    localStorage.setItem(`favorites_${category}`, JSON.stringify(favorites));
+  }, [favorites, category]);
+
+  // Save skipped resources to localStorage
+  useEffect(() => {
+    localStorage.setItem(`skipped_${category}`, JSON.stringify(skippedResources));
+  }, [skippedResources, category]);
 
   // Handle URL query parameter for AI search from home page
   useEffect(() => {
@@ -134,6 +159,22 @@ export default function ResourceCategory() {
     setDescription("");
     setSubcategory("");
     setCurrentIndex(0);
+    setShowFavorites(false);
+  };
+
+  const handleFavorites = () => {
+    setMode("favorites");
+    setShowFavorites(true);
+    setCurrentIndex(0);
+  };
+
+  const resetSearch = () => {
+    setSkippedResources([]);
+    setCurrentIndex(0);
+    toast({
+      title: "Search reset",
+      description: "You can now review all resources again",
+    });
   };
 
   const toggleFavorite = (resourceId: number) => {
@@ -145,14 +186,21 @@ export default function ResourceCategory() {
   };
 
   const swipeLeft = () => {
-    const resources = mode === "search" ? aiResults : allResources;
+    const resources = getDisplayResources();
+    const currentResource = resources[currentIndex];
+    
+    // Mark current resource as skipped
+    if (currentResource && !skippedResources.includes(currentResource.id)) {
+      setSkippedResources(prev => [...prev, currentResource.id]);
+    }
+    
     if (currentIndex < resources.length - 1) {
       setCurrentIndex(prev => prev + 1);
     }
   };
 
   const swipeRight = () => {
-    const resources = mode === "search" ? aiResults : allResources;
+    const resources = getDisplayResources();
     const currentResource = resources[currentIndex];
     if (currentResource) {
       toggleFavorite(currentResource.id);
@@ -160,7 +208,19 @@ export default function ResourceCategory() {
     }
   };
 
-  const displayResources: Resource[] = mode === "search" ? aiResults : (allResources || []);
+  const getDisplayResources = (): Resource[] => {
+    if (mode === "favorites") {
+      return allResources.filter((resource: Resource) => favorites.includes(resource.id));
+    }
+    if (mode === "search") {
+      return aiResults;
+    }
+    // In browse mode, filter out skipped resources unless we've seen all
+    const availableResources = allResources.filter((resource: Resource) => !skippedResources.includes(resource.id));
+    return availableResources.length > 0 ? availableResources : allResources;
+  };
+
+  const displayResources: Resource[] = getDisplayResources();
   const currentResource = displayResources[currentIndex];
 
   if (!config) {
@@ -195,7 +255,35 @@ export default function ResourceCategory() {
             >
               AI Search
             </Button>
+            <Button
+              variant={mode === "favorites" ? "default" : "outline"}
+              onClick={handleFavorites}
+              className="relative"
+            >
+              <BookOpen className="h-4 w-4 mr-2" />
+              Favorites
+              {favorites.length > 0 && (
+                <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs">
+                  {favorites.length}
+                </Badge>
+              )}
+            </Button>
           </div>
+
+          {/* Reset Button */}
+          {mode === "browse" && skippedResources.length > 0 && (
+            <div className="flex justify-center mb-4">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={resetSearch}
+                className="text-orange-600 border-orange-300 hover:bg-orange-50"
+              >
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Reset & Review All Again
+              </Button>
+            </div>
+          )}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
@@ -287,8 +375,19 @@ export default function ResourceCategory() {
             ) : displayResources.length === 0 ? (
               <div className="text-center py-12">
                 <p className="text-gray-500 dark:text-gray-400">
-                  {mode === "search" ? "No results found for your search" : `No ${category} available`}
+                  {mode === "search" ? "No results found for your search" : 
+                   mode === "favorites" ? "No favorites saved yet" : 
+                   `No ${category} available`}
                 </p>
+                {mode === "favorites" && (
+                  <Button 
+                    variant="outline" 
+                    onClick={handleBrowse}
+                    className="mt-4"
+                  >
+                    Start browsing to add favorites
+                  </Button>
+                )}
               </div>
             ) : (
               <div className="space-y-6">
