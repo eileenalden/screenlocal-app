@@ -51,6 +51,8 @@ export default function Header() {
     { href: "/crew", label: "Crew", active: location.startsWith("/crew") },
     { href: "/cast", label: "Cast", active: location.startsWith("/cast") },
     { href: "/services", label: "Services", active: location.startsWith("/services") },
+    { href: "/permits", label: "Permits", active: location.startsWith("/permits") },
+    { href: "/tax-rebates", label: "Tax Rebates", active: location.startsWith("/tax-rebates") },
   ];
 
   return (
@@ -61,7 +63,6 @@ export default function Header() {
           <Link href="/" className="flex items-center space-x-2">
             <Film className="h-8 w-8 text-orange-500" />
             <span className="font-serif font-bold text-xl text-gray-900">FilmMatch</span>
-            <span className="text-gray-600 font-medium">Oakland</span>
           </Link>
 
           {/* Desktop Navigation */}

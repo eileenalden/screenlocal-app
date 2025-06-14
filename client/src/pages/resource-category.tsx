@@ -14,22 +14,32 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Search, Heart, MessageSquare, Loader2, ChevronLeft, ChevronRight, X, RefreshCw, BookOpen } from "lucide-react";
+import { Search, Heart, MessageSquare, Loader2, ChevronLeft, ChevronRight, X, RefreshCw, BookOpen, MapPin, Settings } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import MessagingDialog from "@/components/messaging-dialog";
 import type { Resource } from "@shared/schema";
 
+// Location radius configuration for each resource type
+const LOCATION_SETTINGS = {
+  locations: { defaultRadius: 10, options: [5, 10, 15, 20, 30] },
+  crew: { defaultRadius: 30, options: [10, 20, 30, 50] },
+  cast: { defaultRadius: 30, options: [10, 20, 30, 50] },
+  services: { defaultRadius: 20, options: [10, 15, 20, 30] },
+  permits: { defaultRadius: 50, options: [20, 30, 50, 100] },
+  'tax-rebates': { defaultRadius: 100, options: [50, 100, 200, 500] }
+};
+
 const categoryConfig = {
   locations: {
     title: "Locations",
-    description: "Find the perfect filming locations in Oakland",
+    description: "Find the perfect filming locations",
     subcategories: ["studio", "outdoor", "house", "warehouse", "office", "restaurant"],
     placeholder: "Describe the location you need: 'Victorian house with period details' or 'Industrial warehouse with high ceilings'..."
   },
   crew: {
     title: "Crew",
-    description: "Connect with professional film crew in Oakland",
+    description: "Connect with professional film crew",
     subcategories: ["director", "cinematographer", "sound", "lighting", "camera-operator", "producer"],
     placeholder: "Describe your crew needs: 'Experienced DP for indie feature' or 'Sound engineer for documentary'..."
   },
@@ -44,6 +54,18 @@ const categoryConfig = {
     description: "Professional film production services",
     subcategories: ["pre-production", "equipment-rental", "craft-services", "post-production"],
     placeholder: "Describe what services you need: 'Catering for 50 person crew' or 'Camera equipment rental'..."
+  },
+  permits: {
+    title: "Permits",
+    description: "Film permits and location approvals",
+    subcategories: ["filming", "street-closure", "drone", "special-events", "public-property", "commercial"],
+    placeholder: "Describe your permit needs: 'Street filming permit for downtown scene' or 'Drone permit for aerial shots'..."
+  },
+  'tax-rebates': {
+    title: "Tax Rebates",
+    description: "Film tax incentives and rebates",
+    subcategories: ["state", "city", "county", "federal", "production", "post-production"],
+    placeholder: "Describe your tax rebate needs: 'California film incentive application' or 'Local production rebates'..."
   }
 };
 
@@ -58,6 +80,10 @@ export default function ResourceCategory() {
   const [favorites, setFavorites] = useState<number[]>([]);
   const [aiResults, setAiResults] = useState<Resource[]>([]);
   const [mode, setMode] = useState<"browse" | "search" | "favorites">("browse");
+  const [locationRadius, setLocationRadius] = useState<number>(
+    LOCATION_SETTINGS[category]?.defaultRadius || 20
+  );
+  const [showLocationSettings, setShowLocationSettings] = useState(false);
   const [skippedResources, setSkippedResources] = useState<number[]>([]);
   const [showFavorites, setShowFavorites] = useState(false);
   const { toast } = useToast();

@@ -18,6 +18,8 @@ function Router() {
       <Route path="/crew" component={ResourceCategory} />
       <Route path="/cast" component={ResourceCategory} />
       <Route path="/services" component={ResourceCategory} />
+      <Route path="/permits" component={ResourceCategory} />
+      <Route path="/tax-rebates" component={ResourceCategory} />
       <Route component={NotFound} />
     </Switch>
   );
