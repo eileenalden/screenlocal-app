@@ -125,7 +125,7 @@ Changelog:
 - June 14, 2025. Removed "Oakland" branding for broader geographic flexibility
 - June 14, 2025. Added direct messaging buttons to all resource cards for immediate contact
 - June 14, 2025. Implemented multi-tenant branding support with customizable hero text per organization
-- June 14, 2025. Updated footer copyright to "2025 FilmMatch. All rights reserved."
+- June 14, 2025. Updated footer copyright to "2025 FilmMatcher. All rights reserved."
 - June 14, 2025. Removed MatchmakingInterface component and project filtering sections from home page
 - June 14, 2025. Replaced cost estimator with SSO integration links to professional budgeting software (Saturation.io, Movie Magic Budgeting, Showbiz Budgeting, Hot Budget)
 - June 14, 2025. Removed availability calendar - availability is resource-specific, not a broad utility
