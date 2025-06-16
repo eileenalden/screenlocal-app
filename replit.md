@@ -164,6 +164,7 @@ Changelog:
 - June 14, 2025. Added East Bay city reference points for distance filtering - users can now set radius relative to Oakland, Berkeley, Richmond, Fremont, Hayward, or San Leandro
 - June 14, 2025. Implemented zero-state AI search preview with blurred resource cards and FOMO signup prompts for unauthenticated users
 - June 14, 2025. Added mobile-friendly carousel navigation arrows with responsive sizing for resource category cards
+- June 14, 2025. Removed secondary "Sign Up to Browse" CTA from AI search section for cleaner user flow
 ```
 
 ## User Preferences

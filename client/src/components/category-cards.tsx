@@ -235,17 +235,7 @@ export default function CategoryCards() {
                       </>
                     )}
                   </Button>
-                  <div className="text-center">
-                    <span className="text-gray-500 text-sm">or</span>
-                  </div>
-                  <Button
-                    variant="outline"
-                    onClick={() => window.location.href = '/api/login'}
-                    className="border-2 border-orange-500 text-orange-500 px-8 py-4 rounded-xl hover:bg-orange-500 hover:text-white transition-colors font-semibold h-auto"
-                  >
-                    <Grid3X3 className="h-4 w-4 mr-2" />
-                    Sign Up to Browse
-                  </Button>
+
                 </div>
               </div>
             </CardContent>
