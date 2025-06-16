@@ -3,11 +3,14 @@ import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Film, Search, Bell, Menu, X, Heart } from "lucide-react";
+import ProfileDropdown from "@/components/profile-dropdown";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Header() {
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [totalFavorites, setTotalFavorites] = useState(0);
+  const { user, isAuthenticated } = useAuth();
 
   // Calculate total favorites across all categories
   useEffect(() => {
@@ -98,7 +101,17 @@ export default function Header() {
             <Button variant="ghost" size="sm">
               <Bell className="h-4 w-4" />
             </Button>
-            <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
+            {isAuthenticated ? (
+              <ProfileDropdown user={user as any} />
+            ) : (
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={() => window.location.href = '/api/login'}
+              >
+                Sign In
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
