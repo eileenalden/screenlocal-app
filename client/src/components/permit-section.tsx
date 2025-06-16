@@ -78,11 +78,11 @@ export default function PermitSection() {
                 Insurance
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex flex-col h-full">
               <p className="text-gray-600 mb-4">
                 Production insurance and liability coverage
               </p>
-              <ul className="text-sm text-gray-600 space-y-2 mb-6">
+              <ul className="text-sm text-gray-600 space-y-2 mb-4 flex-1">
                 <li className="flex items-center">
                   <Check className="h-4 w-4 text-green-600 mr-2" />
                   General liability
@@ -95,8 +95,12 @@ export default function PermitSection() {
                   <Check className="h-4 w-4 text-green-600 mr-2" />
                   Errors & omissions
                 </li>
+                <li className="flex items-center">
+                  <Check className="h-4 w-4 text-green-600 mr-2" />
+                  Workers' compensation
+                </li>
               </ul>
-              <Button className="w-full bg-yellow-600 hover:bg-yellow-700">
+              <Button className="w-full bg-yellow-600 hover:bg-yellow-700 mt-auto">
                 Get Quote
               </Button>
             </CardContent>
