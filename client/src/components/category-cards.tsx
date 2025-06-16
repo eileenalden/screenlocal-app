@@ -32,7 +32,7 @@ const categories = [
   },
   {
     id: "cast",
-    title: "Cast",
+    title: "Talent",
     description: "Actors, extras, and specialty performers",
     icon: Theater,
     count: "300+ profiles",

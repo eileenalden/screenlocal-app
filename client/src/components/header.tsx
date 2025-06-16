@@ -49,7 +49,7 @@ export default function Header() {
   const navItems = [
     { href: "/locations", label: "Locations", active: location.startsWith("/locations") },
     { href: "/crew", label: "Crew", active: location.startsWith("/crew") },
-    { href: "/cast", label: "Cast", active: location.startsWith("/cast") },
+    { href: "/cast", label: "Talent", active: location.startsWith("/cast") },
     { href: "/services", label: "Services", active: location.startsWith("/services") },
     { href: "/permits", label: "Permits", active: location.startsWith("/permits") },
     { href: "/budget", label: "Budget", active: location.startsWith("/budget") },

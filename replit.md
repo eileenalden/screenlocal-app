@@ -165,6 +165,7 @@ Changelog:
 - June 14, 2025. Implemented zero-state AI search preview with blurred resource cards and FOMO signup prompts for unauthenticated users
 - June 14, 2025. Added mobile-friendly carousel navigation arrows with responsive sizing for resource category cards
 - June 14, 2025. Removed secondary "Sign Up to Browse" CTA from AI search section for cleaner user flow
+- June 14, 2025. Changed "Cast" label to "Talent" in navigation menu and resource category cards for more inclusive industry terminology
 ```
 
 ## User Preferences
