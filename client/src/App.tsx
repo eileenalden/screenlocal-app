@@ -10,6 +10,8 @@ import Home from "@/pages/home";
 import Landing from "@/pages/landing";
 import ResourceCategory from "@/pages/resource-category";
 import ProjectProfile from "@/pages/project-profile";
+import MyResources from "@/pages/my-resources";
+import CreateResource from "@/pages/create-resource";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -23,6 +25,8 @@ function Router() {
       <Route path="/services" component={ResourceCategory} />
       <Route path="/permits" component={ResourceCategory} />
       <Route path="/budget" component={ResourceCategory} />
+      <Route path="/my-resources" component={MyResources} />
+      <Route path="/create-resource/:type/step-:step" component={CreateResource} />
       <Route component={NotFound} />
     </Switch>
   );

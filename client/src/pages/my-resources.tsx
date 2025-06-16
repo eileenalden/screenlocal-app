@@ -46,6 +46,8 @@ export default function MyResources() {
     retry: false,
   });
 
+  const resourcesArray = Array.isArray(myResources) ? myResources : [];
+
   const handleCreateNew = (type: string) => {
     setLocation(`/create-resource/${type}/step-1`);
   };
@@ -109,9 +111,9 @@ export default function MyResources() {
                 </Card>
               ))}
             </div>
-          ) : myResources?.length > 0 ? (
+          ) : resourcesArray.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {myResources.map((resource: any) => (
+              {resourcesArray.map((resource: any) => (
                 <Card key={resource.id} className="overflow-hidden">
                   <div 
                     className="h-48 bg-cover bg-center"
