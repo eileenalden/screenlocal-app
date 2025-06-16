@@ -24,11 +24,11 @@ export default function PermitSection() {
                 Film Permits
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex flex-col h-full">
               <p className="text-gray-600 mb-4">
                 Streamlined application process for Oakland filming permits
               </p>
-              <ul className="text-sm text-gray-600 space-y-2 mb-6">
+              <ul className="text-sm text-gray-600 space-y-2 mb-4 flex-1">
                 <li className="flex items-center">
                   <Check className="h-4 w-4 text-green-600 mr-2" />
                   Location permits
@@ -42,7 +42,7 @@ export default function PermitSection() {
                   Noise permits
                 </li>
               </ul>
-              <Button className="w-full bg-orange-500 hover:bg-orange-600">
+              <Button className="w-full bg-orange-500 hover:bg-orange-600 mt-auto">
                 Start Application
               </Button>
             </CardContent>
@@ -56,15 +56,15 @@ export default function PermitSection() {
                 Tax Rebates
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex flex-col h-full">
               <p className="text-gray-600 mb-4">
                 Up to 25% rebate on qualified production expenses
               </p>
-              <div className="bg-white rounded-lg p-4 mb-4">
+              <div className="bg-white rounded-lg p-4 mb-4 flex-1">
                 <div className="text-2xl font-bold text-teal-500 mb-1">$2,587</div>
                 <div className="text-sm text-gray-600">Estimated rebate for your project</div>
               </div>
-              <Button className="w-full bg-teal-500 hover:bg-teal-600">
+              <Button className="w-full bg-teal-500 hover:bg-teal-600 mt-auto">
                 Check Eligibility
               </Button>
             </CardContent>

@@ -168,6 +168,7 @@ Changelog:
 - June 14, 2025. Changed "Cast" label to "Talent" in navigation menu and resource category cards for more inclusive industry terminology
 - June 14, 2025. Fixed insurance card layout to match permit and budget cards with consistent button positioning using flexbox
 - June 16, 2025. Implemented comprehensive Apple-style resource management system with profile dropdown, multi-step onboarding, and resource-specific forms for locations, talent, crew, and services
+- June 16, 2025. Fixed permit section card layout - applied consistent flexbox styling to align all three CTA buttons at the same bottom position
 ```
 
 ## User Preferences
