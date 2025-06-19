@@ -627,8 +627,11 @@ export default function ResourceCategory() {
     queryKey: ['/api/resources', category],
     queryFn: async () => {
       const resourceType = getResourceType(category);
+      console.log(`Fetching resources for category: ${category}, resourceType: ${resourceType}`);
       const response = await fetch(`/api/resources?type=${resourceType}`);
-      return response.json();
+      const data = await response.json();
+      console.log(`Resources fetched:`, data);
+      return data;
     }
   });
 
@@ -843,6 +846,8 @@ export default function ResourceCategory() {
 
   const displayResources: Resource[] = getDisplayResources();
   const currentResource = displayResources[currentIndex];
+  
+  console.log(`Category: ${category}, Mode: ${mode}, All resources count: ${allResources.length}, Display resources count: ${displayResources.length}`);
 
   if (!config) {
     return <div>Category not found</div>;
