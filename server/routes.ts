@@ -40,7 +40,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/organization", async (req, res) => {
     try {
-      const organization = await storage.getOrganizationBySlug("oakland");
+      const organization = await storage.getOrganizationBySlug("oakland-demo");
       res.json(organization);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch organization" });

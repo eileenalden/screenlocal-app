@@ -742,3 +742,27 @@ export class MemStorage implements IStorage {
 import { DatabaseStorage } from "./databaseStorage";
 
 export const storage = new DatabaseStorage();
+
+// Initialize demo user for bypassed authentication
+async function initializeDemoUser() {
+  try {
+    const demoUser = await storage.getUser('demo-user-oakland');
+    if (!demoUser) {
+      await storage.upsertUser({
+        id: 'demo-user-oakland',
+        email: 'demo@screenlocal.app',
+        firstName: 'Demo',
+        lastName: 'User',
+        profileImageUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400',
+        role: 'filmmaker',
+        organizationId: 1,
+        profileComplete: true
+      });
+    }
+  } catch (error) {
+    console.log('Demo user initialization skipped (normal during development)');
+  }
+}
+
+// Initialize demo user on server start
+initializeDemoUser();

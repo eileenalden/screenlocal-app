@@ -9,6 +9,16 @@ export function useAuth() {
   return {
     user,
     isLoading,
-    isAuthenticated: !!user,
+    isAuthenticated: true, // Always authenticated in demo mode
+  };
+}
+}
+    retry: false,
+  });
+
+  return {
+    user,
+    isLoading,
+    isAuthenticated: true, // Always authenticated in demo mode
   };
 }
