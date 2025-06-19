@@ -172,6 +172,8 @@ Changelog:
 - June 19, 2025. Bypassed authentication system for demo purposes - all users automatically authenticated as demo user with access to oakland-demo organization data
 - June 19, 2025. Fixed resource filtering system - updated seeded resources with complete metadata for locations (propertyType/spaceType), talent (gender/ethnicity/ageRange/unionStatus), crew (department/unionStatus), and services
 - June 19, 2025. Resolved category mapping issue - frontend category names now properly map to backend resource types (locations->location, cast->talent, services->service)
+- June 19, 2025. Fixed resource display timing issue - resources now show properly after API data loads, prevented "No resources available" from showing during loading state
+- June 19, 2025. Added optional filtering system with dedicated Filters button - users can browse immediately or use category-specific filters (demographics for talent, departments for crew, property types for locations)
 ```
 
 ## User Preferences

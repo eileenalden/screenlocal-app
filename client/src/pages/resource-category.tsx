@@ -627,10 +627,10 @@ export default function ResourceCategory() {
     queryKey: ['/api/resources', category],
     queryFn: async () => {
       const resourceType = getResourceType(category);
-      console.log(`Fetching resources for category: ${category}, resourceType: ${resourceType}`);
+      // console.log(`Fetching resources for category: ${category}, resourceType: ${resourceType}`);
       const response = await fetch(`/api/resources?type=${resourceType}`);
       const data = await response.json();
-      console.log(`Resources fetched:`, data);
+      // console.log(`Resources fetched:`, data);
       return data;
     }
   });
@@ -847,7 +847,8 @@ export default function ResourceCategory() {
   const displayResources: Resource[] = getDisplayResources();
   const currentResource = displayResources[currentIndex];
   
-  console.log(`Category: ${category}, Mode: ${mode}, All resources count: ${allResources.length}, Display resources count: ${displayResources.length}`);
+  // Remove debug logs for production
+  // console.log(`Category: ${category}, Mode: ${mode}, All resources count: ${allResources.length}, Display resources count: ${displayResources.length}`);
 
   if (!config) {
     return <div>Category not found</div>;
@@ -1071,7 +1072,7 @@ export default function ResourceCategory() {
               <div className="flex justify-center items-center h-64">
                 <Loader2 className="h-8 w-8 animate-spin" />
               </div>
-            ) : displayResources.length === 0 ? (
+            ) : displayResources.length === 0 && !isLoading ? (
               <div className="text-center py-12">
                 <p className="text-gray-500 dark:text-gray-400">
                   {mode === "search" ? "No results found for your search" : 

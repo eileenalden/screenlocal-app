@@ -1,0 +1,205 @@
+
+      /////////////////////
+   ///////////////////////////
+  ////////@@@@@@@//////////////
+  ////////@@@@@@@//////////////
+  ////////@@@@@@@//////////////        Curious and driven?
+  ///////////////@@@@@@@///////        Work with us!
+  ///////////////@@@@@@@///////
+  ///////////////@@@@@@@///////        https://join.replit.com/hack.with.us
+  ////////@@@@@@@//////////////
+  ////////@@@@@@@//////////////
+  ////////@@@@@@#//////////////
+   ///////////////////////////
+      /////////////////////
+      _app-42e86ef635691cd5.js:38:5277
+[LaunchDarkly] LaunchDarkly client initialized _app-42e86ef635691cd5.js:38:5277
+Partitioned cookie or storage access was provided to “https://js.stripe.com/v3/controller-with-preconnect-3e575ac7878c852bf20ef30d4ffa8f8d.html#__shared_params__[version]=acacia&apiKey=pk_live_515YpNsJAmnYVOvfnsBqRdATWS6SzbNAslOz1z2tujdKuvRMDAwWMeFXp6dJL1YKRrQjB0WAp0UDGwlFYL7hxw7Fc00QkfxBFsL&apiVersion=2025-01-27.acacia&stripeJsId=d3944a30-9731-4107-a583-c24ed77b1eed&firstStripeInstanceCreatedLatency=4&controllerCount=1&isCheckout=false&stripeJsLoadTime=1750309159775&manualBrowserDeprecationRollout=false&mids[guid]=NA&mids[muid]=a7e4ee27-6e65-4a46-92e5-4eb4eeb9817b42f77f&mids[sid]=71100384-3e33-4504-83a2-5ce2058c5a763ca6ab&referrer=https%3A%2F%2Freplit.com%2F%40eileenalden%2FOakFilmConnect&controllerId=__privateStripeController3381” because it is loaded in the third-party context and dynamic state partitioning is enabled. controller-with-preconnect-655581e21abd82950bf1be231768ecf2.js:1:26907
+Partitioned cookie or storage access was provided to “https://www.googletagmanager.com/static/service_worker/5690/sw_iframe.html?origin=https%3A%2F%2Freplit.com” because it is loaded in the third-party context and dynamic state partitioning is enabled. sw_iframe.html:15:769
+Partitioned cookie or storage access was provided to “https://m.stripe.network/inner.html#url=https%3A%2F%2Freplit.com%2F%40eileenalden%2FOakFilmConnect&title=OakFilmConnect%20-%20Replit&referrer=&muid=a7e4ee27-6e65-4a46-92e5-4eb4eeb9817b42f77f&sid=71100384-3e33-4504-83a2-5ce2058c5a763ca6ab&version=6&preview=false&__shared_params__[version]=acacia” because it is loaded in the third-party context and dynamic state partitioning is enabled. out-4.5.44.js:1:39660
+Cookie warnings 2
+Content-Security-Policy warnings 4
+Ignoring unsupported entryTypes: longtask. recaptcha__en.js:376:427
+Partitioned cookie or storage access was provided to “https://www.google.com/recaptcha/enterprise/anchor?ar=2&k=6LdqhwwoAAAAAFPdw8jCuvY3PaHQItGj3RzOS4fW&co=aHR0cHM6Ly9yZXBsaXQuY29tOjQ0Mw..&hl=en&v=GUGrl5YkSwpBsxsF3eY665Ye&size=invisible&cb=4sfqccn6meue” because it is loaded in the third-party context and dynamic state partitioning is enabled. recaptcha__en.js:113:174
+Cookie warnings 4
+Feature Policy: Skipping unsupported feature name “accelerometer”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “ambient-light-sensor”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “autoplay”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “battery”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “encrypted-media”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “execution-while-not-rendered”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “execution-while-out-of-viewport”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “gyroscope”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “layout-animations”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “legacy-image-formats”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “magnetometer”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “midi”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “navigation-override”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “oversized-images”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “payment”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “picture-in-picture”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “publickey-credentials”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “sync-xhr”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “unoptimized-images”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “unsized-media”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “usb”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “xr-spatial-tracking”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “clipboard-read”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “clipboard-write”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “pointer-lock”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “accelerometer”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “ambient-light-sensor”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “autoplay”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “battery”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “encrypted-media”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “execution-while-not-rendered”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “execution-while-out-of-viewport”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “gyroscope”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “layout-animations”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “legacy-image-formats”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “magnetometer”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “midi”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “navigation-override”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “oversized-images”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “payment”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “picture-in-picture”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “publickey-credentials”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “sync-xhr”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “unoptimized-images”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “unsized-media”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “usb”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “xr-spatial-tracking”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “clipboard-read”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “clipboard-write”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “pointer-lock”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “accelerometer”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “ambient-light-sensor”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “autoplay”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “battery”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “encrypted-media”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “execution-while-not-rendered”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “execution-while-out-of-viewport”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “gyroscope”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “layout-animations”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “legacy-image-formats”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “magnetometer”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “midi”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “navigation-override”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “oversized-images”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “payment”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “picture-in-picture”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “publickey-credentials”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “sync-xhr”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “unoptimized-images”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “unsized-media”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “usb”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “xr-spatial-tracking”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “clipboard-read”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “clipboard-write”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “pointer-lock”. framework-43f372cdaab5f068.js:1:44626
+Feature Policy: Skipping unsupported feature name “accelerometer”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “ambient-light-sensor”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “autoplay”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “battery”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “encrypted-media”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “execution-while-not-rendered”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “execution-while-out-of-viewport”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “gyroscope”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “layout-animations”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “legacy-image-formats”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “magnetometer”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “midi”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “navigation-override”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “oversized-images”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “payment”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “picture-in-picture”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “publickey-credentials”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “sync-xhr”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “unoptimized-images”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “unsized-media”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “usb”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “xr-spatial-tracking”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “clipboard-read”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “clipboard-write”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “pointer-lock”. framework-43f372cdaab5f068.js:1:130991
+Feature Policy: Skipping unsupported feature name “accelerometer”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “ambient-light-sensor”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “autoplay”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “battery”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “encrypted-media”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “execution-while-not-rendered”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “execution-while-out-of-viewport”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “gyroscope”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “layout-animations”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “legacy-image-formats”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “magnetometer”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “midi”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “navigation-override”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “oversized-images”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “payment”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “picture-in-picture”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “publickey-credentials”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “sync-xhr”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “unoptimized-images”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “unsized-media”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “usb”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “xr-spatial-tracking”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “clipboard-read”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “clipboard-write”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “accelerometer”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “ambient-light-sensor”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “autoplay”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “battery”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “encrypted-media”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “execution-while-not-rendered”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “execution-while-out-of-viewport”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “gyroscope”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “layout-animations”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “legacy-image-formats”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “magnetometer”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “midi”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “navigation-override”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “oversized-images”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “payment”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “picture-in-picture”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “publickey-credentials”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “sync-xhr”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “unoptimized-images”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “unsized-media”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “usb”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “xr-spatial-tracking”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “clipboard-read”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “clipboard-write”. workspace_iframe.html
+Feature Policy: Skipping unsupported feature name “accelerometer”. workspace_iframe.html:151:20
+Feature Policy: Skipping unsupported feature name “ambient-light-sensor”. workspace_iframe.html:151:20
+Feature Policy: Skipping unsupported feature name “autoplay”. workspace_iframe.html:151:20
+Feature Policy: Skipping unsupported feature name “battery”. workspace_iframe.html:151:20
+Feature Policy: Skipping unsupported feature name “encrypted-media”. workspace_iframe.html:151:20
+Feature Policy: Skipping unsupported feature name “execution-while-not-rendered”. workspace_iframe.html:151:20
+Feature Policy: Skipping unsupported feature name “execution-while-out-of-viewport”. workspace_iframe.html:151:20
+Feature Policy: Skipping unsupported feature name “gyroscope”. workspace_iframe.html:151:20
+Feature Policy: Skipping unsupported feature name “layout-animations”. workspace_iframe.html:151:20
+Feature Policy: Skipping unsupported feature name “legacy-image-formats”. workspace_iframe.html:151:20
+Feature Policy: Skipping unsupported feature name “magnetometer”. workspace_iframe.html:151:20
+Feature Policy: Skipping unsupported feature name “midi”. workspace_iframe.html:151:20
+Feature Policy: Skipping unsupported feature name “navigation-override”. workspace_iframe.html:151:20
+Feature Policy: Skipping unsupported feature name “oversized-images”. workspace_iframe.html:151:20
+Feature Policy: Skipping unsupported feature name “payment”. workspace_iframe.html:151:20
+Feature Policy: Skipping unsupported feature name “picture-in-picture”. workspace_iframe.html:151:20
+Feature Policy: Skipping unsupported feature name “publickey-credentials”. workspace_iframe.html:151:20
+Feature Policy: Skipping unsupported feature name “sync-xhr”. workspace_iframe.html:151:20
+Feature Policy: Skipping unsupported feature name “unoptimized-images”. workspace_iframe.html:151:20
+Feature Policy: Skipping unsupported feature name “unsized-media”. workspace_iframe.html:151:20
+Feature Policy: Skipping unsupported feature name “usb”. workspace_iframe.html:151:20
+Feature Policy: Skipping unsupported feature name “xr-spatial-tracking”. workspace_iframe.html:151:20
+Feature Policy: Skipping unsupported feature name “clipboard-read”. workspace_iframe.html:151:20
+Feature Policy: Skipping unsupported feature name “clipboard-write”. workspace_iframe.html:151:20
+The script from “https://9ebaa3ea-cf42-4af1-a473-2d9514342a7d-00-2las7rxeu5v4x.riker.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js” was loaded even though its MIME type (“text/plain”) is not a valid JavaScript MIME type. 9ebaa3ea-cf42-4af1-a473-2d9514342a7d-00-2las7rxeu5v4x.riker.replit.dev
+The script from “https://9ebaa3ea-cf42-4af1-a473-2d9514342a7d-00-2las7rxeu5v4x.riker.replit.dev/__replco/static/devtools/injected.js” was loaded even though its MIME type (“text/plain”) is not a valid JavaScript MIME type. 9ebaa3ea-cf42-4af1-a473-2d9514342a7d-00-2las7rxeu5v4x.riker.replit.dev
+Partitioned cookie or storage access was provided to “https://9ebaa3ea-cf42-4af1-a473-2d9514342a7d-00-2las7rxeu5v4x.riker.replit.dev/” because it is loaded in the third-party context and dynamic state partitioning is enabled. eruda.js:2:397271
+Partitioned cookie or storage access was provided to “https://9ebaa3ea-cf42-4af1-a473-2d9514342a7d-00-2las7rxeu5v4x.riker.replit.dev/__replco/workspace_iframe.html?initialPath=%2F&id=%3Ar11v%3A” because it is loaded in the third-party context and dynamic state partitioning is enabled.
+Layout was forced before the page was fully loaded. If stylesheets are not yet loaded this may cause a flash of unstyled content. eruda.js:2:105892
+[vite] connecting... eruda.js:2:135516
+[vite] connected. eruda.js:2:135516
+Cookie warnings 2
+stallwart: failed ping 1 stallwart.build.js:1:886
