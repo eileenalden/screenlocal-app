@@ -203,6 +203,9 @@ export class DatabaseStorage implements IStorage {
       }
     }
     
+    // Order by ID to ensure consistent ordering (MamaDog Studios has ID 50, so appears first)
+    query = query.orderBy(resources.id);
+    
     return await query;
   }
 
