@@ -667,11 +667,472 @@ export default function OaklandFilmPermit({ onClose }: OaklandFilmPermitProps) {
           </div>
         );
         
-      default:
+      case 4:
+        return (
+          <div className="space-y-6">
+            <div>
+              <Label htmlFor="companyName">Production Company Name *</Label>
+              <Input
+                id="companyName"
+                value={formData.companyName}
+                onChange={(e) => updateFormData('companyName', e.target.value)}
+                placeholder="Your production company"
+              />
+            </div>
+            
+            <div>
+              <Label htmlFor="companyAddress">Address *</Label>
+              <Input
+                id="companyAddress"
+                value={formData.companyAddress}
+                onChange={(e) => updateFormData('companyAddress', e.target.value)}
+                placeholder="Street address"
+              />
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="companyCity">City *</Label>
+                <Input
+                  id="companyCity"
+                  value={formData.companyCity}
+                  onChange={(e) => updateFormData('companyCity', e.target.value)}
+                  placeholder="City"
+                />
+              </div>
+              <div>
+                <Label htmlFor="companyState">State *</Label>
+                <Select value={formData.companyState} onValueChange={(value) => updateFormData('companyState', value)}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {US_STATES.map(state => (
+                      <SelectItem key={state} value={state}>{state}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="companyCountry">Country *</Label>
+                <Input
+                  id="companyCountry"
+                  value={formData.companyCountry}
+                  onChange={(e) => updateFormData('companyCountry', e.target.value)}
+                  placeholder="Country"
+                />
+              </div>
+              <div>
+                <Label htmlFor="companyZip">Zip Code *</Label>
+                <Input
+                  id="companyZip"
+                  value={formData.companyZip}
+                  onChange={(e) => updateFormData('companyZip', e.target.value)}
+                  placeholder="Zip code"
+                />
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="companyPhone">Company Phone *</Label>
+                <Input
+                  id="companyPhone"
+                  value={formData.companyPhone}
+                  onChange={(e) => handlePhoneChange('companyPhone', e.target.value)}
+                  placeholder="(555) 123-4567"
+                  maxLength={14}
+                />
+              </div>
+              <div>
+                <Label htmlFor="companyEmail">Company Email *</Label>
+                <Input
+                  id="companyEmail"
+                  type="email"
+                  value={formData.companyEmail}
+                  onChange={(e) => updateFormData('companyEmail', e.target.value)}
+                  placeholder="company@example.com"
+                />
+              </div>
+            </div>
+          </div>
+        );
+        
+      case 5:
+        return (
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <Label className="text-lg font-semibold">Filming Locations</Label>
+              <Button
+                type="button"
+                onClick={addFilmingLocation}
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                <Plus className="h-4 w-4" />
+                Add Location
+              </Button>
+            </div>
+            
+            {formData.filmingLocations.map((location, index) => (
+              <Card key={location.id} className="p-4">
+                <div className="flex justify-between items-center mb-4">
+                  <h4 className="font-medium">Location {index + 1}</h4>
+                  {formData.filmingLocations.length > 1 && (
+                    <Button
+                      type="button"
+                      onClick={() => removeFilmingLocation(location.id)}
+                      variant="ghost"
+                      size="sm"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  )}
+                </div>
+                
+                <div className="grid gap-4">
+                  <div>
+                    <Label>Location/Address *</Label>
+                    <Input
+                      value={location.address}
+                      onChange={(e) => updateFilmingLocation(location.id, 'address', e.target.value)}
+                      placeholder="Full address"
+                    />
+                  </div>
+                  
+                  <div className="grid grid-cols-3 gap-4">
+                    <div>
+                      <Label>Type *</Label>
+                      <Select 
+                        value={location.type} 
+                        onValueChange={(value) => updateFilmingLocation(location.id, 'type', value)}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="interior">Interior</SelectItem>
+                          <SelectItem value="exterior">Exterior</SelectItem>
+                          <SelectItem value="both">Both</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <Label>Date *</Label>
+                      <Input
+                        type="date"
+                        value={location.date}
+                        onChange={(e) => updateFilmingLocation(location.id, 'date', e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <Label>Start Time</Label>
+                      <Input
+                        type="time"
+                        value={location.startTime}
+                        onChange={(e) => updateFilmingLocation(location.id, 'startTime', e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label>End Time</Label>
+                      <Input
+                        type="time"
+                        value={location.endTime}
+                        onChange={(e) => updateFilmingLocation(location.id, 'endTime', e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <Label>Special Conditions</Label>
+                      <Input
+                        value={location.specialConditions}
+                        onChange={(e) => updateFilmingLocation(location.id, 'specialConditions', e.target.value)}
+                        placeholder="Any special requirements"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label>Location Contact Name</Label>
+                      <Input
+                        value={location.contactName}
+                        onChange={(e) => updateFilmingLocation(location.id, 'contactName', e.target.value)}
+                        placeholder="Contact person"
+                      />
+                    </div>
+                    <div>
+                      <Label>Location Contact Phone</Label>
+                      <Input
+                        value={location.contactPhone}
+                        onChange={(e) => updateFilmingLocation(location.id, 'contactPhone', formatPhoneNumber(e.target.value))}
+                        placeholder="(555) 123-4567"
+                        maxLength={14}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        );
+        
+      case 6:
+        return (
+          <div className="space-y-6">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="numCastExtras">Number of Cast and Extras *</Label>
+                <Input
+                  id="numCastExtras"
+                  type="number"
+                  min="0"
+                  value={formData.numCastExtras}
+                  onChange={(e) => updateFormData('numCastExtras', parseInt(e.target.value) || 0)}
+                />
+              </div>
+              <div>
+                <Label htmlFor="numCrew">Number of Crew *</Label>
+                <Input
+                  id="numCrew"
+                  type="number"
+                  min="0"
+                  value={formData.numCrew}
+                  onChange={(e) => updateFormData('numCrew', parseInt(e.target.value) || 0)}
+                />
+              </div>
+            </div>
+            
+            <div>
+              <Label htmlFor="starring">Starring</Label>
+              <Input
+                id="starring"
+                value={formData.starring}
+                onChange={(e) => updateFormData('starring', e.target.value)}
+                placeholder="Main cast members"
+              />
+            </div>
+            
+            <div>
+              <Label htmlFor="synopsis">Synopsis *</Label>
+              <Textarea
+                id="synopsis"
+                value={formData.synopsis}
+                onChange={(e) => updateFormData('synopsis', e.target.value)}
+                placeholder="Brief description of your project"
+                rows={4}
+              />
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <Label className="text-base font-medium">Police Services needed?</Label>
+                <RadioGroup
+                  value={formData.needsPoliceServices}
+                  onValueChange={(value) => updateFormData('needsPoliceServices', value)}
+                  className="flex gap-6 mt-2"
+                >
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="yes" id="police-yes" />
+                    <Label htmlFor="police-yes">Yes</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="no" id="police-no" />
+                    <Label htmlFor="police-no">No</Label>
+                  </div>
+                </RadioGroup>
+              </div>
+              
+              <div>
+                <Label className="text-base font-medium">Traffic Control needed?</Label>
+                <RadioGroup
+                  value={formData.needsTrafficControl}
+                  onValueChange={(value) => updateFormData('needsTrafficControl', value)}
+                  className="flex gap-6 mt-2"
+                >
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="yes" id="traffic-yes" />
+                    <Label htmlFor="traffic-yes">Yes</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="no" id="traffic-no" />
+                    <Label htmlFor="traffic-no">No</Label>
+                  </div>
+                </RadioGroup>
+              </div>
+              
+              <div>
+                <Label className="text-base font-medium">Reserved Parking needed?</Label>
+                <RadioGroup
+                  value={formData.needsReservedParking}
+                  onValueChange={(value) => updateFormData('needsReservedParking', value)}
+                  className="flex gap-6 mt-2"
+                >
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="yes" id="parking-yes" />
+                    <Label htmlFor="parking-yes">Yes</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="no" id="parking-no" />
+                    <Label htmlFor="parking-no">No</Label>
+                  </div>
+                </RadioGroup>
+                <p className="text-sm text-gray-600 mt-1">Note: Parking diagram may be required</p>
+              </div>
+              
+              <div>
+                <Label className="text-base font-medium">Drone Use?</Label>
+                <RadioGroup
+                  value={formData.needsDroneUse}
+                  onValueChange={(value) => updateFormData('needsDroneUse', value)}
+                  className="flex gap-6 mt-2"
+                >
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="yes" id="drone-yes" />
+                    <Label htmlFor="drone-yes">Yes</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="no" id="drone-no" />
+                    <Label htmlFor="drone-no">No</Label>
+                  </div>
+                </RadioGroup>
+                <p className="text-sm text-gray-600 mt-1">Note: Reviewed case-by-case. Required for drone filming on, from, within, and over City property</p>
+              </div>
+            </div>
+            
+            <div>
+              <Label htmlFor="specialEffects">Special Effects or Stunts</Label>
+              <Textarea
+                id="specialEffects"
+                value={formData.specialEffects}
+                onChange={(e) => updateFormData('specialEffects', e.target.value)}
+                placeholder="Describe any special effects, stunts, or hazardous activities"
+                rows={3}
+              />
+            </div>
+            
+            <div>
+              <Label htmlFor="additionalInfo">Additional Information about your project</Label>
+              <Textarea
+                id="additionalInfo"
+                value={formData.additionalInfo}
+                onChange={(e) => updateFormData('additionalInfo', e.target.value)}
+                placeholder="Any other relevant information"
+                rows={3}
+              />
+            </div>
+          </div>
+        );
+        
+      case 7:
+        const cost = calculateCost();
+        return (
+          <div className="space-y-6">
+            {/* Cost Breakdown */}
+            <Card className="bg-blue-50 border-blue-200">
+              <CardHeader>
+                <CardTitle className="text-lg">Cost Summary</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="flex justify-between">
+                  <span>Production Type:</span>
+                  <span className="font-medium">{formData.productionType}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Daily Rate:</span>
+                  <span className="font-medium">${cost.dailyRate}/day</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Filming Days:</span>
+                  <span className="font-medium">{cost.filmingDays} days across {cost.dateRanges} range{cost.dateRanges > 1 ? 's' : ''}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Subtotal:</span>
+                  <span className="font-medium">${cost.subtotal}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Technology Surcharge (12.5%):</span>
+                  <span className="font-medium">${cost.surcharge.toFixed(2)}</span>
+                </div>
+                <hr className="border-blue-300" />
+                <div className="flex justify-between text-lg font-bold">
+                  <span>Total Permit Cost:</span>
+                  <span className="text-orange-600">${cost.total.toFixed(2)}</span>
+                </div>
+              </CardContent>
+            </Card>
+            
+            {/* Fee Reference Table */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Fee Reference</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 gap-2 text-sm">
+                  <div>Feature: $245/day</div>
+                  <div>TV/Commercial: $306/day</div>
+                  <div>Industrial/Web: $245/day</div>
+                  <div>Music Video: $122/day</div>
+                  <div>Short Film: $61/day</div>
+                  <div>Still Photo: $92/day</div>
+                  <div>Student/PSA: FREE</div>
+                  <div className="text-gray-600">+ 12.5% tech fee</div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            {/* Insurance Status */}
+            <div>
+              <Label className="text-base font-medium">Insurance Status *</Label>
+              <RadioGroup
+                value={formData.insuranceStatus}
+                onValueChange={(value) => updateFormData('insuranceStatus', value)}
+                className="mt-2 space-y-2"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="included" id="insurance-included" />
+                  <Label htmlFor="insurance-included">Proof of Insurance included</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="not-ready" id="insurance-not-ready" />
+                  <Label htmlFor="insurance-not-ready">Insurance documents not yet ready</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="on-file" id="insurance-on-file" />
+                  <Label htmlFor="insurance-on-file">Have insurance on file with Oakland Film Office</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="need-help" id="insurance-need-help" />
+                  <Label htmlFor="insurance-need-help">Don't understand insurance requirements</Label>
+                </div>
+              </RadioGroup>
+            </div>
+            
+            {/* Terms & Conditions */}
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="terms"
+                checked={formData.agreesToTerms}
+                onCheckedChange={(checked) => updateFormData('agreesToTerms', !!checked)}
+              />
+              <Label htmlFor="terms" className="text-sm">
+                I agree to abide by Oakland Film Office Terms & Conditions *
+              </Label>
+            </div>
+          </div>
+        );
+        
+        default:
         return (
           <div className="text-center py-8">
-            <h3 className="text-lg font-semibold mb-4">Coming Soon</h3>
-            <p className="text-gray-600">Additional permit application steps will be available soon.</p>
+            <h3 className="text-lg font-semibold mb-4">Step Complete</h3>
+            <p className="text-gray-600">This step has been completed.</p>
           </div>
         );
     }
@@ -681,9 +1142,10 @@ export default function OaklandFilmPermit({ onClose }: OaklandFilmPermitProps) {
   const cost = calculateCost();
 
   const handleSubmit = () => {
+    const applicationNumber = `OFP-${Date.now().toString().slice(-6)}`;
     toast({
-      title: "Application Submitted",
-      description: "Your Oakland Film Permit application has been submitted successfully. You will receive a confirmation email shortly.",
+      title: "Application Submitted Successfully",
+      description: `Your Oakland Film Permit application #${applicationNumber} has been submitted. You will receive a confirmation email shortly.`,
     });
     localStorage.removeItem('oakland-film-permit-draft');
     onClose();
