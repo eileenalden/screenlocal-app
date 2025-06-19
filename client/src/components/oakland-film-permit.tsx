@@ -480,7 +480,7 @@ export default function OaklandFilmPermit({ onClose }: OaklandFilmPermitProps) {
     }
   };
 
-  const progressPercentage = (currentStep / TOTAL_STEPS) * 100;
+  const progressPercentage = currentStep === 1 && !formData.projectTitle ? 0 : (currentStep / TOTAL_STEPS) * 100;
   const cost = calculateCost();
 
   const handleSubmit = () => {
