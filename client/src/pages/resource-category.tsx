@@ -46,14 +46,27 @@ const REFERENCE_CITIES = [
 const BROWSE_FILTERS = {
   locations: {
     name: "Location Type",
-    options: [
-      "Interior - House",
-      "Exterior - House", 
-      "Interior - Apartment",
-      "Exterior - Apartment",
-      "Interior - Business",
-      "Exterior - Business"
-    ]
+    multiSelect: true,
+    categories: {
+      propertyType: {
+        name: "Property Type",
+        options: [
+          "Any",
+          "house",
+          "apartment", 
+          "business",
+          "warehouse"
+        ]
+      },
+      spaceType: {
+        name: "Space Type",
+        options: [
+          "Any",
+          "interior",
+          "exterior"
+        ]
+      }
+    }
   },
   crew: {
     name: "Department",
@@ -557,6 +570,8 @@ export default function ResourceCategory() {
   // Browse filtering state
   const [browseFilters, setBrowseFilters] = useState<{
     selectedSubcategory?: string;
+    locationPropertyType?: string[];
+    locationSpaceType?: string[];
     castGender?: string[];
     castEthnicity?: string[];
     castAge?: string[];
@@ -806,12 +821,16 @@ export default function ResourceCategory() {
       filteredResources = filteredResources.filter(resource => {
         if (!resource.amenities) return false;
         
-        const hasPropertyType = !browseFilters.locationPropertyType?.length || browseFilters.locationPropertyType.some(type => 
-          resource.amenities?.some(amenity => amenity === `propertyType:${type}`)
-        );
-        const hasSpaceType = !browseFilters.locationSpaceType?.length || browseFilters.locationSpaceType.some(type => 
-          resource.amenities?.some(amenity => amenity === `spaceType:${type}`)
-        );
+        const hasPropertyType = !browseFilters.locationPropertyType?.length || 
+          browseFilters.locationPropertyType.includes('Any') ||
+          browseFilters.locationPropertyType.some(type => 
+            resource.amenities?.some(amenity => amenity === `propertyType:${type}`)
+          );
+        const hasSpaceType = !browseFilters.locationSpaceType?.length || 
+          browseFilters.locationSpaceType.includes('Any') ||
+          browseFilters.locationSpaceType.some(type => 
+            resource.amenities?.some(amenity => amenity === `spaceType:${type}`)
+          );
         
         return hasPropertyType && hasSpaceType;
       });
@@ -867,6 +886,7 @@ export default function ResourceCategory() {
   if (category === 'locations' && (browseFilters.locationPropertyType?.length || browseFilters.locationSpaceType?.length)) {
     console.log('Location filters applied:', browseFilters);
     console.log('Display resources after filtering:', displayResources.length);
+    console.log('All resources before filtering:', allResources.length);
   }
 
   if (!config) {
@@ -1210,7 +1230,70 @@ export default function ResourceCategory() {
           <div className="space-y-4">
             {BROWSE_FILTERS[category] && (
               <>
-                {category === 'cast' ? (
+                {category === 'locations' ? (
+                  /* Special multi-select interface for location filtering */
+                  <div className="space-y-4">
+                    <div>
+                      <label className="text-sm font-medium mb-2 block">Property Type</label>
+                      <div className="space-y-2">
+                        {BROWSE_FILTERS[category].categories.propertyType.options.map((option) => (
+                          <label key={option} className="flex items-center space-x-2">
+                            <input
+                              type="checkbox"
+                              checked={browseFilters.locationPropertyType?.includes(option) || false}
+                              onChange={(e) => {
+                                const current = browseFilters.locationPropertyType || [];
+                                if (e.target.checked) {
+                                  setBrowseFilters({
+                                    ...browseFilters,
+                                    locationPropertyType: [...current, option]
+                                  });
+                                } else {
+                                  setBrowseFilters({
+                                    ...browseFilters,
+                                    locationPropertyType: current.filter(t => t !== option)
+                                  });
+                                }
+                              }}
+                              className="rounded border-gray-300"
+                            />
+                            <span className="text-sm capitalize">{option}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="text-sm font-medium mb-2 block">Space Type</label>
+                      <div className="space-y-2">
+                        {BROWSE_FILTERS[category].categories.spaceType.options.map((option) => (
+                          <label key={option} className="flex items-center space-x-2">
+                            <input
+                              type="checkbox"
+                              checked={browseFilters.locationSpaceType?.includes(option) || false}
+                              onChange={(e) => {
+                                const current = browseFilters.locationSpaceType || [];
+                                if (e.target.checked) {
+                                  setBrowseFilters({
+                                    ...browseFilters,
+                                    locationSpaceType: [...current, option]
+                                  });
+                                } else {
+                                  setBrowseFilters({
+                                    ...browseFilters,
+                                    locationSpaceType: current.filter(t => t !== option)
+                                  });
+                                }
+                              }}
+                              className="rounded border-gray-300"
+                            />
+                            <span className="text-sm capitalize">{option}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ) : category === 'cast' ? (
                   /* Special multi-select interface for cast demographics */
                   <div className="space-y-4">
                     <div>
@@ -1396,8 +1479,8 @@ export default function ResourceCategory() {
                       </div>
                     </div>
                   </div>
-                ) : (
-                  /* Standard dropdown for other categories */
+                ) : category === 'services' ? (
+                  /* Standard dropdown for services */
                   <div>
                     <label className="text-sm font-medium mb-2 block">{BROWSE_FILTERS[category].name}</label>
                     <Select 
@@ -1419,7 +1502,7 @@ export default function ResourceCategory() {
                       </SelectContent>
                     </Select>
                   </div>
-                )}
+                ) : null}
               </>
             )}
             
