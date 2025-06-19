@@ -184,13 +184,13 @@ const EAST_BAY_CITIES = [
   {
     id: "oakland",
     name: "Oakland",
-    rebatePercent: "15%",
-    description: "City of Oakland offers a 15% local rebate program supporting film production with reduced permit fees and tax incentives.",
+    rebatePercent: "10% + 2.5%",
+    description: "City of Oakland offers a 10% base rebate on qualified local spending, plus an additional 2.5% for productions spending in high-unemployment zip codes or with worker-owned cooperatives (up to 12.5% total).",
     qualifications: [
-      "Production budget minimum of $50,000",
+      "Production budget minimum of $250,000",
       "At least 50% of filming days within Oakland city limits",
-      "Hire minimum 25% local Oakland residents",
-      "Complete application 30 days prior to filming"
+      "Complete application 30 days prior to filming",
+      "Additional 2.5% for spending in designated zip codes or worker-owned cooperatives"
     ],
     applicationSteps: [
       "Submit preliminary application with project details",
@@ -199,12 +199,12 @@ const EAST_BAY_CITIES = [
       "Receive approval and certificate",
       "Complete production and submit final documentation"
     ],
-    contactInfo: "Oakland Film Commission: film@oaklandca.gov | (510) 238-2263"
+    contactInfo: "Oakland Film Commission: film@oaklandca.gov"
   },
   {
     id: "berkeley",
     name: "Berkeley",
-    rebatePercent: "10%",
+    rebatePercent: "",
     description: "Berkeley Film Incentive Program provides tax credits for productions filming primarily within city boundaries.",
     qualifications: [
       "Minimum 60% of production days in Berkeley",
@@ -224,7 +224,7 @@ const EAST_BAY_CITIES = [
   {
     id: "richmond",
     name: "Richmond",
-    rebatePercent: "12%",
+    rebatePercent: "",
     description: "Richmond Production Incentive offers competitive rebates for film and television projects utilizing local resources.",
     qualifications: [
       "Production value minimum $75,000",
@@ -322,7 +322,7 @@ function BudgetSection() {
               <SelectContent>
                 {EAST_BAY_CITIES.map((city) => (
                   <SelectItem key={city.id} value={city.id}>
-                    {city.name} ({city.rebatePercent} rebate)
+                    {city.name}{city.rebatePercent ? ` (${city.rebatePercent} rebate)` : ''}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -332,7 +332,7 @@ function BudgetSection() {
           {selectedCityData && (
             <div className="space-y-6">
               <div className="bg-green-50 rounded-lg p-4">
-                <h3 className="font-semibold text-lg mb-2">{selectedCityData.name} - {selectedCityData.rebatePercent} Tax Rebate</h3>
+                <h3 className="font-semibold text-lg mb-2">{selectedCityData.name}{selectedCityData.rebatePercent ? ` - ${selectedCityData.rebatePercent} Film Rebate` : ' Film Incentive Program'}</h3>
                 <p className="text-gray-700">{selectedCityData.description}</p>
               </div>
 
@@ -372,11 +372,9 @@ function BudgetSection() {
                     <Button
                       variant="outline"
                       size="sm"
-                      disabled
-                      className="opacity-50 cursor-not-allowed"
                     >
                       <ExternalLink className="h-4 w-4 mr-2" />
-                      Apply Online
+                      Check My Eligibility
                     </Button>
                   )}
                 </div>
@@ -411,10 +409,11 @@ function BudgetSection() {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => window.open(CALIFORNIA_TAX_CREDIT.website, "_blank")}
+                disabled
+                className="opacity-50 cursor-not-allowed"
               >
                 <ExternalLink className="h-4 w-4 mr-2" />
-                Apply Online
+                Coming Soon
               </Button>
             </div>
           </div>
@@ -488,11 +487,11 @@ function BudgetSection() {
                   <Button 
                     size="sm" 
                     variant="outline"
-                    onClick={() => handleExportToTool(tool.name)}
-                    className="border-orange-500 text-orange-500 hover:bg-orange-50"
+                    disabled
+                    className="opacity-50 cursor-not-allowed"
                   >
                     <ExternalLink className="h-4 w-4 mr-1" />
-                    Export
+                    Integrations coming soon
                   </Button>
                 </div>
               </div>
