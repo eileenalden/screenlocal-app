@@ -610,10 +610,24 @@ export default function ResourceCategory() {
     }
   }, [search, category]);
 
+  // Map frontend category names to backend resource types
+  const getResourceType = (category: string) => {
+    const mapping: Record<string, string> = {
+      'locations': 'location',
+      'crew': 'crew', 
+      'cast': 'talent',
+      'services': 'service',
+      'permits': 'permit',
+      'budget': 'budget'
+    };
+    return mapping[category] || category;
+  };
+
   const { data: allResources = [], isLoading } = useQuery({
     queryKey: ['/api/resources', category],
     queryFn: async () => {
-      const response = await fetch(`/api/resources?type=${category}`);
+      const resourceType = getResourceType(category);
+      const response = await fetch(`/api/resources?type=${resourceType}`);
       return response.json();
     }
   });
@@ -655,7 +669,7 @@ export default function ResourceCategory() {
     }
     setMode("search");
     aiSearchMutation.mutate({
-      type: category,
+      type: getResourceType(category),
       subtype: subcategory,
       query: description
     });
@@ -779,7 +793,7 @@ export default function ResourceCategory() {
       );
     }
     
-    // Apply cast filters
+    // Apply cast filters  
     if (category === 'cast' && (browseFilters.castGender?.length || browseFilters.castEthnicity?.length || browseFilters.castAge?.length || browseFilters.castUnionStatus?.length)) {
       filteredResources = filteredResources.filter(resource => {
         if (!resource.specialties) return false;

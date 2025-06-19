@@ -170,6 +170,8 @@ Changelog:
 - June 16, 2025. Implemented comprehensive Apple-style resource management system with profile dropdown, multi-step onboarding, and resource-specific forms for locations, talent, crew, and services
 - June 16, 2025. Fixed permit section card layout - applied consistent flexbox styling to align all three CTA buttons at the same bottom position
 - June 19, 2025. Bypassed authentication system for demo purposes - all users automatically authenticated as demo user with access to oakland-demo organization data
+- June 19, 2025. Fixed resource filtering system - updated seeded resources with complete metadata for locations (propertyType/spaceType), talent (gender/ethnicity/ageRange/unionStatus), crew (department/unionStatus), and services
+- June 19, 2025. Resolved category mapping issue - frontend category names now properly map to backend resource types (locations->location, cast->talent, services->service)
 ```
 
 ## User Preferences
