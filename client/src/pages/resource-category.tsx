@@ -651,7 +651,7 @@ export default function ResourceCategory() {
     return mapping[category] || category;
   };
   
-  console.log(`Resource category page: ${category}, mapped to type: ${getResourceType(category)}`);
+
 
   const { data: allResources = [], isLoading } = useQuery({
     queryKey: ['/api/resources', category],
@@ -890,18 +890,7 @@ export default function ResourceCategory() {
   const displayResources: Resource[] = getDisplayResources();
   const currentResource = displayResources[currentIndex];
   
-  // Debug filtering for all categories - only show when filters are applied
-  if (mode === "search" || Object.values(browseFilters).some(filter => Array.isArray(filter) ? filter.length > 0 : filter)) {
-    console.log(`${category} page (${mode} mode) - showing ${displayResources.length} resources:`, displayResources.map(r => `${r.title} (${r.type})`));
-  }
-  
-  if (category === 'locations' && (browseFilters.locationPropertyType?.length || browseFilters.locationSpaceType?.length)) {
-    console.log('Location filters applied:', browseFilters);
-  } else if (category === 'cast' && (browseFilters.castGender?.length || browseFilters.castEthnicity?.length || browseFilters.castAge?.length || browseFilters.castUnionStatus?.length)) {
-    console.log('Talent filters applied:', browseFilters);
-  } else if (category === 'crew' && (browseFilters.crewDepartment?.length || browseFilters.crewUnionStatus?.length)) {
-    console.log('Crew filters applied:', browseFilters);
-  }
+
 
   if (!config) {
     return <div>Category not found</div>;

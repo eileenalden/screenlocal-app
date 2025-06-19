@@ -181,12 +181,9 @@ export class DatabaseStorage implements IStorage {
     maxPrice?: number;
     available?: boolean;
   }): Promise<Resource[]> {
-    console.log('DatabaseStorage.getResources called with filters:', filters);
-    
     let whereConditions = [];
     
     if (filters?.type) {
-      console.log('Adding type filter:', filters.type);
       whereConditions.push(eq(resources.type, filters.type));
     }
     if (filters?.category) {
@@ -206,9 +203,7 @@ export class DatabaseStorage implements IStorage {
       }
     }
     
-    const result = await query;
-    console.log(`DatabaseStorage.getResources returning ${result.length} resources of types:`, [...new Set(result.map(r => r.type))]);
-    return result;
+    return await query;
   }
 
   async getResourcesByProvider(providerId: number): Promise<Resource[]> {
