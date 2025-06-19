@@ -581,6 +581,7 @@ export default function ResourceCategory() {
     crewUnionStatus?: string[];
   }>({});
   const [showBrowseFilters, setShowBrowseFilters] = useState(false);
+  const [showPermitWizard, setShowPermitWizard] = useState(false);
 
   // Reset state when category changes
   useEffect(() => {
@@ -1545,6 +1546,11 @@ export default function ResourceCategory() {
       </Dialog>
 
       <Footer />
+      
+      {/* Oakland Film Permit Wizard */}
+      {showPermitWizard && (
+        <OaklandFilmPermit onClose={() => setShowPermitWizard(false)} />
+      )}
     </div>
   );
 }
