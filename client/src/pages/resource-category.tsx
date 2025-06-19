@@ -662,7 +662,18 @@ export default function ResourceCategory() {
   };
 
   const handleBrowse = () => {
-    // Show filters dialog instead of immediately browsing
+    // For locations and services, go directly to browse mode
+    if (category === 'locations' || category === 'services') {
+      setMode("browse");
+      setAiResults([]);
+      setDescription("");
+      setSubcategory("");
+      setCurrentIndex(0);
+      setShowFavorites(false);
+      return;
+    }
+    
+    // For cast and crew, show filters dialog
     setShowBrowseFilters(true);
   };
 
@@ -692,15 +703,8 @@ export default function ResourceCategory() {
         return;
       }
     } else {
-      // For other categories, require subcategory selection
-      if (!browseFilters.selectedSubcategory) {
-        toast({
-          title: "Missing filter",
-          description: `Please select a ${filterConfig.name.toLowerCase()}`,
-          variant: "destructive",
-        });
-        return;
-      }
+      // For other categories, subcategory is optional
+      // Users can browse all or filter by subcategory
     }
 
     setMode("browse");
@@ -765,9 +769,57 @@ export default function ResourceCategory() {
     if (mode === "search") {
       return aiResults;
     }
-    // In browse mode, filter out skipped resources unless we've seen all
-    const availableResources = allResources.filter((resource: Resource) => !skippedResources.includes(resource.id));
-    return availableResources.length > 0 ? availableResources : allResources;
+    // In browse mode, apply filtering based on current filters
+    let filteredResources = [...allResources];
+    
+    // Apply browse filters if any are set
+    if (browseFilters.selectedSubcategory) {
+      filteredResources = filteredResources.filter(resource => 
+        resource.category === browseFilters.selectedSubcategory
+      );
+    }
+    
+    // Apply cast filters
+    if (category === 'cast' && (browseFilters.castGender?.length || browseFilters.castEthnicity?.length || browseFilters.castAge?.length || browseFilters.castUnionStatus?.length)) {
+      filteredResources = filteredResources.filter(resource => {
+        if (!resource.specialties) return false;
+        
+        const hasGender = !browseFilters.castGender?.length || browseFilters.castGender.some(gender => 
+          resource.specialties?.some(s => s.includes(`gender:${gender.toLowerCase()}`))
+        );
+        const hasEthnicity = !browseFilters.castEthnicity?.length || browseFilters.castEthnicity.some(ethnicity => 
+          resource.specialties?.some(s => s.includes(`ethnicity:${ethnicity.toLowerCase().replace(/\s+/g, '_')}`))
+        );
+        const hasAge = !browseFilters.castAge?.length || browseFilters.castAge.some(age => 
+          resource.specialties?.some(s => s.includes(`ageRange:${age}`))
+        );
+        const hasUnion = !browseFilters.castUnionStatus?.length || browseFilters.castUnionStatus.some(union => 
+          resource.specialties?.some(s => s.includes(`unionStatus:${union.toLowerCase().replace('-', '_')}`))
+        );
+        
+        return hasGender && hasEthnicity && hasAge && hasUnion;
+      });
+    }
+    
+    // Apply crew filters
+    if (category === 'crew' && (browseFilters.crewDepartment?.length || browseFilters.crewUnionStatus?.length)) {
+      filteredResources = filteredResources.filter(resource => {
+        if (!resource.specialties) return false;
+        
+        const hasDepartment = !browseFilters.crewDepartment?.length || browseFilters.crewDepartment.some(dept => 
+          resource.specialties?.some(s => s.includes(`department:${dept.toLowerCase().replace(/\s+/g, '_')}`))
+        );
+        const hasUnion = !browseFilters.crewUnionStatus?.length || browseFilters.crewUnionStatus.some(union => 
+          resource.specialties?.some(s => s.includes(`unionStatus:${union.toLowerCase()}`))
+        );
+        
+        return hasDepartment && hasUnion;
+      });
+    }
+    
+    // Filter out skipped resources unless we've seen all
+    const availableResources = filteredResources.filter((resource: Resource) => !skippedResources.includes(resource.id));
+    return availableResources.length > 0 ? availableResources : filteredResources;
   };
 
   const displayResources: Resource[] = getDisplayResources();
