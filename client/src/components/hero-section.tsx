@@ -16,10 +16,10 @@ export default function HeroSection() {
       <div className="relative max-w-4xl mx-auto px-8 text-center z-10">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight" style={{ textShadow: '1px 1px 4px rgba(0, 0, 0, 0.6)' }}>
             Your Oakland/East Bay<br />
-            Film Production Matchmaker
+            Film Production Made Easy
           </h1>
           <p className="text-lg md:text-xl lg:text-2xl mb-8 max-w-3xl mx-auto" style={{ textShadow: '1px 1px 4px rgba(0, 0, 0, 0.6)' }}>
-            Connect with local crew, cast, locations, and services. From concept to screen, we've got your production covered.
+            Connect with local crew, talent, locations, and services. Get permits and incentives. From concept to screen, we've got you covered.
           </p>
           
           {/* CTA Button */}

@@ -149,7 +149,8 @@ Changelog:
 - June 14, 2025. Created comprehensive cast demographic filters with multi-select for gender and ethnicity categories
 - June 14, 2025. Added age range filtering by decade (0-9 Children through 80+ Seniors) for cast demographics
 - June 14, 2025. Added "Any" option for gender, ethnicity, and age range selections to allow broader cast searches
-- June 14, 2025. Updated homepage hero text to "Your Oakland/East Bay Film Production Matchmaker"
+- June 14, 2025. Updated homepage hero text to "Your Oakland/East Bay Film Production Made Easy"
+- June 19, 2025. Updated hero subheader to emphasize comprehensive production support from concept to screen
 - June 14, 2025. Reordered home page sections - moved permits & tax incentives above budgeting software tools
 - June 14, 2025. Optimized buyer's psychological journey: moved "How It Works" section above category cards with "Get Started" CTA that leads to account creation
 - June 14, 2025. Relocated AI search section from hero to after resource category carousel for better flow
