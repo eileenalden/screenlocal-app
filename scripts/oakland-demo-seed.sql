@@ -1,9 +1,143 @@
 -- Oakland Demo Seed Data for ScreenLocal
--- Comprehensive film industry resources for Oakland city
+-- Comprehensive film industry resources for Oakland city (50+ resources)
 -- This script matches the current database schema structure
 
 -- Clear existing demo resources
 DELETE FROM resources WHERE organization_id = 1;
+
+-- Add additional locations to reach 25 total
+INSERT INTO resources (organization_id, provider_id, type, title, description, category, images, price_per_day, price_type, location, amenities, equipment, specialties, rating, review_count, is_active) VALUES
+
+-- Additional Oakland Neighborhoods
+(1, 1, 'location', 'Laurel District Vintage Storefront', 
+ 'Classic 1940s storefront with original tile floors, large display windows, and neon signage. Perfect for retro commercials, period pieces, or modern urban scenes.', 
+ 'retail', 
+ ARRAY['https://images.unsplash.com/photo-1441986300917-64674bd600d8'],
+ 900.00, 'day', 'Oakland, CA (Laurel District)', 
+ ARRAY['vintage_storefront', 'neon_signage', 'display_windows', 'street_parking'], 
+ ARRAY[], 
+ ARRAY['vintage', 'storefront', 'retro', 'laurel', 'urban'], 
+ 4.5, 21, true),
+
+(1, 2, 'location', 'Dimond District Family Home', 
+ 'Charming 1950s ranch-style home with mid-century furnishings, backyard patio, and authentic period details. Great for family-oriented commercials and residential scenes.', 
+ 'house', 
+ ARRAY['https://images.unsplash.com/photo-1449844908441-8829872d2607'],
+ 1000.00, 'day', 'Oakland, CA (Dimond District)', 
+ ARRAY['mid_century_furnishings', 'backyard_patio', 'family_oriented', 'period_details'], 
+ ARRAY[], 
+ ARRAY['ranch_style', 'mid_century', 'family', 'dimond', 'residential'], 
+ 4.6, 17, true),
+
+(1, 1, 'location', 'Montclair Village Coffee Shop', 
+ 'Cozy neighborhood coffee shop with exposed brick, local art, and community atmosphere. Available for filming during off-hours or with limited crew during business.', 
+ 'restaurant', 
+ ARRAY['https://images.unsplash.com/photo-1554475901-4538ddfbccc2'],
+ 700.00, 'day', 'Oakland, CA (Montclair)', 
+ ARRAY['exposed_brick', 'local_art', 'community_atmosphere', 'off_hours_available'], 
+ ARRAY['espresso_machines', 'seating_for_40'], 
+ ARRAY['coffee_shop', 'cozy', 'neighborhood', 'montclair', 'community'], 
+ 4.7, 29, true),
+
+(1, 3, 'location', 'Glenview Elementary School', 
+ 'Classic 1960s school building with gymnasium, classrooms, cafeteria, and playground. Perfect for educational content, coming-of-age stories, or community scenes.', 
+ 'school', 
+ ARRAY['https://images.unsplash.com/photo-1580582932707-520aed937b7b'],
+ 1200.00, 'day', 'Oakland, CA (Glenview)', 
+ ARRAY['gymnasium', 'multiple_classrooms', 'cafeteria', 'playground', 'parking'], 
+ ARRAY['PA_system', 'projectors', 'whiteboards'], 
+ ARRAY['school', 'educational', 'gymnasium', 'glenview', 'community'], 
+ 4.4, 12, true),
+
+(1, 2, 'location', 'Skyline Boulevard Scenic Overlook', 
+ 'Stunning overlook with panoramic views of San Francisco Bay, city skyline, and East Bay hills. Multiple vantage points and parking areas available.', 
+ 'outdoor', 
+ ARRAY['https://images.unsplash.com/photo-1506905925346-21bda4d32df4'],
+ 400.00, 'day', 'Oakland, CA (Skyline)', 
+ ARRAY['panoramic_views', 'multiple_vantage_points', 'parking_areas', 'scenic'], 
+ ARRAY[], 
+ ARRAY['overlook', 'scenic', 'panoramic', 'skyline', 'bay_views'], 
+ 4.8, 34, true),
+
+(1, 1, 'location', 'Mills College Historic Campus', 
+ 'Beautiful collegiate Gothic architecture with ivy-covered buildings, courtyards, and mature trees. Academic atmosphere perfect for university scenes.', 
+ 'school', 
+ ARRAY['https://images.unsplash.com/photo-1562774053-701939374585'],
+ 1500.00, 'day', 'Oakland, CA (Mills College)', 
+ ARRAY['gothic_architecture', 'ivy_covered_buildings', 'courtyards', 'mature_trees'], 
+ ARRAY[], 
+ ARRAY['college', 'gothic', 'academic', 'historic', 'ivy'], 
+ 4.9, 41, true),
+
+(1, 3, 'location', 'Chinatown Oakland Restaurant', 
+ 'Authentic Chinese restaurant with traditional decor, red lanterns, and family-style seating. Available after hours, cultural authenticity guaranteed.', 
+ 'restaurant', 
+ ARRAY['https://images.unsplash.com/photo-1571091718767-18b5b1457add'],
+ 850.00, 'day', 'Oakland, CA (Chinatown)', 
+ ARRAY['traditional_decor', 'red_lanterns', 'family_seating', 'cultural_authenticity'], 
+ ARRAY['commercial_kitchen', 'traditional_furnishings'], 
+ ARRAY['chinese', 'authentic', 'traditional', 'chinatown', 'cultural'], 
+ 4.6, 23, true),
+
+(1, 2, 'location', 'Claremont Hotel Grounds', 
+ 'Historic luxury hotel with manicured gardens, tennis courts, and spa facilities. Multiple indoor and outdoor locations available on expansive property.', 
+ 'hotel', 
+ ARRAY['https://images.unsplash.com/photo-1566073771259-6a8506099945'],
+ 3000.00, 'day', 'Oakland, CA (Claremont)', 
+ ARRAY['luxury_hotel', 'manicured_gardens', 'tennis_courts', 'spa_facilities'], 
+ ARRAY[], 
+ ARRAY['luxury', 'historic', 'hotel', 'gardens', 'claremont'], 
+ 4.9, 87, true),
+
+(1, 1, 'location', 'Oakland Museum Exterior Plaza', 
+ 'Modern museum with distinctive terraced architecture and outdoor sculpture garden. Great for contemporary scenes and architectural beauty.', 
+ 'museum', 
+ ARRAY['https://images.unsplash.com/photo-1578662996442-48f60103fc96'],
+ 1100.00, 'day', 'Oakland, CA (Downtown)', 
+ ARRAY['terraced_architecture', 'sculpture_garden', 'modern_design', 'downtown_location'], 
+ ARRAY[], 
+ ARRAY['museum', 'modern', 'terraced', 'sculpture', 'contemporary'], 
+ 4.7, 36, true),
+
+(1, 2, 'location', 'Piedmont Avenue Theater District', 
+ 'Historic theater district with vintage marquees, cafes, and pedestrian-friendly streets. Multiple storefronts and classic architecture available.', 
+ 'street', 
+ ARRAY['https://images.unsplash.com/photo-1518894781321-630e638d0742'],
+ 600.00, 'day', 'Oakland, CA (Piedmont Avenue)', 
+ ARRAY['vintage_marquees', 'pedestrian_friendly', 'multiple_storefronts', 'classic_architecture'], 
+ ARRAY[], 
+ ARRAY['theater_district', 'vintage', 'pedestrian', 'piedmont', 'historic'], 
+ 4.5, 28, true),
+
+(1, 3, 'location', 'Chabot Space Center Observatory', 
+ 'Modern space science center with planetarium, observatory domes, and interactive exhibits. Perfect for sci-fi, educational, or futuristic content.', 
+ 'science_center', 
+ ARRAY['https://images.unsplash.com/photo-1446776653964-20c1d3a81b06'],
+ 1800.00, 'day', 'Oakland, CA (Chabot)', 
+ ARRAY['planetarium', 'observatory_domes', 'interactive_exhibits', 'modern_facility'], 
+ ARRAY['planetarium_equipment', 'telescopes', 'projection_systems'], 
+ ARRAY['space_center', 'observatory', 'planetarium', 'futuristic', 'educational'], 
+ 4.8, 52, true),
+
+(1, 1, 'location', 'Oakland Coliseum Parking Lot', 
+ 'Massive parking area adjacent to sports stadium. Perfect for large-scale productions, car commercials, or crowd scenes. Multiple configurations available.', 
+ 'outdoor', 
+ ARRAY['https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b'],
+ 800.00, 'day', 'Oakland, CA (Coliseum)', 
+ ARRAY['massive_parking', 'stadium_adjacent', 'large_scale_productions', 'multiple_configurations'], 
+ ARRAY[], 
+ ARRAY['parking_lot', 'stadium', 'large_scale', 'coliseum', 'sports'], 
+ 4.3, 19, true),
+
+(1, 2, 'location', 'Fruitvale BART Station Plaza', 
+ 'Modern transit hub with community plaza, murals, and multicultural atmosphere. Great for urban stories and community-focused content.', 
+ 'transit', 
+ ARRAY['https://images.unsplash.com/photo-1544620347-c4fd4a3d5957'],
+ 500.00, 'day', 'Oakland, CA (Fruitvale)', 
+ ARRAY['transit_hub', 'community_plaza', 'murals', 'multicultural_atmosphere'], 
+ ARRAY[], 
+ ARRAY['transit', 'community', 'multicultural', 'fruitvale', 'urban'], 
+ 4.4, 15, true);
 
 -- LOCATIONS (12 authentic Oakland locations)
 INSERT INTO resources (organization_id, provider_id, type, title, description, category, images, price_per_day, price_type, location, amenities, equipment, specialties, rating, review_count, is_active) VALUES
@@ -219,7 +353,58 @@ INSERT INTO resources (organization_id, provider_id, type, title, description, c
  ARRAY['12_years_experience', 'full_kit', 'period_specialist', 'prosthetics_expert'], 
  ARRAY['full_makeup_kit', 'hair_styling_tools', 'prosthetics', 'airbrush'], 
  ARRAY['makeup_artist', 'hair', 'beauty', 'character', 'special_effects', 'period'], 
- 4.8, 56, true);
+ 4.8, 56, true),
+
+-- Additional Crew Members
+(1, 5, 'crew', 'Carlos Martinez - Location Manager', 
+ 'Experienced location manager with extensive Bay Area connections. Specializes in permit coordination, community relations, and logistical support for location shoots.', 
+ 'production', 
+ ARRAY['https://images.unsplash.com/photo-1519085360753-af0119f7cbe7'],
+ 550.00, 'day', 'Oakland, CA', 
+ ARRAY['bay_area_connections', 'permit_coordination', 'community_relations', 'logistical_support'], 
+ ARRAY['location_database', 'permit_contacts', 'coordination_tools'], 
+ ARRAY['location_manager', 'permits', 'coordination', 'bay_area', 'logistics'], 
+ 4.7, 39, true),
+
+(1, 4, 'crew', 'Nina Patel - Costume Designer', 
+ 'Award-winning costume designer with extensive wardrobe collection. Specializes in period costumes, contemporary fashion, and character-driven designs.', 
+ 'wardrobe', 
+ ARRAY['https://images.unsplash.com/photo-1438761681033-6461ffad8d80'],
+ 700.00, 'day', 'Oakland, CA', 
+ ARRAY['award_winning', 'extensive_wardrobe', 'period_specialist', 'character_driven'], 
+ ARRAY['costume_collection', 'sewing_equipment', 'fitting_tools'], 
+ ARRAY['costume_designer', 'wardrobe', 'period', 'fashion', 'character'], 
+ 4.9, 48, true),
+
+(1, 5, 'crew', 'Tommy Wu - Assistant Director', 
+ 'Experienced 1st AD with strong organizational skills and production management background. Expert in scheduling, crew coordination, and set safety protocols.', 
+ 'production', 
+ ARRAY['https://images.unsplash.com/photo-1472099645785-5658abf4ff4e'],
+ 650.00, 'day', 'Berkeley, CA', 
+ ARRAY['organizational_skills', 'production_management', 'scheduling_expert', 'safety_protocols'], 
+ ARRAY['scheduling_software', 'communication_equipment', 'safety_gear'], 
+ ARRAY['assistant_director', 'ad', 'scheduling', 'coordination', 'safety'], 
+ 4.8, 61, true),
+
+(1, 6, 'crew', 'Rachel Green - Set Decorator', 
+ 'Creative set decorator with prop house connections and styling expertise. Specializes in authentic period details and contemporary commercial aesthetics.', 
+ 'art', 
+ ARRAY['https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb'],
+ 580.00, 'day', 'Oakland, CA', 
+ ARRAY['prop_house_connections', 'styling_expertise', 'period_details', 'commercial_aesthetics'], 
+ ARRAY['prop_collection', 'styling_tools', 'transport_vehicle'], 
+ ARRAY['set_decorator', 'props', 'styling', 'period', 'commercial'], 
+ 4.6, 34, true),
+
+(1, 4, 'crew', 'Brandon Lee - Drone Operator', 
+ 'FAA-licensed drone operator with cinematic aerial experience. Owns professional drone fleet including DJI Inspire and custom cinema rigs.', 
+ 'camera', 
+ ARRAY['https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d'],
+ 480.00, 'day', 'San Francisco, CA', 
+ ARRAY['faa_licensed', 'cinematic_aerial', 'professional_fleet', 'custom_rigs'], 
+ ARRAY['DJI_Inspire', 'cinema_drones', 'fpv_systems', 'aerial_equipment'], 
+ ARRAY['drone_operator', 'aerial', 'faa_licensed', 'cinematic', 'dji'], 
+ 4.7, 43, true);
 
 -- TALENT (12 diverse performers)
 INSERT INTO resources (organization_id, provider_id, type, title, description, category, images, price_per_day, price_type, location, amenities, equipment, specialties, rating, review_count, is_active) VALUES
