@@ -8,7 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ChevronLeft, ChevronRight, Plus, Trash2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, Trash2, Calendar, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface FilmingLocation {
@@ -23,10 +23,18 @@ interface FilmingLocation {
   contactPhone: string;
 }
 
+interface DateRange {
+  id: string;
+  startDate: string;
+  endDate: string;
+  label: string;
+}
+
 interface FormData {
   // Step 1: Project Basics
   projectTitle: string;
   productionType: string;
+  filmingDateRanges: DateRange[];
   estimatedAirDate: string;
   producerName: string;
   directorName: string;
@@ -117,9 +125,13 @@ interface OaklandFilmPermitProps {
 
 export default function OaklandFilmPermit({ onClose }: OaklandFilmPermitProps) {
   const [currentStep, setCurrentStep] = useState(1);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [tempStartDate, setTempStartDate] = useState("");
+  const [tempEndDate, setTempEndDate] = useState("");
   const [formData, setFormData] = useState<FormData>({
     projectTitle: "",
     productionType: "",
+    filmingDateRanges: [],
     estimatedAirDate: "",
     producerName: "",
     directorName: "",
@@ -185,23 +197,35 @@ export default function OaklandFilmPermit({ onClose }: OaklandFilmPermitProps) {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  const calculateTotalFilmingDays = () => {
+    return formData.filmingDateRanges.reduce((total, range) => {
+      if (!range.startDate || !range.endDate) return total;
+      const start = new Date(range.startDate);
+      const end = new Date(range.endDate);
+      const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+      return total + days;
+    }, 0);
+  };
+
   const calculateCost = () => {
-    if (!formData.productionType) return { subtotal: 0, surcharge: 0, total: 0, dailyRate: 0, filmingDays: 0 };
+    if (!formData.productionType || formData.filmingDateRanges.length === 0) {
+      return { subtotal: 0, surcharge: 0, total: 0, dailyRate: 0, filmingDays: 0, dateRanges: 0 };
+    }
     
     const dailyRate = PRODUCTION_RATES[formData.productionType] || 0;
-    const uniqueDates = new Set(formData.filmingLocations.filter(loc => loc.date).map(loc => loc.date));
-    const filmingDays = Math.max(uniqueDates.size, 1);
+    const filmingDays = calculateTotalFilmingDays();
+    const dateRanges = formData.filmingDateRanges.length;
     const subtotal = dailyRate * filmingDays;
     const surcharge = dailyRate > 0 ? subtotal * 0.125 : 0;
     const total = subtotal + surcharge;
     
-    return { subtotal, surcharge, total, dailyRate, filmingDays };
+    return { subtotal, surcharge, total, dailyRate, filmingDays, dateRanges };
   };
 
   const validateStep = (step: number): boolean => {
     switch (step) {
       case 1:
-        return !!(formData.projectTitle && formData.productionType && formData.estimatedAirDate && formData.producerName && formData.directorName);
+        return !!(formData.projectTitle && formData.productionType && formData.filmingDateRanges.length > 0 && formData.estimatedAirDate && formData.producerName && formData.directorName);
       case 2:
         return !!(formData.contactName && formData.contactTitle && formData.phoneNumber && formData.emailAddress);
       case 3:
@@ -288,6 +312,66 @@ export default function OaklandFilmPermit({ onClose }: OaklandFilmPermitProps) {
     }));
   };
 
+  const formatDateRange = (startDate: string, endDate: string) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const startFormatted = start.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const endFormatted = end.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    
+    if (startDate === endDate) {
+      return endFormatted;
+    }
+    
+    if (start.getMonth() === end.getMonth() && start.getFullYear() === end.getFullYear()) {
+      return `${startFormatted}-${end.getDate()}, ${end.getFullYear()}`;
+    }
+    
+    return `${startFormatted}-${endFormatted}`;
+  };
+
+  const addDateRange = () => {
+    if (!tempStartDate || !tempEndDate) {
+      toast({
+        title: "Invalid dates",
+        description: "Please select both start and end dates.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (new Date(tempStartDate) > new Date(tempEndDate)) {
+      toast({
+        title: "Invalid date range",
+        description: "End date must be after start date.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const newRange: DateRange = {
+      id: Date.now().toString(),
+      startDate: tempStartDate,
+      endDate: tempEndDate,
+      label: formatDateRange(tempStartDate, tempEndDate)
+    };
+
+    setFormData(prev => ({
+      ...prev,
+      filmingDateRanges: [...prev.filmingDateRanges, newRange]
+    }));
+
+    setTempStartDate("");
+    setTempEndDate("");
+    setShowDatePicker(false);
+  };
+
+  const removeDateRange = (id: string) => {
+    setFormData(prev => ({
+      ...prev,
+      filmingDateRanges: prev.filmingDateRanges.filter(range => range.id !== id)
+    }));
+  };
+
   const renderStep = () => {
     switch (currentStep) {
       case 1:
@@ -317,6 +401,97 @@ export default function OaklandFilmPermit({ onClose }: OaklandFilmPermitProps) {
                   </div>
                 ))}
               </RadioGroup>
+            </div>
+            
+            {/* Filming Dates Section */}
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <Label className="text-base font-medium">Filming Dates *</Label>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowDatePicker(true)}
+                  className="flex items-center gap-2"
+                >
+                  <Calendar className="h-4 w-4" />
+                  Add Filming Dates
+                </Button>
+              </div>
+              
+              {/* Selected Date Ranges */}
+              {formData.filmingDateRanges.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {formData.filmingDateRanges.map((range) => (
+                    <div
+                      key={range.id}
+                      className="flex items-center gap-2 bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm"
+                    >
+                      <span>{range.label}</span>
+                      <button
+                        type="button"
+                        onClick={() => removeDateRange(range.id)}
+                        className="hover:bg-blue-200 rounded-full p-1"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {/* Total Days Display */}
+              {formData.filmingDateRanges.length > 0 && (
+                <div className="text-sm text-gray-600 mb-4">
+                  Total filming days: {calculateTotalFilmingDays()} days across {formData.filmingDateRanges.length} date range{formData.filmingDateRanges.length > 1 ? 's' : ''}
+                </div>
+              )}
+              
+              {/* Date Picker Modal */}
+              {showDatePicker && (
+                <Card className="border-2 border-blue-200 p-4 mb-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="font-medium">Add Filming Date Range</h4>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setShowDatePicker(false)}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 mb-3">
+                    <div>
+                      <Label htmlFor="tempStartDate">Start Date</Label>
+                      <Input
+                        id="tempStartDate"
+                        type="date"
+                        value={tempStartDate}
+                        onChange={(e) => setTempStartDate(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="tempEndDate">End Date</Label>
+                      <Input
+                        id="tempEndDate"
+                        type="date"
+                        value={tempEndDate}
+                        onChange={(e) => setTempEndDate(e.target.value)}
+                        min={tempStartDate}
+                      />
+                    </div>
+                  </div>
+                  <Button
+                    type="button"
+                    onClick={addDateRange}
+                    className="w-full"
+                    disabled={!tempStartDate || !tempEndDate}
+                  >
+                    Add Date Range
+                  </Button>
+                </Card>
+              )}
             </div>
             
             <div>
@@ -555,7 +730,7 @@ export default function OaklandFilmPermit({ onClose }: OaklandFilmPermitProps) {
         </Card>
         
         {/* Sticky Cost Summary */}
-        {formData.productionType && (
+        {formData.productionType && formData.filmingDateRanges.length > 0 && (
           <Card className="w-80 h-fit sticky top-4">
             <CardHeader>
               <CardTitle className="text-lg">Cost Summary</CardTitle>
@@ -571,7 +746,7 @@ export default function OaklandFilmPermit({ onClose }: OaklandFilmPermitProps) {
               </div>
               <div className="flex justify-between">
                 <span>Filming Days:</span>
-                <span className="font-medium">{cost.filmingDays}</span>
+                <span className="font-medium">{cost.filmingDays} days across {cost.dateRanges} range{cost.dateRanges > 1 ? 's' : ''}</span>
               </div>
               <div className="flex justify-between">
                 <span>Subtotal:</span>
