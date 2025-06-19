@@ -1,0 +1,63 @@
+**Copy and paste this comprehensive prompt to Replit Agent:**
+
+---
+
+Update the Permits page with accurate permit cards based on Oakland's actual requirements. Replace the current placeholder permit cards with these 6 permit cards using the same card layout as the locations:
+
+**1. Oakland Film Permit**
+- Title: "Oakland Film Permit"
+- Description: "Required for all commercial filming in Oakland. Covers public locations, city property, and most private locations."
+- Category: "Film Permits"
+- Processing Time: "Minimum 2 business days (5-7 days recommended)"
+- Cost: "Starts at $61/day (varies by production type)"
+- Status: "Available"
+- Button: "Apply Now"
+
+**2. Encroachment Permit**
+- Title: "Encroachment Permit (OPD)"
+- Description: "Required for street closures, traffic control, or any filming that impacts public streets and sidewalks."
+- Category: "Traffic Control"
+- Processing Time: "5+ business days"
+- Cost: "$100-150/hour per officer (4-hour minimum)"
+- Status: "Available"
+- Button: "Apply Now"
+
+**3. Parking Permits**
+- Title: "Reserved Parking Permits"
+- Description: "Required for reserving street parking spaces for production vehicles and equipment trucks."
+- Category: "Parking"
+- Processing Time: "3-5 business days"
+- Cost: "$20/meter/day or $5/25ft/day"
+- Status: "Available"
+- Button: "Apply Now"
+
+**4. Fire Department Permit**
+- Title: "Fire Department Permit"
+- Description: "Required for pyrotechnics, special effects, open flames, or any hazardous materials on set."
+- Category: "Special Effects"
+- Processing Time: "7-10 business days"
+- Cost: "Varies (permit fees + safety personnel)"
+- Status: "Available"
+- Button: "Apply Now"
+
+**5. Drone Authorization**
+- Title: "Drone Authorization"
+- Description: "Required for unmanned aircraft filming on, from, within, and over city property. Reviewed case-by-case."
+- Category: "Special Equipment"
+- Processing Time: "7-14 business days"
+- Cost: "Varies"
+- Status: "Available"
+- Button: "Apply Now"
+
+**6. City Parks Permit**
+- Title: "City Parks Filming Permit"
+- Description: "Required for filming in Oakland city parks. Separate permit from Parks & Recreation Department."
+- Category: "Locations"
+- Processing Time: "1-2 weeks"
+- Cost: "Varies by park and usage"
+- Status: "Coming Soon"
+- Button: "Coming Soon"
+
+Make sure the "Apply Now" buttons for the available permits are clickable and the "Coming Soon" buttons are disabled/grayed out. Use the same card styling, hover effects, and layout as the existing location cards.
+
+---
