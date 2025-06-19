@@ -95,9 +95,21 @@ export default function ResourceCard({ resource, viewMode = "grid", showMatchBut
         
         <div className="flex items-center justify-between mb-4">
           <div className="flex flex-col">
-            <span className="text-orange-500 font-semibold">
-              ${resource.pricePerDay || "0"}/{resource.priceType || "day"}
-            </span>
+            {resource.type === 'permit' ? (
+              <>
+                <span className="text-orange-500 font-semibold">
+                  {resource.amenities?.find(a => a.startsWith('cost:'))?.replace('cost:', '') || 
+                   (resource.pricePerDay > 0 ? `$${resource.pricePerDay} ${resource.priceType}` : 'Varies')}
+                </span>
+                <span className="text-sm text-gray-600 mt-1">
+                  {resource.amenities?.find(a => a.startsWith('processing_time:'))?.replace('processing_time:', '') || 'Processing time varies'}
+                </span>
+              </>
+            ) : (
+              <span className="text-orange-500 font-semibold">
+                ${resource.pricePerDay || "0"}/{resource.priceType || "day"}
+              </span>
+            )}
             {resource.category && (
               <Badge variant="outline" className="mt-1 w-fit">
                 {resource.category}
@@ -106,12 +118,22 @@ export default function ResourceCard({ resource, viewMode = "grid", showMatchBut
           </div>
           <span className={`text-sm font-medium ${getStatusColor(resource.isActive || false)}`}>
             <CheckCircle className="h-4 w-4 inline mr-1" />
-            {getStatusText(resource.isActive || false)}
+            {resource.type === 'permit' ? 
+              (resource.amenities?.find(a => a.startsWith('status:'))?.replace('status:', '') || getStatusText(resource.isActive || false)) :
+              getStatusText(resource.isActive || false)
+            }
           </span>
         </div>
         
         <div className="flex gap-2">
-          {showMatchButton ? (
+          {resource.type === 'permit' ? (
+            <Button 
+              className="flex-1 bg-orange-500 text-white hover:bg-orange-600 text-sm font-medium"
+              disabled={!resource.isActive}
+            >
+              {resource.amenities?.find(a => a.startsWith('button:'))?.replace('button:', '') || 'Apply Now'}
+            </Button>
+          ) : showMatchButton ? (
             <Button className="flex-1 bg-orange-500 text-white hover:bg-orange-600 text-sm font-medium">
               <Heart className="h-3 w-3 mr-1" />
               Match
@@ -121,7 +143,7 @@ export default function ResourceCard({ resource, viewMode = "grid", showMatchBut
               View Details
             </Button>
           )}
-          <MessagingDialog resource={resource} senderId={1} />
+          {resource.type !== 'permit' && <MessagingDialog resource={resource} senderId={1} />}
           <Button variant="outline" size="sm" className="px-3">
             <ResourceIcon className="h-4 w-4" />
           </Button>
