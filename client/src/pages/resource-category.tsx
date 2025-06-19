@@ -580,6 +580,19 @@ export default function ResourceCategory() {
     crewUnionStatus?: string[];
   }>({});
   const [showBrowseFilters, setShowBrowseFilters] = useState(false);
+
+  // Reset state when category changes
+  useEffect(() => {
+    setMode("browse");
+    setDescription("");
+    setSubcategory("");
+    setCurrentIndex(0);
+    setAiResults([]);
+    setShowFavorites(false);
+    setBrowseFilters({});
+    setShowBrowseFilters(false);
+    setLocationRadius(LOCATION_SETTINGS[category]?.defaultRadius || 20);
+  }, [category]);
   
   const { toast } = useToast();
   const search = useSearch();
@@ -877,8 +890,10 @@ export default function ResourceCategory() {
   const displayResources: Resource[] = getDisplayResources();
   const currentResource = displayResources[currentIndex];
   
-  // Debug filtering for all categories
-  console.log(`${category} page - showing ${displayResources.length} resources:`, displayResources.map(r => `${r.title} (${r.type})`));
+  // Debug filtering for all categories - only show when filters are applied
+  if (mode === "search" || Object.values(browseFilters).some(filter => Array.isArray(filter) ? filter.length > 0 : filter)) {
+    console.log(`${category} page (${mode} mode) - showing ${displayResources.length} resources:`, displayResources.map(r => `${r.title} (${r.type})`));
+  }
   
   if (category === 'locations' && (browseFilters.locationPropertyType?.length || browseFilters.locationSpaceType?.length)) {
     console.log('Location filters applied:', browseFilters);
