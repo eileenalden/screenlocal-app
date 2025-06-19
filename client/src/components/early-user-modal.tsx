@@ -51,6 +51,8 @@ export default function EarlyUserModal({ isOpen, onClose }: EarlyUserModalProps)
     company: ""
   });
   
+  const [otherFeature, setOtherFeature] = useState("");
+  
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const { toast } = useToast();
 
@@ -103,6 +105,7 @@ export default function EarlyUserModal({ isOpen, onClose }: EarlyUserModalProps)
       userType: formData.userType,
       challenge: formData.challenge,
       wantedFeatures: formData.wantedFeatures,
+      otherFeature: formData.wantedFeatures.includes("Other") ? otherFeature : "",
       name: formData.name,
       company: formData.company,
       submittedAt: new Date().toISOString()
@@ -127,6 +130,7 @@ export default function EarlyUserModal({ isOpen, onClose }: EarlyUserModalProps)
       name: "",
       company: ""
     });
+    setOtherFeature("");
     
     setTimeout(() => {
       onClose();
@@ -209,6 +213,19 @@ export default function EarlyUserModal({ isOpen, onClose }: EarlyUserModalProps)
                   </div>
                 ))}
               </div>
+              
+              {/* Other Feature Text Field */}
+              {formData.wantedFeatures.includes("Other") && (
+                <div className="mt-3">
+                  <Label htmlFor="otherFeature">Please specify:</Label>
+                  <Input
+                    id="otherFeature"
+                    value={otherFeature}
+                    onChange={(e) => setOtherFeature(e.target.value)}
+                    placeholder="Describe the feature you'd like to see..."
+                  />
+                </div>
+              )}
             </div>
 
             {/* Optional Fields */}

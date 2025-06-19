@@ -10,6 +10,7 @@ interface EarlyUser {
   userType: string;
   challenge: string;
   wantedFeatures: string[];
+  otherFeature?: string;
   name: string;
   company: string;
   submittedAt: string;
@@ -35,6 +36,7 @@ export default function AdminExport() {
       'User Type',
       'Challenge',
       'Wanted Features',
+      'Other Feature',
       'Name',
       'Company',
       'Submitted At'
@@ -46,6 +48,7 @@ export default function AdminExport() {
       user.userType,
       `"${user.challenge.replace(/"/g, '""')}"`, // Escape quotes in challenge text
       `"${user.wantedFeatures.join(', ')}"`,
+      `"${(user.otherFeature || '').replace(/"/g, '""')}"`,
       user.name,
       user.company,
       new Date(user.submittedAt).toLocaleString()
@@ -187,6 +190,7 @@ export default function AdminExport() {
                       <TableHead>Company</TableHead>
                       <TableHead>Challenge</TableHead>
                       <TableHead>Wanted Features</TableHead>
+                      <TableHead>Other Feature</TableHead>
                       <TableHead>Submitted</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -211,6 +215,9 @@ export default function AdminExport() {
                               </span>
                             ))}
                           </div>
+                        </TableCell>
+                        <TableCell className="max-w-xs truncate" title={user.otherFeature}>
+                          {user.otherFeature || '-'}
                         </TableCell>
                         <TableCell>{formatDate(user.submittedAt)}</TableCell>
                       </TableRow>
