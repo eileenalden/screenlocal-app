@@ -260,7 +260,7 @@ export default function EarlyUserModal({ isOpen, onClose }: EarlyUserModalProps)
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <MapPin className="h-4 w-4 text-orange-600" />
-                    <span>Get invited to our launch party</span>
+                    <span>VIP launch party invitation</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Lightbulb className="h-4 w-4 text-orange-600" />
