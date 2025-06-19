@@ -59,9 +59,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (minPrice) filters.minPrice = parseFloat(minPrice as string);
       if (maxPrice) filters.maxPrice = parseFloat(maxPrice as string);
 
+      console.log(`API resources request - filters:`, filters);
       const resources = await storage.getResources(filters);
+      console.log(`API resources response - ${resources.length} resources of types:`, [...new Set(resources.map(r => r.type))]);
       res.json(resources);
     } catch (error) {
+      console.error("Error fetching resources:", error);
       res.status(500).json({ message: "Failed to fetch resources" });
     }
   });
