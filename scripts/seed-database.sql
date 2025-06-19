@@ -1,12 +1,26 @@
 -- ScreenLocal Database Seed Data
 -- Run this after initial table creation to populate development data
 
--- Insert Oakland organization
+-- 1. Insert Oakland organization
 INSERT INTO organizations (name, slug, city, state, brand_name, hero_title, hero_subtitle, primary_color, is_active) VALUES
 ('Oakland/East Bay Film Hub', 'oakland-eastbay', 'Oakland', 'CA', 'Oakland/East Bay', 'Your Oakland/East Bay Film Production Matchmaker', 'Connect with locations, talent, and services specifically for Oakland filmmakers', '#ea580c', true)
 ON CONFLICT (slug) DO NOTHING;
 
--- Insert sample resources with realistic Oakland data
+-- 2. Create placeholder providers (simplified approach - no user dependency)
+-- Note: In production, providers would be created through the app UI with real users
+INSERT INTO providers (id, user_id, business_name, bio) VALUES 
+(1, 'placeholder-1', 'Oakland Hills Properties', 'Location management company'),
+(2, 'placeholder-2', 'West Oakland Studios', 'Industrial space rentals'),
+(3, 'placeholder-3', 'Classic Diners LLC', 'Restaurant location services'),
+(4, 'placeholder-4', 'Sarah Chen Productions', 'Cinematography services'),
+(5, 'placeholder-5', 'Bay Area Sound', 'Professional audio services'),
+(6, 'placeholder-6', 'Elena Rodriguez Talent', 'Acting representation'),
+(7, 'placeholder-7', 'David Kim Agency', 'Character actor representation'),
+(8, 'placeholder-8', 'Bay Equipment Rentals', 'Film equipment rental'),
+(9, 'placeholder-9', 'Golden Gate Post', 'Post-production services')
+ON CONFLICT (id) DO NOTHING;
+
+-- 3. Insert sample resources with realistic Oakland data
 INSERT INTO resources (organization_id, provider_id, type, title, description, category, images, price_per_day, price_type, location, amenities, equipment, specialties, rating, review_count, is_active) VALUES
 -- Locations
 (1, 1, 'location', 'Victorian House in Oakland Hills', 'Stunning 1890s Victorian with original hardwood floors, ornate moldings, and panoramic bay views. Perfect for period dramas or upscale contemporary scenes.', 'house', 
