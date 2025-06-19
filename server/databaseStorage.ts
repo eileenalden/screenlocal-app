@@ -181,11 +181,31 @@ export class DatabaseStorage implements IStorage {
     maxPrice?: number;
     available?: boolean;
   }): Promise<Resource[]> {
+    let whereConditions = [];
+    
     if (filters?.type) {
-      return await db.select().from(resources).where(eq(resources.type, filters.type));
+      whereConditions.push(eq(resources.type, filters.type));
+    }
+    if (filters?.category) {
+      whereConditions.push(eq(resources.category, filters.category));
+    }
+    if (filters?.location) {
+      whereConditions.push(eq(resources.location, filters.location));
     }
     
-    return await db.select().from(resources);
+    let query = db.select().from(resources);
+    
+    if (whereConditions.length > 0) {
+      // Import and function at top of file, use single condition or combine with and
+      if (whereConditions.length === 1) {
+        query = query.where(whereConditions[0]);
+      } else {
+        const { and } = await import("drizzle-orm");
+        query = query.where(and(...whereConditions));
+      }
+    }
+    
+    return await query;
   }
 
   async getResourcesByProvider(providerId: number): Promise<Resource[]> {

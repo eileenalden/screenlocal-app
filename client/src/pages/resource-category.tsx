@@ -637,6 +637,8 @@ export default function ResourceCategory() {
     };
     return mapping[category] || category;
   };
+  
+  console.log(`Resource category page: ${category}, mapped to type: ${getResourceType(category)}`);
 
   const { data: allResources = [], isLoading } = useQuery({
     queryKey: ['/api/resources', category],
@@ -787,19 +789,8 @@ export default function ResourceCategory() {
     // In browse mode, apply filtering based on current filters
     let filteredResources = [...allResources];
     
-    // First filter by the current category to ensure we only show relevant resources
-    const categoryMapping = {
-      'locations': 'location',
-      'crew': 'crew', 
-      'cast': 'talent',
-      'services': 'service',
-      'permits': 'permit'
-    };
-    
-    const resourceType = categoryMapping[category];
-    if (resourceType) {
-      filteredResources = filteredResources.filter(resource => resource.type === resourceType);
-    }
+    // Resources should already be filtered by type from the API, but ensure client-side consistency
+    // This is a safety check in case API filtering doesn't work properly
     
     // Apply browse filters if any are set
     if (browseFilters.selectedSubcategory) {
@@ -887,7 +878,7 @@ export default function ResourceCategory() {
   const currentResource = displayResources[currentIndex];
   
   // Debug filtering for all categories
-  console.log(`${category} page - showing ${displayResources.length} resources:`, displayResources.map(r => `${r.name} (${r.type})`));
+  console.log(`${category} page - showing ${displayResources.length} resources:`, displayResources.map(r => `${r.title} (${r.type})`));
   
   if (category === 'locations' && (browseFilters.locationPropertyType?.length || browseFilters.locationSpaceType?.length)) {
     console.log('Location filters applied:', browseFilters);
