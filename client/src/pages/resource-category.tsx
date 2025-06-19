@@ -1139,7 +1139,7 @@ export default function ResourceCategory() {
                 {/* Swipe Interface */}
                 {category === "permits" ? (
                   /* Fixed layout for Permits - arrows outside card boundaries */
-                  <div className="relative max-w-4xl mx-auto">
+                  <div className="relative max-w-4xl mx-auto mb-20">
                     <div className="flex items-center justify-center gap-8">
                       {/* Left Navigation Arrow */}
                       <Button
@@ -1163,20 +1163,20 @@ export default function ResourceCategory() {
                                 showMatchButton={false}
                               />
                               
-                              {/* Swipe Controls */}
-                              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4">
+                              {/* Swipe Controls - positioned below card to avoid overlap */}
+                              <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 flex gap-4">
                                 <Button
                                   size="lg"
                                   variant="outline"
                                   onClick={swipeLeft}
-                                  className="bg-white/90 hover:bg-white"
+                                  className="bg-white shadow-md hover:bg-gray-50 border-2"
                                 >
                                   <X className="h-6 w-6" />
                                 </Button>
                                 <Button
                                   size="lg"
                                   onClick={swipeRight}
-                                  className="bg-red-500 hover:bg-red-600 text-white"
+                                  className="bg-red-500 hover:bg-red-600 text-white shadow-md"
                                 >
                                   <Heart className="h-6 w-6 fill-current" />
                                 </Button>
