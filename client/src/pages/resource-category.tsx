@@ -15,7 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Search, Heart, MessageSquare, Loader2, ChevronLeft, ChevronRight, X, RefreshCw, BookOpen, MapPin, Settings, ExternalLink, FileSpreadsheet, Percent, CheckCircle } from "lucide-react";
+import { Search, Heart, MessageSquare, Loader2, ChevronLeft, ChevronRight, X, RefreshCw, BookOpen, MapPin, Settings, ExternalLink, FileSpreadsheet, Percent, CheckCircle, Filter } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import MessagingDialog from "@/components/messaging-dialog";
@@ -872,6 +872,16 @@ export default function ResourceCategory() {
                 >
                   Browse
                 </Button>
+                {(category === 'cast' || category === 'crew' || category === 'locations' || category === 'services') && (
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowBrowseFilters(true)}
+                    size="sm"
+                  >
+                    <Filter className="h-4 w-4 mr-2" />
+                    Filters
+                  </Button>
+                )}
                 <Button
                   variant={mode === "search" ? "default" : "outline"}
                   onClick={() => setMode("search")}
