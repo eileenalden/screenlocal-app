@@ -510,7 +510,7 @@ const categoryConfig = {
     placeholder: "Describe your crew needs: 'Experienced DP for indie feature' or 'Sound engineer for documentary'..."
   },
   cast: {
-    title: "Cast", 
+    title: "Talent", 
     description: "Discover talented actors and performers",
     subcategories: ["actor", "voice-talent", "extras", "dancers", "musicians", "child-actor"],
     placeholder: "Describe your casting needs: 'Male actor 30-40 for lead role' or 'Child actors for commercial'..."
@@ -687,8 +687,13 @@ export default function ResourceCategory() {
       return;
     }
     
-    // For cast and crew, show filters dialog
-    setShowBrowseFilters(true);
+    // For cast and crew, allow direct browsing too (filters are optional)
+    setMode("browse");
+    setAiResults([]);
+    setDescription("");
+    setSubcategory("");
+    setCurrentIndex(0);
+    setShowFavorites(false);
   };
 
   const applyBrowseFilters = () => {
@@ -793,8 +798,8 @@ export default function ResourceCategory() {
       );
     }
     
-    // Apply cast filters  
-    if (category === 'cast' && (browseFilters.castGender?.length || browseFilters.castEthnicity?.length || browseFilters.castAge?.length || browseFilters.castUnionStatus?.length)) {
+    // Apply cast filters only if filters are actually set
+    if (category === 'cast' && browseFilters.castGender?.length && browseFilters.castEthnicity?.length && browseFilters.castAge?.length && browseFilters.castUnionStatus?.length) {
       filteredResources = filteredResources.filter(resource => {
         if (!resource.specialties) return false;
         
@@ -815,8 +820,8 @@ export default function ResourceCategory() {
       });
     }
     
-    // Apply crew filters
-    if (category === 'crew' && (browseFilters.crewDepartment?.length || browseFilters.crewUnionStatus?.length)) {
+    // Apply crew filters only if filters are actually set
+    if (category === 'crew' && browseFilters.crewDepartment?.length && browseFilters.crewUnionStatus?.length) {
       filteredResources = filteredResources.filter(resource => {
         if (!resource.specialties) return false;
         
