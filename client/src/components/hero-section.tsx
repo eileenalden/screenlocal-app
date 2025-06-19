@@ -1,5 +1,8 @@
+import { useState } from "react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroImage from "@assets/iStock-1606622096_1749920695443.jpg";
+import EarlyUserModal from "@/components/early-user-modal";
 
 export default function HeroSection() {
   const [showEarlyUserModal, setShowEarlyUserModal] = useState(false);
@@ -28,9 +31,10 @@ export default function HeroSection() {
             <Button 
               size="lg"
               className="bg-orange-400 hover:bg-orange-500 text-white px-8 py-4 text-lg md:text-xl font-semibold rounded-md shadow-lg transition-colors"
-              onClick={() => window.location.href = '/api/login'}
+              onClick={() => setShowEarlyUserModal(true)}
             >
               Get Started
+              <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
           

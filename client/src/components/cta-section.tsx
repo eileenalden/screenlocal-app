@@ -1,6 +1,9 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import EarlyUserModal from "@/components/early-user-modal";
 
 export default function CTASection() {
+  const [showEarlyUserModal, setShowEarlyUserModal] = useState(false);
   return (
     <section className="py-16 bg-orange-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -14,7 +17,7 @@ export default function CTASection() {
         <Button 
           size="lg"
           className="bg-white text-orange-500 hover:bg-orange-50 px-8 py-3 text-lg font-semibold mb-4"
-          onClick={() => window.location.href = '/api/login'}
+          onClick={() => setShowEarlyUserModal(true)}
         >
           Get Started
         </Button>
@@ -31,6 +34,11 @@ export default function CTASection() {
           </p>
         </div>
       </div>
+      
+      <EarlyUserModal 
+        isOpen={showEarlyUserModal} 
+        onClose={() => setShowEarlyUserModal(false)} 
+      />
     </section>
   );
 }

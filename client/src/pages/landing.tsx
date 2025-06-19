@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import EarlyUserModal from "@/components/early-user-modal";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Camera, MapPin, Users, Wrench, FileText, DollarSign } from "lucide-react";
 
 export default function Landing() {
+  const [showEarlyUserModal, setShowEarlyUserModal] = useState(false);
   const handleLogin = () => {
     window.location.href = "/api/login";
   };
@@ -53,7 +56,7 @@ export default function Landing() {
             streamline your production, and bring your vision to life.
           </p>
           <Button 
-            onClick={handleLogin}
+            onClick={handleGetStarted}
             size="lg"
             className="text-lg px-8 py-3"
           >
@@ -130,6 +133,11 @@ export default function Landing() {
           <p>&copy; 2025 ScreenLocal. All rights reserved.</p>
         </div>
       </div>
+      
+      <EarlyUserModal 
+        isOpen={showEarlyUserModal} 
+        onClose={() => setShowEarlyUserModal(false)} 
+      />
     </div>
   );
 }
