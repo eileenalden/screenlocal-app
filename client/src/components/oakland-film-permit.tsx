@@ -5,8 +5,23 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ChevronLeft, ChevronRight, Plus, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+
+interface FilmingLocation {
+  id: string;
+  address: string;
+  type: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  specialConditions: string;
+  contactName: string;
+  contactPhone: string;
+}
 
 interface FormData {
   // Step 1: Project Basics
@@ -29,6 +44,35 @@ interface FormData {
   locationAssistantPhone: string;
   productionManagerName: string;
   productionManagerPhone: string;
+  
+  // Step 4: Production Company
+  companyName: string;
+  companyAddress: string;
+  companyCity: string;
+  companyState: string;
+  companyCountry: string;
+  companyZip: string;
+  companyPhone: string;
+  companyEmail: string;
+  
+  // Step 5: Filming Locations
+  filmingLocations: FilmingLocation[];
+  
+  // Step 6: Project Details
+  numCastExtras: number;
+  numCrew: number;
+  starring: string;
+  synopsis: string;
+  needsPoliceServices: string;
+  needsTrafficControl: string;
+  needsReservedParking: string;
+  needsDroneUse: string;
+  specialEffects: string;
+  additionalInfo: string;
+  
+  // Step 7: Cost Summary & Submit
+  insuranceStatus: string;
+  agreesToTerms: boolean;
 }
 
 const PRODUCTION_TYPES = [
@@ -42,6 +86,27 @@ const PRODUCTION_TYPES = [
   "PSA",
   "Documentary",
   "Student Project"
+];
+
+const PRODUCTION_RATES: Record<string, number> = {
+  "Feature": 245,
+  "Television": 306,
+  "Commercial": 306,
+  "Industrial/Web": 245,
+  "Music Video": 122,
+  "Still Photography": 92,
+  "Short Subject": 61,
+  "PSA": 0,
+  "Documentary": 245,
+  "Student Project": 0
+};
+
+const US_STATES = [
+  "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
+  "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
+  "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
+  "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
+  "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
 ];
 
 const TOTAL_STEPS = 7;
@@ -67,7 +132,38 @@ export default function OaklandFilmPermit({ onClose }: OaklandFilmPermitProps) {
     locationAssistantName: "",
     locationAssistantPhone: "",
     productionManagerName: "",
-    productionManagerPhone: ""
+    productionManagerPhone: "",
+    companyName: "",
+    companyAddress: "",
+    companyCity: "",
+    companyState: "CA",
+    companyCountry: "USA",
+    companyZip: "",
+    companyPhone: "",
+    companyEmail: "",
+    filmingLocations: [{
+      id: "1",
+      address: "",
+      type: "",
+      date: "",
+      startTime: "",
+      endTime: "",
+      specialConditions: "",
+      contactName: "",
+      contactPhone: ""
+    }],
+    numCastExtras: 0,
+    numCrew: 0,
+    starring: "",
+    synopsis: "",
+    needsPoliceServices: "",
+    needsTrafficControl: "",
+    needsReservedParking: "",
+    needsDroneUse: "",
+    specialEffects: "",
+    additionalInfo: "",
+    insuranceStatus: "",
+    agreesToTerms: false
   });
   
   const { toast } = useToast();
@@ -89,6 +185,19 @@ export default function OaklandFilmPermit({ onClose }: OaklandFilmPermitProps) {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  const calculateCost = () => {
+    if (!formData.productionType) return { subtotal: 0, surcharge: 0, total: 0, dailyRate: 0, filmingDays: 0 };
+    
+    const dailyRate = PRODUCTION_RATES[formData.productionType] || 0;
+    const uniqueDates = new Set(formData.filmingLocations.filter(loc => loc.date).map(loc => loc.date));
+    const filmingDays = Math.max(uniqueDates.size, 1);
+    const subtotal = dailyRate * filmingDays;
+    const surcharge = dailyRate > 0 ? subtotal * 0.125 : 0;
+    const total = subtotal + surcharge;
+    
+    return { subtotal, surcharge, total, dailyRate, filmingDays };
+  };
+
   const validateStep = (step: number): boolean => {
     switch (step) {
       case 1:
@@ -97,6 +206,14 @@ export default function OaklandFilmPermit({ onClose }: OaklandFilmPermitProps) {
         return !!(formData.contactName && formData.contactTitle && formData.phoneNumber && formData.emailAddress);
       case 3:
         return !!(formData.locationManagerName && formData.locationManagerPhone);
+      case 4:
+        return !!(formData.companyName && formData.companyAddress && formData.companyCity && formData.companyState && formData.companyZip && formData.companyPhone && formData.companyEmail);
+      case 5:
+        return formData.filmingLocations.some(loc => loc.address && loc.type && loc.date);
+      case 6:
+        return !!(formData.numCastExtras >= 0 && formData.numCrew >= 0 && formData.synopsis);
+      case 7:
+        return !!(formData.insuranceStatus && formData.agreesToTerms);
       default:
         return true;
     }
@@ -135,6 +252,40 @@ export default function OaklandFilmPermit({ onClose }: OaklandFilmPermitProps) {
   const handlePhoneChange = (field: keyof FormData, value: string) => {
     const formatted = formatPhoneNumber(value);
     updateFormData(field, formatted);
+  };
+
+  const addFilmingLocation = () => {
+    const newLocation: FilmingLocation = {
+      id: Date.now().toString(),
+      address: "",
+      type: "",
+      date: "",
+      startTime: "",
+      endTime: "",
+      specialConditions: "",
+      contactName: "",
+      contactPhone: ""
+    };
+    setFormData(prev => ({
+      ...prev,
+      filmingLocations: [...prev.filmingLocations, newLocation]
+    }));
+  };
+
+  const removeFilmingLocation = (id: string) => {
+    setFormData(prev => ({
+      ...prev,
+      filmingLocations: prev.filmingLocations.filter(loc => loc.id !== id)
+    }));
+  };
+
+  const updateFilmingLocation = (id: string, field: keyof FilmingLocation, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      filmingLocations: prev.filmingLocations.map(loc =>
+        loc.id === id ? { ...loc, [field]: value } : loc
+      )
+    }));
   };
 
   const renderStep = () => {
@@ -330,57 +481,117 @@ export default function OaklandFilmPermit({ onClose }: OaklandFilmPermitProps) {
   };
 
   const progressPercentage = (currentStep / TOTAL_STEPS) * 100;
+  const cost = calculateCost();
+
+  const handleSubmit = () => {
+    toast({
+      title: "Application Submitted",
+      description: "Your Oakland Film Permit application has been submitted successfully. You will receive a confirmation email shortly.",
+    });
+    localStorage.removeItem('oakland-film-permit-draft');
+    onClose();
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-        <CardHeader className="pb-4">
-          <div className="flex items-center justify-between mb-4">
-            <CardTitle className="text-xl">Oakland Film Permit Application</CardTitle>
-            <Button variant="ghost" size="sm" onClick={onClose}>×</Button>
-          </div>
-          
-          {/* Progress Bar */}
-          <div className="space-y-2">
-            <div className="flex justify-between text-sm text-gray-600">
-              <span>Step {currentStep} of {TOTAL_STEPS}</span>
-              <span>{Math.round(progressPercentage)}% Complete</span>
+      <div className="flex w-full max-w-6xl max-h-[90vh] gap-4">
+        {/* Main Form */}
+        <Card className="flex-1 overflow-y-auto">
+          <CardHeader className="pb-4">
+            <div className="flex items-center justify-between mb-4">
+              <CardTitle className="text-xl">Oakland Film Permit Application</CardTitle>
+              <Button variant="ghost" size="sm" onClick={onClose}>×</Button>
             </div>
-            <Progress value={progressPercentage} className="h-2" />
-          </div>
-        </CardHeader>
-        
-        <CardContent className="space-y-6">
-          {renderStep()}
-          
-          {/* Navigation Buttons */}
-          <div className="flex justify-between pt-6 border-t">
-            <Button
-              variant="outline"
-              onClick={prevStep}
-              disabled={currentStep === 1}
-              className="flex items-center gap-2"
-            >
-              <ChevronLeft className="h-4 w-4" />
-              Previous
-            </Button>
             
-            <Button
-              onClick={nextStep}
-              disabled={currentStep === TOTAL_STEPS}
-              className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600"
-            >
-              Next
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
+            {/* Progress Bar */}
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm text-gray-600">
+                <span>Step {currentStep} of {TOTAL_STEPS}</span>
+                <span>{Math.round(progressPercentage)}% Complete</span>
+              </div>
+              <Progress value={progressPercentage} className="h-2" />
+            </div>
+          </CardHeader>
           
-          {/* Auto-save indicator */}
-          <p className="text-xs text-gray-500 text-center">
-            Your progress is automatically saved
-          </p>
-        </CardContent>
-      </Card>
+          <CardContent className="space-y-6">
+            {renderStep()}
+            
+            {/* Navigation Buttons */}
+            <div className="flex justify-between pt-6 border-t">
+              <Button
+                variant="outline"
+                onClick={prevStep}
+                disabled={currentStep === 1}
+                className="flex items-center gap-2"
+              >
+                <ChevronLeft className="h-4 w-4" />
+                Previous
+              </Button>
+              
+              {currentStep === TOTAL_STEPS ? (
+                <Button
+                  onClick={handleSubmit}
+                  disabled={!validateStep(currentStep)}
+                  className="flex items-center gap-2 bg-green-600 hover:bg-green-700"
+                >
+                  Submit Application
+                </Button>
+              ) : (
+                <Button
+                  onClick={nextStep}
+                  className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600"
+                >
+                  Next
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
+            
+            {/* Auto-save indicator */}
+            <p className="text-xs text-gray-500 text-center">
+              Your progress is automatically saved
+            </p>
+          </CardContent>
+        </Card>
+        
+        {/* Sticky Cost Summary */}
+        {formData.productionType && (
+          <Card className="w-80 h-fit sticky top-4">
+            <CardHeader>
+              <CardTitle className="text-lg">Cost Summary</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div className="flex justify-between">
+                <span>Production Type:</span>
+                <span className="font-medium">{formData.productionType}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Daily Rate:</span>
+                <span className="font-medium">${cost.dailyRate}/day</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Filming Days:</span>
+                <span className="font-medium">{cost.filmingDays}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Subtotal:</span>
+                <span className="font-medium">${cost.subtotal}</span>
+              </div>
+              {cost.surcharge > 0 && (
+                <div className="flex justify-between">
+                  <span>Tech Surcharge (12.5%):</span>
+                  <span className="font-medium">${cost.surcharge.toFixed(2)}</span>
+                </div>
+              )}
+              <hr />
+              <div className="flex justify-between text-lg font-bold">
+                <span>Total:</span>
+                <span className="text-orange-600">${cost.total.toFixed(2)}</span>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+      </div>
     </div>
   );
 }

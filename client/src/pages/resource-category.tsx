@@ -20,6 +20,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import MessagingDialog from "@/components/messaging-dialog";
 import ProductionTools from "@/components/production-tools";
+import OaklandFilmPermit from "@/components/oakland-film-permit";
 import type { Resource } from "@shared/schema";
 
 // Location radius configuration for each resource type

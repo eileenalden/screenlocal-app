@@ -1,0 +1,97 @@
+**Copy and paste this COMPREHENSIVE prompt to Replit Agent:**
+
+---
+
+When the "Apply Now" button is clicked on the Oakland Film Permit card, create an iPhone-style application wizard called OaklandFilmPermit.js with these 7 steps:
+
+**Visual Design:**
+- Progress indicator showing "Step X of 7" at top
+- Clean, modern mobile-first design  
+- One step displayed at a time
+- Previous/Next navigation buttons
+- Auto-save progress to localStorage
+- Form validation before advancing
+- Sticky cost summary box showing running total
+
+**Step 1: Project Basics**
+- Project Title (text input)
+- Production Type (radio buttons: Feature, Commercial, Television, Industrial/Web, Music Video, Still Photography, Short Subject, PSA, Documentary, Student Project)
+- Estimated Air Date/Print Date (date picker)
+- Producer Name (text input)
+- Director Name (text input)
+- **Real-time cost calculation appears when production type is selected**
+
+**Step 2: Contact Information**
+- Your Name and Title (text input)
+- Phone Number (phone input with auto-formatting)
+- Email Address (email input with validation)
+
+**Step 3: Crew Information**
+- Location Manager Name (text input)
+- Location Manager Phone (phone input)
+- Location Assistant/Scout Name (text input, optional)
+- Location Assistant Phone (phone input, optional) 
+- Production Manager Name (text input, optional)
+- Production Manager Phone (phone input, optional)
+
+**Step 4: Production Company**
+- Production Company Name (text input)
+- Address (text input)
+- City (text input)
+- State (dropdown)
+- Country (text input, default "USA")
+- Zip Code (text input)
+- Company Telephone (phone input)
+- Company Email (email input)
+
+**Step 5: Filming Locations**
+- Dynamic table to add/remove multiple locations
+- Each location row has: Location/Address, Interior/Exterior/Both (dropdown), Date (date picker), Start Time (time picker), End Time (time picker), Special Conditions (text), Location Contact Name, Location Contact Phone
+- "Add Location" button to add more rows
+- **Update cost calculation based on total filming days**
+
+**Step 6: Project Details**
+- Number of Cast and Extras (number input)
+- Number of Crew (number input)
+- Starring (text input)
+- Synopsis (textarea)
+- Police Services needed? (yes/no radio)
+- Traffic Control needed? (yes/no radio)
+- Reserved Parking needed? (yes/no radio with note "Parking diagram may be required")
+- Drone Use? (yes/no radio with note "Reviewed case-by-case. Required for drone filming on, from, within, and over City property")
+- Special Effects or Stunts (textarea)
+- Additional Information about your project (textarea)
+
+**Step 7: Cost Summary & Submit**
+- **Complete cost breakdown display:**
+  - Production type and daily rate
+  - Number of filming days × daily rate = subtotal
+  - Technology surcharge (12.5%) = amount
+  - **Total permit cost**
+- **Fee reference table:** Feature ($245/day), TV/Commercial ($306/day), Industrial/Web ($245/day), Music Video ($122/day), Short Film ($61/day), Still Photo ($92/day), Student/PSA (FREE with documentation)
+- Insurance Status (radio buttons: "Proof of Insurance included", "Insurance documents not yet ready", "Have insurance on file with Oakland Film Office", "Don't understand insurance requirements")
+- Terms & Conditions checkbox: "I agree to abide by Oakland Film Office Terms & Conditions"
+- Submit Application button
+
+**Cost Calculation Logic:**
+- Feature Film: $245/day
+- Television/TV Movie/Commercial/Corporate: $306/day  
+- Industrial/Web Content: $245/day
+- Music Video: $122/day
+- Short Film: $61/day
+- Still Photography: $92/day
+- Student Project: $0 (FREE)
+- PSA: $0 (FREE)
+- Add 12.5% technology surcharge to all non-free permits
+- Total = (daily rate × filming days) + (subtotal × 0.125)
+
+**Technical Requirements:**
+- Route to this component when Oakland Film Permit "Apply Now" is clicked
+- Save all form data to localStorage as user progresses
+- Form validation on each step before allowing next
+- Responsive design that works on mobile and desktop
+- Clean animations between steps
+
+The wizard should feel as smooth and intuitive as setting up an iPhone, with clear progress indication and helpful guidance throughout.
+
+---
