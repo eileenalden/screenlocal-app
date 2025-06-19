@@ -251,7 +251,7 @@ export default function EarlyUserModal({ isOpen, onClose }: EarlyUserModalProps)
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Rocket className="h-4 w-4 text-orange-600" />
-                    <span>Get exclusive launch pricing</span>
+                    <span>Get exclusive launch benefits</span>
                   </div>
                 </div>
               </CardContent>
