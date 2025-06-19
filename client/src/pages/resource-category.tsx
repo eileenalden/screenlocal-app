@@ -787,6 +787,20 @@ export default function ResourceCategory() {
     // In browse mode, apply filtering based on current filters
     let filteredResources = [...allResources];
     
+    // First filter by the current category to ensure we only show relevant resources
+    const categoryMapping = {
+      'locations': 'location',
+      'crew': 'crew', 
+      'cast': 'talent',
+      'services': 'service',
+      'permits': 'permit'
+    };
+    
+    const resourceType = categoryMapping[category];
+    if (resourceType) {
+      filteredResources = filteredResources.filter(resource => resource.type === resourceType);
+    }
+    
     // Apply browse filters if any are set
     if (browseFilters.selectedSubcategory) {
       filteredResources = filteredResources.filter(resource => 
@@ -873,15 +887,14 @@ export default function ResourceCategory() {
   const currentResource = displayResources[currentIndex];
   
   // Debug filtering for all categories
+  console.log(`${category} page - showing ${displayResources.length} resources:`, displayResources.map(r => `${r.name} (${r.type})`));
+  
   if (category === 'locations' && (browseFilters.locationPropertyType?.length || browseFilters.locationSpaceType?.length)) {
     console.log('Location filters applied:', browseFilters);
-    console.log('Display resources after filtering:', displayResources.length);
   } else if (category === 'cast' && (browseFilters.castGender?.length || browseFilters.castEthnicity?.length || browseFilters.castAge?.length || browseFilters.castUnionStatus?.length)) {
     console.log('Talent filters applied:', browseFilters);
-    console.log('Display resources after filtering:', displayResources.length);
   } else if (category === 'crew' && (browseFilters.crewDepartment?.length || browseFilters.crewUnionStatus?.length)) {
     console.log('Crew filters applied:', browseFilters);
-    console.log('Display resources after filtering:', displayResources.length);
   }
 
   if (!config) {
