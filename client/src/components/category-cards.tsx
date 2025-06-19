@@ -286,12 +286,13 @@ export default function CategoryCards() {
                     <Lock className="h-8 w-8 text-orange-500 mx-auto mb-3" />
                     <h4 className="font-semibold text-gray-900 mb-2">Sign up to view full matches and contact info</h4>
                     <p className="text-gray-600 mb-4">Get complete details, pricing, availability, and direct contact with providers</p>
-                    <Button 
+                    {/* Sign Up Button - Temporarily Disabled */}
+                    {/* <Button 
                       onClick={() => window.location.href = '/api/login'}
                       className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors font-semibold"
                     >
                       Sign Up Now - It's Free
-                    </Button>
+                    </Button> */}
                   </div>
                 </CardContent>
               </Card>
