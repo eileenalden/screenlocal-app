@@ -801,6 +801,22 @@ export default function ResourceCategory() {
       );
     }
     
+    // Apply location filters only if filters are actually set
+    if (category === 'locations' && (browseFilters.locationPropertyType?.length || browseFilters.locationSpaceType?.length)) {
+      filteredResources = filteredResources.filter(resource => {
+        if (!resource.amenities) return false;
+        
+        const hasPropertyType = !browseFilters.locationPropertyType?.length || browseFilters.locationPropertyType.some(type => 
+          resource.amenities?.some(amenity => amenity === `propertyType:${type}`)
+        );
+        const hasSpaceType = !browseFilters.locationSpaceType?.length || browseFilters.locationSpaceType.some(type => 
+          resource.amenities?.some(amenity => amenity === `spaceType:${type}`)
+        );
+        
+        return hasPropertyType && hasSpaceType;
+      });
+    }
+    
     // Apply cast filters only if filters are actually set
     if (category === 'cast' && browseFilters.castGender?.length && browseFilters.castEthnicity?.length && browseFilters.castAge?.length && browseFilters.castUnionStatus?.length) {
       filteredResources = filteredResources.filter(resource => {
@@ -847,8 +863,11 @@ export default function ResourceCategory() {
   const displayResources: Resource[] = getDisplayResources();
   const currentResource = displayResources[currentIndex];
   
-  // Remove debug logs for production
-  // console.log(`Category: ${category}, Mode: ${mode}, All resources count: ${allResources.length}, Display resources count: ${displayResources.length}`);
+  // Debug location filtering
+  if (category === 'locations' && (browseFilters.locationPropertyType?.length || browseFilters.locationSpaceType?.length)) {
+    console.log('Location filters applied:', browseFilters);
+    console.log('Display resources after filtering:', displayResources.length);
+  }
 
   if (!config) {
     return <div>Category not found</div>;
