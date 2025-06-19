@@ -246,8 +246,8 @@ const EAST_BAY_CITIES = [
 // California State Tax Credit Information
 const CALIFORNIA_TAX_CREDIT = {
   name: "California Film & TV Tax Credit Program",
-  rebatePercent: "20-25%",
-  description: "State tax incentive program offering up to 25% tax credits for qualified film and television productions shot in California.",
+  rebatePercent: "20% (35% proposed for LA)",
+  description: "Current program offers 20% tax credits for qualified productions. Proposed legislation would increase to 35% for Los Angeles filming with additional 5% for other economic opportunity areas.",
   qualifications: [
     "Principal photography must occur in California",
     "Minimum qualified expenditure thresholds",
@@ -258,7 +258,7 @@ const CALIFORNIA_TAX_CREDIT = {
     "Register for California Film Commission portal",
     "Submit application during designated lottery periods",
     "Provide detailed production information and budget",
-    "Await lottery results and allocation notification",
+    "Await lottery results and allocation notification (Program expires June 2025)",
     "Execute tax credit agreement and comply with reporting requirements"
   ],
   contactInfo: "California Film Commission: info@film.ca.gov | (323) 860-2960",
@@ -449,6 +449,11 @@ function BudgetSection() {
               <div className="bg-blue-50 rounded-lg p-4">
                 <h4 className="font-medium mb-2">Contact Information</h4>
                 <p className="text-gray-700">{CALIFORNIA_TAX_CREDIT.contactInfo}</p>
+                <div className="mt-3 p-2 bg-orange-50 rounded border border-orange-200">
+                  <p className="text-sm text-orange-700">
+                    <strong>Note:</strong> Program 4.0 launching July 2025 with expanded eligibility and increased rates
+                  </p>
+                </div>
               </div>
             </div>
           )}
