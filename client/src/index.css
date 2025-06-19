@@ -23,7 +23,7 @@
   --destructive-foreground: hsl(60, 9.1%, 97.8%);
   --ring: hsl(20, 14.3%, 4.1%);
   --radius: 0.5rem;
-  
+
   /* Film-specific colors */
   --film-orange: hsl(20, 100%, 60%);
   --film-teal: hsl(173, 58%, 59%);
@@ -52,7 +52,7 @@
   --destructive: hsl(0, 62.8%, 30.6%);
   --destructive-foreground: hsl(0, 0%, 98%);
   --ring: hsl(240, 4.9%, 83.9%);
-  
+
   /* Film-specific colors for dark mode */
   --film-orange: hsl(20, 100%, 60%);
   --film-teal: hsl(173, 58%, 59%);
@@ -71,7 +71,12 @@
     font-family: 'Inter', sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: 'Playfair Display', serif;
   }
 }
@@ -80,39 +85,39 @@
   .film-orange {
     color: var(--film-orange);
   }
-  
+
   .bg-film-orange {
     background-color: var(--film-orange);
   }
-  
+
   .film-teal {
     color: var(--film-teal);
   }
-  
+
   .bg-film-teal {
     background-color: var(--film-teal);
   }
-  
+
   .film-gold {
     color: var(--film-gold);
   }
-  
+
   .bg-film-gold {
     background-color: var(--film-gold);
   }
-  
+
   .film-dark {
     color: var(--film-dark);
   }
-  
+
   .bg-film-dark {
     background-color: var(--film-dark);
   }
-  
+
   .film-gray {
     color: var(--film-gray);
   }
-  
+
   .bg-film-gray {
     background-color: var(--film-gray);
   }
@@ -158,15 +163,24 @@
 
 /* Animation for card hover effects */
 @keyframes subtle-bounce {
-  0%, 20%, 53%, 80%, 100% {
+
+  0%,
+  20%,
+  53%,
+  80%,
+  100% {
     transform: translate3d(0, 0, 0);
   }
-  40%, 43% {
+
+  40%,
+  43% {
     transform: translate3d(0, -2px, 0);
   }
+
   70% {
     transform: translate3d(0, -1px, 0);
   }
+
   90% {
     transform: translate3d(0, -0.5px, 0);
   }
