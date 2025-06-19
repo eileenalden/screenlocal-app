@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import heroImage from "@assets/iStock-1606622096_1749920695443.jpg";
 
 export default function HeroSection() {
+  const [showEarlyUserModal, setShowEarlyUserModal] = useState(false);
   return (
     <section className="relative text-white overflow-hidden min-h-[90vh] flex items-center justify-center">
       {/* Hero Background Image with Overlay */}
@@ -46,6 +47,11 @@ export default function HeroSection() {
             </p>
           </div>
       </div>
+      
+      <EarlyUserModal 
+        isOpen={showEarlyUserModal} 
+        onClose={() => setShowEarlyUserModal(false)} 
+      />
     </section>
   );
 }

@@ -1,0 +1,60 @@
+Good thinking! Yes, we should be more specific about data storage for easy export.
+
+**Copy and paste this UPDATED prompt to Replit Agent:**
+
+---
+
+Replace the "Get Started" CTA with a modal popup that collects early user interest. Create a modal with this content:
+
+**Modal Design:**
+- Triggered when any "Get Started" button is clicked across the site
+- Visually appealing with ScreenLocal branding
+- Easy to close (X button)
+- Mobile-friendly and responsive
+- Overlay background with smooth animation
+
+**Modal Content:**
+
+**Headline:** "Help Us Build the Future of Film Production!"
+
+**Subtext:** "ScreenLocal is in demo stage. Whether you're a filmmaker, location owner, crew member, or service provider - we want to build exactly what you need."
+
+**Form Fields:**
+- Email (required, email validation)
+- "I am a:" (dropdown: Filmmaker/Producer, Location Owner, Crew Member, Service Provider, Student/Film School, Other)
+- "What's your biggest challenge in film production?" (textarea, placeholder: "Finding locations, getting permits, hiring crew, managing budgets...")
+- "What feature would you want to see first?" (checkboxes: Better Location Finding, Easier Permitting, Crew Networking, Equipment Rental, Budget Planning, Other)
+- Name (optional)
+- Company/Project (optional)
+
+**Incentives Section (with icons):**
+- "🎬 Be first to access new features"
+- "📍 List your locations/services for free during beta" 
+- "💡 Help shape the product with your feedback"
+- "🚀 Get exclusive launch pricing"
+
+**CTA Button:** "Join Our Launch Community" (large, prominent, ScreenLocal orange color)
+
+**Data Storage Structure:**
+```javascript
+// Store in localStorage as 'earlyUsers' array
+{
+  id: timestamp,
+  email: "user@email.com",
+  userType: "Filmmaker/Producer",
+  challenge: "Finding locations...",
+  wantedFeatures: ["Better Location Finding", "Easier Permitting"],
+  name: "John Doe",
+  company: "ABC Productions",
+  submittedAt: new Date().toISOString()
+}
+```
+
+**Export Function:** Add a hidden admin page at /admin/export-users that displays all collected data in a downloadable CSV format for easy export to spreadsheets.
+
+**Form Validation:** 
+- Require email field
+- Show success message after submission: "Thanks for joining! We'll be in touch soon."
+- Close modal automatically after successful submission
+
+---
