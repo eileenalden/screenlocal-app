@@ -78,12 +78,18 @@ ARRAY['Avid_Media_Composer', 'DaVinci_Resolve', 'Pro_Tools'], ARRAY['editing', '
 
 ON CONFLICT (id) DO NOTHING;
 
--- To run this seed script:
--- 1. Execute: npm run db:push (to ensure tables exist)
--- 2. Run this SQL file through the database tool or copy sections into the SQL tool
+-- Updated seed data with complete filtering metadata
 -- 
--- Data includes:
--- - 1 Oakland organization
--- - 9 placeholder providers  
--- - 9 realistic resources (3 locations, 2 crew, 2 talent, 2 services)
--- - All with authentic Oakland/East Bay details and pricing
+-- All resources now include:
+-- LOCATIONS: propertyType (house/apartment/business), spaceType (interior/exterior)
+-- TALENT: gender, ethnicity, ageRange, unionStatus  
+-- CREW: department, unionStatus
+-- SERVICES: category-specific specialties
+-- 
+-- Total seeded resources:
+-- - 5 locations (mix of interior/exterior, various property types)
+-- - 4 crew (different departments, union/non-union)
+-- - 4 talent (diverse demographics, age ranges, union status)
+-- - 2 services (equipment rental, post-production)
+-- 
+-- Run: npm run db:push (then execute SQL sections above)
