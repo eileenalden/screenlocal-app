@@ -205,19 +205,12 @@ const EAST_BAY_CITIES = [
     id: "berkeley",
     name: "Berkeley",
     rebatePercent: "",
-    description: "Berkeley Film Incentive Program provides tax credits for productions filming primarily within city boundaries.",
+    description: "Film incentive program coming soon. Contact Berkeley Film Office for current filming support and permits.",
     qualifications: [
-      "Minimum 60% of production days in Berkeley",
-      "Local crew hiring requirement of 30%",
-      "Environmental sustainability plan required",
-      "Application deadline 45 days before principal photography"
+      "Program details coming soon"
     ],
     applicationSteps: [
-      "Initial consultation with Berkeley Film Office",
-      "Submit comprehensive application",
-      "Environmental impact assessment",
-      "Final approval and agreement signing",
-      "Post-production compliance verification"
+      "Contact Berkeley Film Office for current filming requirements"
     ],
     contactInfo: "Berkeley Film Office: filmoffice@cityofberkeley.info | (510) 981-7530"
   },
@@ -225,19 +218,12 @@ const EAST_BAY_CITIES = [
     id: "richmond",
     name: "Richmond",
     rebatePercent: "",
-    description: "Richmond Production Incentive offers competitive rebates for film and television projects utilizing local resources.",
+    description: "Film incentive program coming soon. Contact Richmond Economic Development for current filming support and permits.",
     qualifications: [
-      "Production value minimum $75,000",
-      "40% local hiring requirement",
-      "Use Richmond-based vendors when possible",
-      "Submit application 21 days prior to filming"
+      "Program details coming soon"
     ],
     applicationSteps: [
-      "Pre-application meeting with economic development",
-      "Complete formal application with supporting documents",
-      "Review by Richmond Film Committee",
-      "Approval and incentive agreement execution",
-      "Production monitoring and final rebate processing"
+      "Contact Richmond Economic Development for current filming requirements"
     ],
     contactInfo: "Richmond Economic Development: economicdev@ci.richmond.ca.us | (510) 307-8140"
   }
