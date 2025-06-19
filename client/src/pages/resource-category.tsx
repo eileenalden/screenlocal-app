@@ -820,12 +820,12 @@ export default function ResourceCategory() {
         const hasPropertyType = !browseFilters.locationPropertyType?.length || 
           browseFilters.locationPropertyType.includes('Any') ||
           browseFilters.locationPropertyType.some(type => 
-            resource.amenities?.some(amenity => amenity === `propertyType:${type}`)
+            resource.amenities?.some(amenity => amenity.includes(`propertyType:${type}`))
           );
         const hasSpaceType = !browseFilters.locationSpaceType?.length || 
           browseFilters.locationSpaceType.includes('Any') ||
           browseFilters.locationSpaceType.some(type => 
-            resource.amenities?.some(amenity => amenity === `spaceType:${type}`)
+            resource.amenities?.some(amenity => amenity.includes(`spaceType:${type}`))
           );
         
         return hasPropertyType && hasSpaceType;
