@@ -1168,6 +1168,7 @@ export default function ResourceCategory() {
                                 }
                               }}
                               isFavorite={favorites.includes(currentResource.id)}
+                              onApplyNow={() => setShowPermitWizard(true)}
                             />
                             
                             {/* Swipe Controls - positioned below card to avoid overlap */}

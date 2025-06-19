@@ -11,9 +11,10 @@ interface ResourceCardProps {
   showMatchButton?: boolean;
   onToggleFavorite?: (resourceId: number) => void;
   isFavorite?: boolean;
+  onApplyNow?: () => void;
 }
 
-export default function ResourceCard({ resource, viewMode = "grid", showMatchButton = false, onToggleFavorite, isFavorite = false }: ResourceCardProps) {
+export default function ResourceCard({ resource, viewMode = "grid", showMatchButton = false, onToggleFavorite, isFavorite = false, onApplyNow }: ResourceCardProps) {
   const getResourceIcon = (type: string) => {
     switch (type) {
       case "crew": return User;
@@ -132,6 +133,7 @@ export default function ResourceCard({ resource, viewMode = "grid", showMatchBut
             <Button 
               className="flex-1 bg-orange-500 text-white hover:bg-orange-600 text-sm font-medium"
               disabled={!resource.isActive}
+              onClick={() => resource.title === 'Oakland Film Permit' && resource.isActive ? onApplyNow?.() : undefined}
             >
               {resource.amenities?.find(a => a.startsWith('button:'))?.replace('button:', '') || 'Apply Now'}
             </Button>
