@@ -1161,6 +1161,14 @@ export default function ResourceCategory() {
                                 resource={currentResource} 
                                 viewMode="grid"
                                 showMatchButton={false}
+                                onToggleFavorite={(resourceId) => {
+                                  if (favorites.includes(resourceId)) {
+                                    setFavorites(favorites.filter(id => id !== resourceId));
+                                  } else {
+                                    setFavorites([...favorites, resourceId]);
+                                  }
+                                }}
+                                isFavorite={favorites.includes(currentResource.id)}
                               />
                               
                               {/* Swipe Controls - positioned below card to avoid overlap */}
@@ -1215,6 +1223,14 @@ export default function ResourceCategory() {
                             resource={currentResource} 
                             viewMode="grid"
                             showMatchButton={false}
+                            onToggleFavorite={(resourceId) => {
+                              if (favorites.includes(resourceId)) {
+                                setFavorites(favorites.filter(id => id !== resourceId));
+                              } else {
+                                setFavorites([...favorites, resourceId]);
+                              }
+                            }}
+                            isFavorite={favorites.includes(currentResource.id)}
                           />
                           
                           {/* Swipe Controls */}

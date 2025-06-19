@@ -9,9 +9,11 @@ interface ResourceCardProps {
   resource: Resource;
   viewMode?: "grid" | "list";
   showMatchButton?: boolean;
+  onToggleFavorite?: (resourceId: number) => void;
+  isFavorite?: boolean;
 }
 
-export default function ResourceCard({ resource, viewMode = "grid", showMatchButton = false }: ResourceCardProps) {
+export default function ResourceCard({ resource, viewMode = "grid", showMatchButton = false, onToggleFavorite, isFavorite = false }: ResourceCardProps) {
   const getResourceIcon = (type: string) => {
     switch (type) {
       case "crew": return User;
@@ -144,8 +146,13 @@ export default function ResourceCard({ resource, viewMode = "grid", showMatchBut
             </Button>
           )}
           {resource.type !== 'permit' && <MessagingDialog resource={resource} senderId={1} />}
-          <Button variant="outline" size="sm" className="px-3">
-            <ResourceIcon className="h-4 w-4" />
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="px-3"
+            onClick={() => onToggleFavorite?.(resource.id)}
+          >
+            <Heart className={`h-4 w-4 ${isFavorite ? 'fill-red-500 text-red-500' : ''}`} />
           </Button>
         </div>
       </CardContent>
