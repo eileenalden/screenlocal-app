@@ -719,30 +719,8 @@ export default function ResourceCategory() {
     const filterConfig = BROWSE_FILTERS[category];
     if (!filterConfig) return;
 
-    if (category === 'cast') {
-      // For cast, require at least one selection from each category
-      if (!browseFilters.castGender?.length || !browseFilters.castEthnicity?.length || !browseFilters.castAge?.length || !browseFilters.castUnionStatus?.length) {
-        toast({
-          title: "Missing filters",
-          description: "Please select at least one option for gender, ethnicity, age range, and union status",
-          variant: "destructive",
-        });
-        return;
-      }
-    } else if (category === 'crew') {
-      // For crew, require at least one selection from each category
-      if (!browseFilters.crewDepartment?.length || !browseFilters.crewUnionStatus?.length) {
-        toast({
-          title: "Missing filters",
-          description: "Please select at least one option for department and union status",
-          variant: "destructive",
-        });
-        return;
-      }
-    } else {
-      // For other categories, subcategory is optional
-      // Users can browse all or filter by subcategory
-    }
+    // No required filters - all filtering is optional
+    // Users can browse all resources or apply filters as needed
 
     setMode("browse");
     setAiResults([]);
@@ -837,38 +815,50 @@ export default function ResourceCategory() {
     }
     
     // Apply cast filters only if filters are actually set
-    if (category === 'cast' && browseFilters.castGender?.length && browseFilters.castEthnicity?.length && browseFilters.castAge?.length && browseFilters.castUnionStatus?.length) {
+    if (category === 'cast' && (browseFilters.castGender?.length || browseFilters.castEthnicity?.length || browseFilters.castAge?.length || browseFilters.castUnionStatus?.length)) {
       filteredResources = filteredResources.filter(resource => {
         if (!resource.specialties) return false;
         
-        const hasGender = !browseFilters.castGender?.length || browseFilters.castGender.some(gender => 
-          resource.specialties?.some(s => s.includes(`gender:${gender.toLowerCase()}`))
-        );
-        const hasEthnicity = !browseFilters.castEthnicity?.length || browseFilters.castEthnicity.some(ethnicity => 
-          resource.specialties?.some(s => s.includes(`ethnicity:${ethnicity.toLowerCase().replace(/\s+/g, '_')}`))
-        );
-        const hasAge = !browseFilters.castAge?.length || browseFilters.castAge.some(age => 
-          resource.specialties?.some(s => s.includes(`ageRange:${age}`))
-        );
-        const hasUnion = !browseFilters.castUnionStatus?.length || browseFilters.castUnionStatus.some(union => 
-          resource.specialties?.some(s => s.includes(`unionStatus:${union.toLowerCase().replace('-', '_')}`))
-        );
+        const hasGender = !browseFilters.castGender?.length || 
+          browseFilters.castGender.includes('Any') ||
+          browseFilters.castGender.some(gender => 
+            resource.specialties?.some(s => s.includes(`gender:${gender.toLowerCase()}`))
+          );
+        const hasEthnicity = !browseFilters.castEthnicity?.length || 
+          browseFilters.castEthnicity.includes('Any') ||
+          browseFilters.castEthnicity.some(ethnicity => 
+            resource.specialties?.some(s => s.includes(`ethnicity:${ethnicity.toLowerCase().replace(/\s+/g, '_')}`))
+          );
+        const hasAge = !browseFilters.castAge?.length || 
+          browseFilters.castAge.includes('Any') ||
+          browseFilters.castAge.some(age => 
+            resource.specialties?.some(s => s.includes(`ageRange:${age}`))
+          );
+        const hasUnion = !browseFilters.castUnionStatus?.length || 
+          browseFilters.castUnionStatus.includes('Any') ||
+          browseFilters.castUnionStatus.some(union => 
+            resource.specialties?.some(s => s.includes(`unionStatus:${union.toLowerCase().replace('-', '_')}`))
+          );
         
         return hasGender && hasEthnicity && hasAge && hasUnion;
       });
     }
     
     // Apply crew filters only if filters are actually set
-    if (category === 'crew' && browseFilters.crewDepartment?.length && browseFilters.crewUnionStatus?.length) {
+    if (category === 'crew' && (browseFilters.crewDepartment?.length || browseFilters.crewUnionStatus?.length)) {
       filteredResources = filteredResources.filter(resource => {
         if (!resource.specialties) return false;
         
-        const hasDepartment = !browseFilters.crewDepartment?.length || browseFilters.crewDepartment.some(dept => 
-          resource.specialties?.some(s => s.includes(`department:${dept.toLowerCase().replace(/\s+/g, '_')}`))
-        );
-        const hasUnion = !browseFilters.crewUnionStatus?.length || browseFilters.crewUnionStatus.some(union => 
-          resource.specialties?.some(s => s.includes(`unionStatus:${union.toLowerCase()}`))
-        );
+        const hasDepartment = !browseFilters.crewDepartment?.length || 
+          browseFilters.crewDepartment.includes('Any') ||
+          browseFilters.crewDepartment.some(dept => 
+            resource.specialties?.some(s => s.includes(`department:${dept.toLowerCase().replace(/\s+/g, '_')}`))
+          );
+        const hasUnion = !browseFilters.crewUnionStatus?.length || 
+          browseFilters.crewUnionStatus.includes('Any') ||
+          browseFilters.crewUnionStatus.some(union => 
+            resource.specialties?.some(s => s.includes(`unionStatus:${union.toLowerCase().replace('-', '_')}`))
+          );
         
         return hasDepartment && hasUnion;
       });
@@ -882,11 +872,16 @@ export default function ResourceCategory() {
   const displayResources: Resource[] = getDisplayResources();
   const currentResource = displayResources[currentIndex];
   
-  // Debug location filtering
+  // Debug filtering for all categories
   if (category === 'locations' && (browseFilters.locationPropertyType?.length || browseFilters.locationSpaceType?.length)) {
     console.log('Location filters applied:', browseFilters);
     console.log('Display resources after filtering:', displayResources.length);
-    console.log('All resources before filtering:', allResources.length);
+  } else if (category === 'cast' && (browseFilters.castGender?.length || browseFilters.castEthnicity?.length || browseFilters.castAge?.length || browseFilters.castUnionStatus?.length)) {
+    console.log('Talent filters applied:', browseFilters);
+    console.log('Display resources after filtering:', displayResources.length);
+  } else if (category === 'crew' && (browseFilters.crewDepartment?.length || browseFilters.crewUnionStatus?.length)) {
+    console.log('Crew filters applied:', browseFilters);
+    console.log('Display resources after filtering:', displayResources.length);
   }
 
   if (!config) {
