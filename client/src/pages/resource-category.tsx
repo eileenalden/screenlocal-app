@@ -1137,154 +1137,81 @@ export default function ResourceCategory() {
             ) : (
               <div className="space-y-6">
                 {/* Swipe Interface */}
-                {category === "permits" ? (
-                  /* Fixed layout for Permits - arrows outside card boundaries */
-                  <div className="relative max-w-4xl mx-auto mb-20">
-                    <div className="flex items-center justify-center gap-8">
-                      {/* Left Navigation Arrow */}
-                      <Button
-                        variant="ghost"
-                        size="lg"
-                        onClick={() => setCurrentIndex(Math.max(0, currentIndex - 1))}
-                        disabled={currentIndex === 0}
-                        className="flex-shrink-0 w-12 h-12 rounded-full bg-white shadow-md hover:shadow-lg transition-shadow"
-                      >
-                        <ChevronLeft className="h-6 w-6" />
-                      </Button>
+                {/* Unified layout with arrows outside card boundaries for all categories */}
+                <div className="relative max-w-4xl mx-auto mb-20">
+                  <div className="flex items-center justify-center gap-8">
+                    {/* Left Navigation Arrow */}
+                    <Button
+                      variant="ghost"
+                      size="lg"
+                      onClick={() => setCurrentIndex(Math.max(0, currentIndex - 1))}
+                      disabled={currentIndex === 0}
+                      className="flex-shrink-0 w-12 h-12 rounded-full bg-white shadow-md hover:shadow-lg transition-shadow"
+                    >
+                      <ChevronLeft className="h-6 w-6" />
+                    </Button>
 
-                      {/* Card Container */}
-                      <div className="flex-1 max-w-2xl">
-                        <Card className="overflow-hidden">
-                          {currentResource && (
-                            <div className="relative">
-                              <ResourceCard 
-                                resource={currentResource} 
-                                viewMode="grid"
-                                showMatchButton={false}
-                                onToggleFavorite={(resourceId) => {
-                                  if (favorites.includes(resourceId)) {
-                                    setFavorites(favorites.filter(id => id !== resourceId));
-                                  } else {
-                                    setFavorites([...favorites, resourceId]);
-                                  }
-                                }}
-                                isFavorite={favorites.includes(currentResource.id)}
-                              />
-                              
-                              {/* Swipe Controls - positioned below card to avoid overlap */}
-                              <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 flex gap-4">
-                                <Button
-                                  size="lg"
-                                  variant="outline"
-                                  onClick={swipeLeft}
-                                  className="bg-white shadow-md hover:bg-gray-50 border-2"
-                                >
-                                  <X className="h-6 w-6" />
-                                </Button>
-                                <Button
-                                  size="lg"
-                                  onClick={swipeRight}
-                                  className="bg-red-500 hover:bg-red-600 text-white shadow-md"
-                                >
-                                  <Heart className="h-6 w-6 fill-current" />
-                                </Button>
-                              </div>
-
-                              {/* Progress */}
-                              <div className="absolute top-4 right-4">
-                                <Badge variant="secondary">
-                                  {currentIndex + 1} / {displayResources.length}
-                                </Badge>
-                              </div>
+                    {/* Card Container */}
+                    <div className="flex-1 max-w-2xl">
+                      <Card className="overflow-hidden">
+                        {currentResource && (
+                          <div className="relative">
+                            <ResourceCard 
+                              resource={currentResource} 
+                              viewMode="grid"
+                              showMatchButton={false}
+                              onToggleFavorite={(resourceId) => {
+                                if (favorites.includes(resourceId)) {
+                                  setFavorites(favorites.filter(id => id !== resourceId));
+                                } else {
+                                  setFavorites([...favorites, resourceId]);
+                                }
+                              }}
+                              isFavorite={favorites.includes(currentResource.id)}
+                            />
+                            
+                            {/* Swipe Controls - positioned below card to avoid overlap */}
+                            <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 flex gap-4">
+                              <Button
+                                size="lg"
+                                variant="outline"
+                                onClick={swipeLeft}
+                                className="bg-white shadow-md hover:bg-gray-50 border-2"
+                              >
+                                <X className="h-6 w-6" />
+                              </Button>
+                              <Button
+                                size="lg"
+                                onClick={swipeRight}
+                                className="bg-red-500 hover:bg-red-600 text-white shadow-md"
+                              >
+                                <Heart className="h-6 w-6 fill-current" />
+                              </Button>
                             </div>
-                          )}
-                        </Card>
-                      </div>
 
-                      {/* Right Navigation Arrow */}
-                      <Button
-                        variant="ghost"
-                        size="lg"
-                        onClick={() => setCurrentIndex(Math.min(displayResources.length - 1, currentIndex + 1))}
-                        disabled={currentIndex === displayResources.length - 1}
-                        className="flex-shrink-0 w-12 h-12 rounded-full bg-white shadow-md hover:shadow-lg transition-shadow"
-                      >
-                        <ChevronRight className="h-6 w-6" />
-                      </Button>
+                            {/* Progress */}
+                            <div className="absolute top-4 right-4">
+                              <Badge variant="secondary">
+                                {currentIndex + 1} / {displayResources.length}
+                              </Badge>
+                            </div>
+                          </div>
+                        )}
+                      </Card>
                     </div>
-                  </div>
-                ) : (
-                  /* Original layout for other categories */
-                  <div className="relative max-w-2xl mx-auto">
-                    <Card className="overflow-hidden">
-                      {currentResource && (
-                        <div className="relative">
-                          <ResourceCard 
-                            resource={currentResource} 
-                            viewMode="grid"
-                            showMatchButton={false}
-                            onToggleFavorite={(resourceId) => {
-                              if (favorites.includes(resourceId)) {
-                                setFavorites(favorites.filter(id => id !== resourceId));
-                              } else {
-                                setFavorites([...favorites, resourceId]);
-                              }
-                            }}
-                            isFavorite={favorites.includes(currentResource.id)}
-                          />
-                          
-                          {/* Swipe Controls */}
-                          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4">
-                            <Button
-                              size="lg"
-                              variant="outline"
-                              onClick={swipeLeft}
-                              className="bg-white/90 hover:bg-white"
-                            >
-                              <X className="h-6 w-6" />
-                            </Button>
-                            <Button
-                              size="lg"
-                              onClick={swipeRight}
-                              className="bg-red-500 hover:bg-red-600 text-white"
-                            >
-                              <Heart className="h-6 w-6 fill-current" />
-                            </Button>
-                          </div>
 
-                          {/* Navigation */}
-                          <div className="absolute top-1/2 left-4 transform -translate-y-1/2">
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => setCurrentIndex(Math.max(0, currentIndex - 1))}
-                              disabled={currentIndex === 0}
-                            >
-                              <ChevronLeft className="h-6 w-6" />
-                            </Button>
-                          </div>
-                          <div className="absolute top-1/2 right-4 transform -translate-y-1/2">
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => setCurrentIndex(Math.min(displayResources.length - 1, currentIndex + 1))}
-                              disabled={currentIndex === displayResources.length - 1}
-                            >
-                              <ChevronRight className="h-6 w-6" />
-                            </Button>
-                          </div>
-
-                          {/* Progress */}
-                          <div className="absolute top-4 right-4">
-                            <Badge variant="secondary">
-                              {currentIndex + 1} / {displayResources.length}
-                            </Badge>
-                          </div>
-                        </div>
-                      )}
-                    </Card>
+                    {/* Right Navigation Arrow */}
+                    <Button
+                      variant="ghost"
+                      size="lg"
+                      onClick={() => setCurrentIndex(Math.min(displayResources.length - 1, currentIndex + 1))}
+                      disabled={currentIndex === displayResources.length - 1}
+                      className="flex-shrink-0 w-12 h-12 rounded-full bg-white shadow-md hover:shadow-lg transition-shadow"
+                    >
+                      <ChevronRight className="h-6 w-6" />
+                    </Button>
                   </div>
-                )}
+                </div>
 
                 {/* Favorites Mode - Contact Options */}
                 {mode === "favorites" && currentResource && (

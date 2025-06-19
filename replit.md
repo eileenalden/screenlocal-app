@@ -178,6 +178,8 @@ Changelog:
 - June 19, 2025. Fixed location filtering system with separate property type and space type multi-select checkboxes - users can now filter by house/apartment/business/warehouse and interior/exterior combinations
 - June 19, 2025. Fixed state persistence bug - each resource category tab now resets to default browse mode when switching between tabs, preventing AI search results from carrying over between categories
 - June 19, 2025. Expanded seed database with 50+ comprehensive Oakland resources including authentic neighborhoods (Rockridge, Temescal, Fruitvale, etc.), diverse talent with realistic Bay Area pricing, professional crew members, and premium partner services (MamaDog Studios, CielSpace) featured prominently
+- June 19, 2025. Fixed navigation arrow positioning across all resource pages - arrows now positioned outside card boundaries to prevent overlap with card content
+- June 19, 2025. Replaced info icons with heart toggle buttons on all resource cards for consistent favorites functionality across locations, crew, talent, services, and permits
 ```
 
 ## User Preferences
