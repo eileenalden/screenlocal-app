@@ -360,9 +360,14 @@ export default function OaklandFilmPermit({ onClose }: OaklandFilmPermitProps) {
       filmingDateRanges: [...prev.filmingDateRanges, newRange]
     }));
 
+    // Clear the temporary dates but keep the picker open for easier multiple additions
     setTempStartDate("");
     setTempEndDate("");
-    setShowDatePicker(false);
+    
+    toast({
+      title: "Date range added",
+      description: `Added ${newRange.label} to filming schedule.`,
+    });
   };
 
   const removeDateRange = (id: string) => {
@@ -456,7 +461,11 @@ export default function OaklandFilmPermit({ onClose }: OaklandFilmPermitProps) {
                       type="button"
                       variant="ghost"
                       size="sm"
-                      onClick={() => setShowDatePicker(false)}
+                      onClick={() => {
+                        setShowDatePicker(false);
+                        setTempStartDate("");
+                        setTempEndDate("");
+                      }}
                     >
                       <X className="h-4 w-4" />
                     </Button>
@@ -482,14 +491,27 @@ export default function OaklandFilmPermit({ onClose }: OaklandFilmPermitProps) {
                       />
                     </div>
                   </div>
-                  <Button
-                    type="button"
-                    onClick={addDateRange}
-                    className="w-full"
-                    disabled={!tempStartDate || !tempEndDate}
-                  >
-                    Add Date Range
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button
+                      type="button"
+                      onClick={addDateRange}
+                      className="flex-1"
+                      disabled={!tempStartDate || !tempEndDate}
+                    >
+                      Add Date Range
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => {
+                        setShowDatePicker(false);
+                        setTempStartDate("");
+                        setTempEndDate("");
+                      }}
+                    >
+                      Done
+                    </Button>
+                  </div>
                 </Card>
               )}
             </div>
