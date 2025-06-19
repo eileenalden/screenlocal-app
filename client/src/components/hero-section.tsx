@@ -38,8 +38,8 @@ export default function HeroSection() {
             </Button>
           </div>
           
-          {/* Login Link */}
-          <div className="text-center">
+          {/* Login Link - Temporarily Disabled */}
+          {/* <div className="text-center">
             <p className="text-white/90" style={{ textShadow: '1px 1px 4px rgba(0, 0, 0, 0.6)' }}>
               Already have an account?{" "}
               <a 
@@ -49,7 +49,7 @@ export default function HeroSection() {
                 Log in here
               </a>
             </p>
-          </div>
+          </div> */}
       </div>
       
       <EarlyUserModal 

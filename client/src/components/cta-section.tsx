@@ -22,7 +22,8 @@ export default function CTASection() {
           Get Started
         </Button>
         
-        <div className="text-center">
+        {/* Login Link - Temporarily Disabled */}
+        {/* <div className="text-center">
           <p className="text-orange-100">
             Already have an account?{" "}
             <a 
@@ -32,7 +33,7 @@ export default function CTASection() {
               Log in here
             </a>
           </p>
-        </div>
+        </div> */}
       </div>
       
       <EarlyUserModal 
