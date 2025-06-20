@@ -121,6 +121,9 @@ Changelog:
 - June 14, 2025. Added persistent favorites system with localStorage and reset functionality
 - June 14, 2025. Removed "Post Project" feature - MVP focuses on filmmaker-initiated contact to avoid spam
 - June 20, 2025. Removed "Post Project" CTA button from mobile menu for cleaner navigation
+- June 20, 2025. Completed security audit - no hardcoded credentials, safe for public GitHub repository
+- June 20, 2025. Created .gitignore, README.md, and vercel.json for deployment configuration
+- June 20, 2025. Verified AI search uses environment variables (OPENAI_API_KEY) with fallback to local text search
 - June 14, 2025. Added permit and tax rebate navigation tabs with dedicated categories
 - June 14, 2025. Implemented location radius settings - different geographic ranges per resource type
 - June 14, 2025. Removed "Oakland" branding for broader geographic flexibility
