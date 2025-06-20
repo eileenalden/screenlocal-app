@@ -120,6 +120,7 @@ Changelog:
 - June 14, 2025. Restructured navigation to category-focused pages (locations, crew, cast, services)
 - June 14, 2025. Added persistent favorites system with localStorage and reset functionality
 - June 14, 2025. Removed "Post Project" feature - MVP focuses on filmmaker-initiated contact to avoid spam
+- June 20, 2025. Removed "Post Project" CTA button from mobile menu for cleaner navigation
 - June 14, 2025. Added permit and tax rebate navigation tabs with dedicated categories
 - June 14, 2025. Implemented location radius settings - different geographic ranges per resource type
 - June 14, 2025. Removed "Oakland" branding for broader geographic flexibility

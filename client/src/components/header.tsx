@@ -143,16 +143,7 @@ export default function Header() {
                   {item.label}
                 </Link>
               ))}
-              <div className="pt-3 border-t border-gray-200">
-                <Link href="/project-profile">
-                  <Button 
-                    className="w-full bg-orange-500 hover:bg-orange-600 text-white"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Post Project
-                  </Button>
-                </Link>
-              </div>
+
             </nav>
           </div>
         )}
